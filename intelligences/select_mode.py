@@ -5,8 +5,8 @@ def select_mode(N, players, board):
 
     if mode == 0:
         print("A vous de jouer")
-        return False, 0, 0, 0
+        return players[N].pawns, False, 0, 0, 0
     else:
-        print("Au joureur ", str(N), " de jouer selon le mode ", mode)
+        print("Au joueur ", str(N), " de jouer selon le mode ", mode)
         if mode == 1:
             return ai_random(N, players, board)

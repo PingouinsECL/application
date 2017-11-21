@@ -69,16 +69,19 @@ window = pygame.display.set_mode((background.get_width(), background.get_height(
 
 
 hold = 1
+show = 1
 while hold:
 
     mode_home = 1
     mode_tuto = 0
     mode_game = 0
+    mode_results = 0
 
     init = 0
     play = 0
     number_turn = 0
     table_but = []
+    players_lost = {}
 
     # HOME
 
@@ -98,20 +101,23 @@ while hold:
 
             if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                 mode_home = 0
-                mode_game = 0
                 mode_tuto = 0
+                mode_game = 0
+                mode_results = 0
                 hold = 0
 
             elif event.type == MOUSEBUTTONDOWN and event.button == 1:
                 cur = event.pos
                 if but_play.hover(cur):
                     mode_home = 0
-                    mode_game = 1
                     mode_tuto = 0
+                    mode_game = 1
+                    mode_results = 0
                 elif but_tuto.hover(cur):
                     mode_home = 0
                     mode_tuto = 1
                     mode_game = 0
+                    mode_results = 0
 
             elif event.type == MOUSEMOTION:
                 cur = event.pos
@@ -135,8 +141,9 @@ while hold:
 
                 if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                     mode_home = 0
-                    mode_game = 0
                     mode_tuto = 0
+                    mode_game = 0
+                    mode_results = 0
                     hold = 0
 
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
@@ -181,12 +188,18 @@ while hold:
                 print(str(number_turn) + 'e tour \t Tour du joueur numéro ', str(N), '\n')
 
                 # selecting the move
-                fail, direction, dist, pawn_number  = select_mode(N, players, board)
+                pawns, fail, direction, dist, pawn_number = select_mode(N, players, board)
 
                 if not(fail):
+                    players[N].pawns = pawns
                     players[N].pawns[pawn_number].move(board, players[N], direction, dist)
                 else:
-                    print("Le joueur ", N, " a perdu")
+                    print("Le joueur ", N, " ne peut plus jouer")
+                    players_lost[N] = 1
+                    if len(players_lost) == 3:
+                        mode_game = 0
+                        mode_results = 1
+
 
                 # printing the game after the move
                 table_but = board.display(window)
@@ -209,3 +222,30 @@ while hold:
 
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
                     play = 1
+        ###
+        while mode_results:
+            window.blit(background, pos_background)
+            window.blit(logo, pos_logo)
+
+            scores = [players[k].score for k in range(len(players))]
+            m = max(scores)
+            i = []
+            k = 0
+            while k < len(players):
+                if scores[k] == m:
+                    i.append(k)
+                k += 1
+
+            if show:
+                show = 0
+                for k in range(len(i)):
+                    print("Le joueur ", i[k], " a gagné avec ", m, " points")
+
+            for event in pygame.event.get():
+
+                if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+                    mode_home = 0
+                    mode_game = 0
+                    mode_tuto = 0
+                    mode_results = 0
+                    hold = 0
