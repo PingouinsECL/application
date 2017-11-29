@@ -5,12 +5,9 @@ def ai_random(N, players, board, list_number_pawns, number_pawns):
     # decision
 
     if number_pawns == 0:
-        fail = True
         direction = 0
         dist = 0
         pawn_number = 0
-    else:
-        fail = False
 
         # choix du numéro du pion
         random.shuffle(list_number_pawns)
@@ -27,4 +24,4 @@ def ai_random(N, players, board, list_number_pawns, number_pawns):
         dist_max = etat_pawn[direction]
         dist = random.randint(1, dist_max)
 
-    return fail, direction, dist, pawn_number
+    return direction, dist, pawn_number
