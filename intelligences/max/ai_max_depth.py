@@ -1,4 +1,4 @@
-def ai_minimax_depth (N, players, board, d_max) :
+def ai_minimax_depth (N, players, board, list_number_pawns, d_max) :
     """
     Pseudo-minimax algorith applied to the 2 to 4 players in this game.
     """
@@ -12,10 +12,9 @@ def ai_minimax_depth (N, players, board, d_max) :
             return heuristique(0) # choisir heuristique
         
         next_p = (p+1)%Player.number_player
-        number_pawns = len(players[p].pawns)
         v = [0 for _ in range (N)]
         action = None
-        for i in range(number_pawns) :
+        for i in list_number_pawns :
             acce = players[p].pawns[i].accessibles
             for j in range(len(acce)) :
                 for k in range (acce[j]) :
