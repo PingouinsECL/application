@@ -220,7 +220,7 @@ while hold:
                 print(str(number_turn) + 'e tour \t Tour du joueur numéro ', str(N), '\n')
 
                 # selecting the move
-                pawns, (fail, direction, dist, pawn_number) = select_mode(N, players, board)
+                fail, pawns, (direction, dist, pawn_number) = select_mode(N, players, board)
 
                 if not(fail):
                     players[N].pawns = pawns
