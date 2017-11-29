@@ -25,13 +25,15 @@ def select_mode(N, players, board):
     number_pawns = len(list_number_pawns)
 
     # selection of the game mode
+    
+    fail = (number_pawns == 0)
 
     if mode == 0:
         print("A vous de jouer")
-        return players[N].pawns, ai_human(N, players, board, list_number_pawns, number_pawns)
+        return fail, players[N].pawns, ai_human(N, players, board, list_number_pawns, number_pawns)
     elif mode == 1:
         print("Au joueur ", str(N), " de jouer selon le mode ", mode)
-        return players[N].pawns, ai_random(N, players, board, list_number_pawns, number_pawns)
+        return fail, players[N].pawns, ai_random(N, players, board, list_number_pawns, number_pawns)
     else:
         print("Au joueur ", str(N), " de jouer selon le mode ", mode)
-        return players[N].pawns, ai_random(N, players, board, list_number_pawns, number_pawns)
+        return fail, players[N].pawns, ai_random(N, players, board, list_number_pawns, number_pawns)
