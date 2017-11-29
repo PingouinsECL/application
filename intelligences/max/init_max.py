@@ -1,6 +1,6 @@
 import random
 
-def init_random(board, players):
+def init_max(board, players):
     h, w = len(board.cases_tab), len(board.cases_tab)
     all_cases = [[board.cases_tab[k][l] for l in range(w)] for k in range(h)]
     for k in range(h):
@@ -14,4 +14,4 @@ def init_random(board, players):
     # selecting random case
     n = random.randint(0, len(candidates)-1)
     y, x = candidates[n]
-return x, y
+    return x, y

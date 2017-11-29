@@ -26,18 +26,21 @@ def select_mode(N, players, board):
     number_pawns = len(list_number_pawns)
 
     # selection of the game mode
-    
+
     fail = (number_pawns == 0)
 
-    if mode == 0:
-        print("A vous de jouer")
-        return fail, players[N].pawns, ai_human(N, players, board, list_number_pawns, number_pawns)
-    elif mode == 1:
-        print("Au joueur ", str(N), " de jouer selon le mode ", mode)
-        return fail, players[N].pawns, ai_random(N, players, board, list_number_pawns, number_pawns)
-    elif mode == 2:
-        print("Au joueur ", str(N), " de jouer selon le mode ", mode)
-        return fail, players[N].pawns, ai_max(N, players, board, list_number_pawns, 5) # dernier nb à changer, pour test
+    if fail:
+        return True, players[N].pawns, (0, 0, 0)
     else:
-        print("Au joueur ", str(N), " de jouer selon le mode ", mode)
-        return fail, players[N].pawns, ai_random(N, players, board, list_number_pawns, number_pawns)
+        if mode == 0:
+            print("A vous de jouer")
+            return fail, players[N].pawns, ai_human(N, players, board, list_number_pawns, number_pawns)
+        elif mode == 1:
+            print("Au joueur ", str(N), " de jouer selon le mode ", mode)
+            return fail, players[N].pawns, ai_random(N, players, board, list_number_pawns, number_pawns)
+        elif mode == 2:
+            print("Au joueur ", str(N), " de jouer selon le mode ", mode)
+            return fail, players[N].pawns, ai_max(N, players, board, list_number_pawns, 5) # dernier nb à changer, pour test
+        else:
+            print("Au joueur ", str(N), " de jouer selon le mode ", mode)
+            return fail, players[N].pawns, ai_random(N, players, board, list_number_pawns, number_pawns)
