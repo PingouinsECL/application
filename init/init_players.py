@@ -13,7 +13,7 @@ def init_players():
     print("\nMode de jeu des différents joueurs\n")
     players = []
     for k in range(number_players):
-        mode_player = int(input("Quel est le mode de jeu du joueur " + str(k) + " ? (0 humain, 1 random)\n"))
+        mode_player = int(input("Quel est le mode de jeu du joueur " + str(k) + " ? (0 humain, 1 random, 2 max)\n"))
         players.append(Player(mode_player, number_players))
 
     return players
