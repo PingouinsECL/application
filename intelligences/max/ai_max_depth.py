@@ -1,4 +1,4 @@
-def ai_minimax_depth (N, players, board, list_number_pawns, d_max) :
+def ai_max (N, players, board, list_number_pawns, d_max) :
     """
     Pseudo-minimax algorith applied to the 2 to 4 players in this game.
     """
