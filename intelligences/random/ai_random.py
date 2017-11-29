@@ -8,6 +8,8 @@ def ai_random(N, players, board, list_number_pawns, number_pawns):
         direction = 0
         dist = 0
         pawn_number = 0
+     
+    else :
 
         # choix du numéro du pion
         random.shuffle(list_number_pawns)
