@@ -13,5 +13,6 @@ class Button:
             win.blit(self.background, [self.x, self.y])
 
     def hover(self, cur):
+        # when hovered
         x_cur, y_cur = cur
         return 0 < x_cur - self.x < self.background.get_width() and 0 < y_cur - self.y < self.background.get_height()

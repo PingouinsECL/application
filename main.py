@@ -1,37 +1,49 @@
+# Loading libraries
+
 import pygame
 from pygame.locals import *
 
 import sys
+
+# Adding folders to path
+
 sys.path.append('../')
 sys.path.append('../../')
 sys.path.append('classes')
 sys.path.append('../classes')
 sys.path.append('../../classes')
+
 sys.path.append('intelligences')
 sys.path.append('../intelligences')
 sys.path.append('../../intelligences')
+
 sys.path.append('init')
 sys.path.append('../init')
 sys.path.append('../../init')
+
 sys.path.append('random')
 sys.path.append('intelligences/random')
 sys.path.append('../intelligences/random')
 sys.path.append('../../intelligences/random')
 
+sys.path.append('human')
+sys.path.append('intelligences/human')
+sys.path.append('../intelligences/human')
+sys.path.append('../../intelligences/human')
+
+# Importing files
 
 from const import *
 
-# sys.path.append('classes')
 from button import *
 from board import *
 
-# sys.path.append('intelligences')
 from select_mode import *
 
-# sys.path.append('init')
 from init_players import *
 from init_position import *
 
+# Initialising window
 pygame.init()
 
 window = pygame.display.set_mode((0, 0))
@@ -55,6 +67,7 @@ background_tutorial = pygame.image.load(path_background_tutorial).convert()
 back = pygame.image.load(path_back).convert()
 
 # Creating button
+
 but_play = Button(play, play_hover, pos_play)
 but_tuto = Button(tuto, tuto_hover, pos_tuto)
 but_sound = Button(sound, mute, pos_sound)
@@ -67,6 +80,7 @@ pygame.display.set_caption(window_title)
 pygame.display.set_icon(icon)
 window = pygame.display.set_mode((background.get_width(), background.get_height()))
 
+# Setting holding variables
 
 hold = 1
 show = 1
@@ -86,7 +100,11 @@ while hold:
     # HOME
 
     while mode_home:
+        # refreshing speed
+
         pygame.time.Clock().tick(30)
+
+        # displaying screen
 
         window.blit(background, pos_background)
         window.blit(logo, pos_logo)
@@ -96,6 +114,8 @@ while hold:
         but_sound.show(window, [0, 0])
 
         pygame.display.flip()
+
+        # listening for events
 
         for event in pygame.event.get():
 
@@ -131,11 +151,15 @@ while hold:
 
         while mode_tuto:
 
+            # cleaning the window
+
             window.blit(background_tutorial, pos_background_tutorial)
             but_back.show(window, cur)
             pygame.display.flip()
 
-            ## Edition de la page d'aide
+            # printing the tutorial
+
+            # listening for events
 
             for event in pygame.event.get():
 
@@ -156,14 +180,17 @@ while hold:
 
         while mode_game:
 
-            #window.blit(background, pos_background)
-            #pygame.display.flip()
+            # initialisation step
 
             if not(init):
                 init = 1
 
+                # creation of the players and the Board
+
                 board = Board()
                 initial_players = init_players()
+
+                # printing the board
 
                 window.blit(background, pos_background)
                 table_but = board.display(window)
@@ -175,6 +202,8 @@ while hold:
                 table_but = board.display(window)
                 pygame.display.flip()
 
+            # player's play
+
             if play:
 
                 play = 0
@@ -182,13 +211,16 @@ while hold:
                 # number of the current player
                 N = number_turn % len(players);
 
+                # refreshing the window
+
                 window.blit(background, pos_background)
+                table_but = board.display(window)
                 pygame.display.flip()
 
                 print(str(number_turn) + 'e tour \t Tour du joueur numéro ', str(N), '\n')
 
                 # selecting the move
-                pawns, fail, direction, dist, pawn_number = select_mode(N, players, board)
+                pawns, (fail, direction, dist, pawn_number) = select_mode(N, players, board)
 
                 if not(fail):
                     players[N].pawns = pawns
@@ -196,12 +228,13 @@ while hold:
                 else:
                     print("Le joueur ", N, " ne peut plus jouer")
                     players_lost[N] = 1
-                    if len(players_lost) == 3:
+                    if len(players_lost) == len(players) - 1:
                         mode_game = 0
                         mode_results = 1
 
 
                 # printing the game after the move
+                window.blit(background, pos_background)
                 table_but = board.display(window)
                 pygame.display.flip()
 
@@ -211,6 +244,8 @@ while hold:
                     print('Score de ', str(k), ' :\t', players[k].score)
 
                 number_turn += 1
+
+            # listening for events
 
             for event in pygame.event.get():
 
@@ -222,7 +257,8 @@ while hold:
 
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
                     play = 1
-        ###
+        # RESULTS
+
         while mode_results:
             window.blit(background, pos_background)
             window.blit(logo, pos_logo)
@@ -240,6 +276,8 @@ while hold:
                 show = 0
                 for k in range(len(i)):
                     print("Le joueur ", i[k], " a gagné avec ", m, " points")
+
+            # listening for events
 
             for event in pygame.event.get():
 

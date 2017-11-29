@@ -2,6 +2,8 @@ from player import *
 
 def init_players():
 
+    # asking the number of players and their gamemode
+
     print("Bienvenue dans le jeu Pingouins\n")
     print("Renseignez les paramètres de jeu\n")
 

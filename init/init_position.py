@@ -1,4 +1,5 @@
 from init_random import *
+from init_human import *
 
 def init_position(board, players):
 
@@ -9,14 +10,18 @@ def init_position(board, players):
             mode = players[k].mode
             print("Paramétrage du joueur numéro ", k, " qui a le mode ", mode, "\n")
 
+            x, y = 0, 0
+
+            # selecting the position mode
+
             if mode == 0:
-                print("Paramétrage du pion numéro ", l, " (aidez-vous du plateau)")
-                x = int(input("X ? (2, 4) \n"))
-                y = int(input("X ? (2, 2) \n"))
-                players[k].pawns[l].place(board, x, y)
-            else:
+                x, y = init_human(board, players, l)
+            elif mode == 1:
                 x, y = init_random(board, players)
-                players[k].pawns[l].place(board, x, y)
+            else:
+                x, y = 0, 0
+
+            players[k].pawns[l].place(board, x, y)
 
         print("Fin du paramétrage du joueur ", k, "\n")
 

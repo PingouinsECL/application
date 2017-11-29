@@ -8,10 +8,10 @@ def init_random(board, players):
             if all_cases[k][l] != 0 :
                 all_cases[k][l] = all_cases[k][l].state
 
-
+    # selecting free cases
     candidates = [(k, l) for k in range(h) for l in range(w) if all_cases[k][l] == 1]
 
+    # selecting random case
     n = random.randint(0, len(candidates)-1)
     y, x = candidates[n]
-    print(x, y)
     return x, y
