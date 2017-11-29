@@ -1,5 +1,6 @@
 from init_random import *
 from init_human import *
+from init_max import *
 
 def init_position(board, players):
 
@@ -18,6 +19,8 @@ def init_position(board, players):
                 x, y = init_human(board, players, l)
             elif mode == 1:
                 x, y = init_random(board, players)
+            elif mode == 2:
+                x, y = init_max(board, players)
             else:
                 x, y = 0, 0
 
