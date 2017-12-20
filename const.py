@@ -43,3 +43,5 @@ path_a = "images/a.jpg"
 path_b = "images/b.jpg"
 path_c = "images/c.jpg"
 path_d = "images/d.jpg"
+
+test
