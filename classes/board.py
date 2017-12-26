@@ -99,11 +99,11 @@ class Board:
                     elif c.owner != -1:
                         letter = chr(ord('a')+c.owner)
                         s += letter + ' '
-                        table_but[k][l] = Button(image_player[c.owner], image_player[c.owner], pos)
+                        table_but[k][l] = Button(image_player[c.owner], image_player[c.owner], pos, 1)
                         table_but[k][l].show(window, [0, 0])
                     else:
                         s += str(c.score) + ' '
-                        table_but[k][l] = Button(image_number[c.score - 1], one, pos)
+                        table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
                         table_but[k][l].show(window, [0, 0])
 
             print(s)

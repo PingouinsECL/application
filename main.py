@@ -66,10 +66,10 @@ background_tutorial = pygame.image.load(path_background_tutorial).convert()
 back = pygame.image.load(path_back).convert()
 
 # Creating buttons
-but_play = Button(play, play_hover, pos_play)
-but_tuto = Button(tuto, tuto_hover, pos_tuto)
-but_sound = Button(sound, mute, pos_sound)
-but_back = Button(back, back, pos_back)
+but_play = Button(play, play_hover, pos_play, 0)
+but_tuto = Button(tuto, tuto_hover, pos_tuto, 0)
+but_sound = Button(sound, mute, pos_sound, 0)
+but_back = Button(back, back, pos_back, 0)
 
 
 # Setting window
