@@ -33,10 +33,13 @@ class Board:
         n_2 = 20
         n_3 = 10
         n_fish_tab = n_1*[1] + n_2*[2] + n_3*[3]
-        for k in range(5):
+        for k in range(10):
             random.shuffle(n_fish_tab)
 
         cases_tab = []
+
+        # number of cases already created
+        i = 0
 
         for k in range(0, 8):
 
@@ -47,9 +50,6 @@ class Board:
 
             line = []
 
-            # number of cases already created
-            i = 0
-
             # to have a constant number of rows per line
             if k % 2 == 1:
                 line.append(0)
@@ -57,6 +57,7 @@ class Board:
             for l in range(0, n_case):
 
                 n_fish = n_fish_tab[i]
+                print(i)
 
                 # creation of the case
                 c = Case(2*l + k % 2, k, n_fish)

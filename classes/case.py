@@ -17,3 +17,6 @@ class Case:
 
     def change_state(self, new_state):
         self.state = new_state
+    
+    def change_owner(self, new_owner):
+        self.owner = new_owner

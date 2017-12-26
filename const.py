@@ -35,6 +35,9 @@ pos_back = [0, 0]
 mx = 40
 my = 100
 
+case_height = 50
+case_width = 50
+
 path_one = "images/1.jpg"
 path_two = "images/2.jpg"
 path_three = "images/3.jpg"
@@ -43,5 +46,3 @@ path_a = "images/a.jpg"
 path_b = "images/b.jpg"
 path_c = "images/c.jpg"
 path_d = "images/d.jpg"
-
-test

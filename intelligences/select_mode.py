@@ -2,7 +2,7 @@ from ai_random import *
 from ai_human import *
 from ai_max import *
 
-def select_mode(N, players, board):
+def select_mode(N, players, board, display):
     mode = players[N].mode
 
     number_pawns = len(players[N].pawns)
@@ -34,7 +34,7 @@ def select_mode(N, players, board):
     else:
         if mode == 0:
             print("A vous de jouer")
-            return fail, players[N].pawns, ai_human(N, players, board, list_number_pawns, number_pawns)
+            return fail, players[N].pawns, ai_human(N, players, board, list_number_pawns, number_pawns, display)
         elif mode == 1:
             print("Au joueur ", str(N), " de jouer selon le mode ", mode)
             return fail, players[N].pawns, ai_random(N, players, board, list_number_pawns, number_pawns)

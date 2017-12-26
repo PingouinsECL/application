@@ -5,7 +5,8 @@ class Player:
     """
     Class defining a player. It can have multiple modes:
     0 -> human
-    1 -> IA 1
+    1 -> random
+    2 -> minimax
     """
 
     number_player = 0
@@ -15,12 +16,7 @@ class Player:
         self.mode = mode
 
         p = []
-        p.append(Pawn(Player.number_player))
-        p.append(Pawn(Player.number_player))
-
-        if total_number <= 3:
-            p.append(Pawn(Player.number_player))
-        if total_number == 2:
+        for k in range(total_number):
             p.append(Pawn(Player.number_player))
 
         self.pawns = p
@@ -35,6 +31,6 @@ class Player:
 
         for i, p in enumerate(pawns):
             acc = p.accessibles
-            if acc != []:
+            if acc != [0, 0, 0, 0, 0, 0]:
                 can[i] = 1
         return can
