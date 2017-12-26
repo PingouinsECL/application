@@ -20,7 +20,7 @@ def init_position(board, players, display, window, background, pos_background):
             # selecting the position mode
 
             if mode == 0:
-                x, y = init_human(board, players, l, display)
+                x, y = init_human(board, l, display)
             elif mode == 1:
                 x, y = init_random(board)
             else:

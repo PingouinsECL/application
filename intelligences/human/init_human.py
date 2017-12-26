@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from const import *
 
-def init_human(board, players, k, display):
+def init_human(board, k, display):
 
     def getCase(t):
         x, y = t

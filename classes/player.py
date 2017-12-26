@@ -14,10 +14,11 @@ class Player:
     def __init__(self, mode, total_number):
         self.score = 0
         self.mode = mode
+        self.number = Player.number_player
 
         p = []
         for k in range(total_number):
-            p.append(Pawn(Player.number_player))
+            p.append(Pawn(self.number))
 
         self.pawns = p
 
