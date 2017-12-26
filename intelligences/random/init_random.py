@@ -1,15 +1,16 @@
 import random
 
-def init_random(board, players):
-    h, w = len(board.cases_tab), len(board.cases_tab)
-    all_cases = [[board.cases_tab[k][l] for l in range(w)] for k in range(h)]
+def init_random(board):
+    h, w = len(board.cases_tab), len(board.cases_tab[0])
+    candidates = []
+
+    # selecting candidate (score 1, accessible)
+
     for k in range(h):
         for l in range(w):
-            if all_cases[k][l] != 0 :
-                all_cases[k][l] = all_cases[k][l].state
-
-    # selecting free cases
-    candidates = [(k, l) for k in range(h) for l in range(w) if all_cases[k][l] == 1]
+            case = board.cases_tab[k][l]
+            if case != 0 and case.state == 1 and case.score == 1:
+                candidates.append((k, l))
 
     # selecting random case
     n = random.randint(0, len(candidates)-1)

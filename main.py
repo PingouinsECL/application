@@ -26,11 +26,6 @@ sys.path.append('intelligences/random')
 sys.path.append('../intelligences/random')
 sys.path.append('../../intelligences/random')
 
-sys.path.append('max')
-sys.path.append('intelligences/max')
-sys.path.append('../intelligences/max')
-sys.path.append('../../intelligences/max')
-
 sys.path.append('human')
 sys.path.append('intelligences/human')
 sys.path.append('../intelligences/human')
@@ -56,7 +51,6 @@ window = pygame.display.set_mode((0, 0))
 # Loading images
 icon = pygame.image.load(path_icon).convert()
 background = pygame.image.load(path_background).convert()
-
 logo = pygame.image.load(path_logo).convert()
 
 play = pygame.image.load(path_play).convert()
@@ -71,8 +65,7 @@ mute = pygame.image.load(path_mute).convert()
 background_tutorial = pygame.image.load(path_background_tutorial).convert()
 back = pygame.image.load(path_back).convert()
 
-# Creating button
-
+# Creating buttons
 but_play = Button(play, play_hover, pos_play)
 but_tuto = Button(tuto, tuto_hover, pos_tuto)
 but_sound = Button(sound, mute, pos_sound)
@@ -80,15 +73,14 @@ but_back = Button(back, back, pos_back)
 
 
 # Setting window
-
 pygame.display.set_caption(window_title)
 pygame.display.set_icon(icon)
 window = pygame.display.set_mode((background.get_width(), background.get_height()))
 
 # Setting holding variables
-
 hold = 1
-show = 1
+show_scores = 1
+
 while hold:
 
     mode_home = 1
@@ -114,9 +106,12 @@ while hold:
         window.blit(background, pos_background)
         window.blit(logo, pos_logo)
 
-        but_play.show(window, [0, 0])
-        but_tuto.show(window, [0, 0])
-        but_sound.show(window, [0, 0])
+        if not('cursor' in locals() or 'cursor' in globals()):
+            cursor = [0, 0]
+
+        but_play.show(window, cursor)
+        but_tuto.show(window, cursor)
+        but_sound.show(window, cursor)
 
         pygame.display.flip()
 
@@ -132,24 +127,25 @@ while hold:
                 hold = 0
 
             elif event.type == MOUSEBUTTONDOWN and event.button == 1:
-                cur = event.pos
-                if but_play.hover(cur):
+                cursor = event.pos
+                if but_play.hover(cursor):
                     mode_home = 0
                     mode_tuto = 0
                     mode_game = 1
                     mode_results = 0
-                elif but_tuto.hover(cur):
+                elif but_tuto.hover(cursor):
                     mode_home = 0
                     mode_tuto = 1
                     mode_game = 0
                     mode_results = 0
 
             elif event.type == MOUSEMOTION:
-                cur = event.pos
-                but_play.show(window, cur)
-                but_tuto.show(window, cur)
-                but_sound.show(window, cur)
-                pygame.display.flip()
+                cursor = event.pos
+
+        but_play.show(window, cursor)
+        but_tuto.show(window, cursor)
+        but_sound.show(window, cursor)
+        pygame.display.flip()
 
 
         # TUTORIAL
@@ -159,7 +155,7 @@ while hold:
             # cleaning the window
 
             window.blit(background_tutorial, pos_background_tutorial)
-            but_back.show(window, cur)
+            but_back.show(window, cursor)
             pygame.display.flip()
 
             # printing the tutorial
@@ -176,8 +172,8 @@ while hold:
                     hold = 0
 
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
-                    cur = event.pos
-                    if but_back.hover(cur):
+                    cursor = event.pos
+                    if but_back.hover(cursor):
                         mode_tuto = 0
                         mode_home = 1
 
@@ -201,11 +197,13 @@ while hold:
                 table_but = board.display(window)
                 pygame.display.flip()
 
-                players = init_position(board, initial_players)
+                players = init_position(board, initial_players, table_but, window, background, pos_background)
 
                 window.blit(background, pos_background)
                 table_but = board.display(window)
                 pygame.display.flip()
+
+                print("Le jeu peut commencer !\n")
 
             # player's play
 
@@ -224,18 +222,19 @@ while hold:
 
                 print(str(number_turn) + 'e tour \t Tour du joueur numéro ', str(N), '\n')
 
-                # selecting the move
-                fail, pawns, (direction, dist, pawn_number) = select_mode(N, players, board)
+                # selecting the move if pawns left
+                if not(N in players_lost):
+                    fail, pawns, (direction, dist, pawn_number) = select_mode(N, players, board, table_but)
 
-                if not(fail):
-                    players[N].pawns = pawns
-                    players[N].pawns[pawn_number].move(board, players[N], direction, dist)
+                    # if a move was found
+                    if not(fail):
+                        players[N].pawns = pawns
+                        players[N].pawns[pawn_number].move(board, players[N], direction, dist)
+                    else:
+                        print("Le joueur ", N, " ne peut plus jouer")
+                        players_lost[N] = 1
                 else:
-                    print("Le joueur ", N, " ne peut plus jouer")
-                    players_lost[N] = 1
-                    if len(players_lost) == len(players) - 1:
-                        mode_game = 0
-                        mode_results = 1
+                    print("Le tour du joueur ", N, " a été passé car il ne pouvait pas jouer")
 
 
                 # printing the game after the move
@@ -247,6 +246,11 @@ while hold:
                 print("Scores actuels")
                 for k in range(len(players)):
                     print('Score de ', str(k), ' :\t', players[k].score)
+                
+                # stopping the play if no player can move
+                if len(players_lost) == len(players) - 1:
+                            mode_game = 0
+                            mode_results = 1
 
                 number_turn += 1
 
@@ -265,6 +269,9 @@ while hold:
         # RESULTS
 
         while mode_results:
+
+            # refreshing the window
+
             window.blit(background, pos_background)
             window.blit(logo, pos_logo)
 
@@ -277,8 +284,8 @@ while hold:
                     i.append(k)
                 k += 1
 
-            if show:
-                show = 0
+            if show_scores:
+                show_scores = 0
                 for k in range(len(i)):
                     print("Le joueur ", i[k], " a gagné avec ", m, " points")
 
