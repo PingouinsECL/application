@@ -197,11 +197,13 @@ while hold:
                 table_but = board.display(window)
                 pygame.display.flip()
 
-                players = init_position(board, initial_players)
+                players = init_position(board, initial_players, table_but, window, background, pos_background)
 
                 window.blit(background, pos_background)
                 table_but = board.display(window)
                 pygame.display.flip()
+
+                print("Le jeu peut commencer !\n")
 
             # player's play
 

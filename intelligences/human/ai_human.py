@@ -96,12 +96,17 @@ def ai_human(N, players, board, list_active_pawns, display):
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
                     x_aim, y_aim = getCase(event.pos)
 
-                    direction, dist = getDirDist(x_pawn, y_pawn, x_aim, y_aim)
-                    dist = int(dist)
+                    if board.cases_tab[y_aim][x_aim] != 0:
 
-                    if (-1 < direction < 6 and 0 < dist <= players[N].pawns[pawn_number].accessibles[direction]):
-                        selected = True
+                        direction, dist = getDirDist(x_pawn, y_pawn, x_aim, y_aim)
+                        dist = int(dist)
+
+                        if (-1 < direction < 6 and 0 < dist <= players[N].pawns[pawn_number].accessibles[direction]):
+                            print("Case sélectionnée. Déplacement")
+                            selected = True
+                    
                     else:
+                        print("Case invalide. Sélection du pion")
                         pawn_number = -1
                         direction = -1
                         dist = -1
