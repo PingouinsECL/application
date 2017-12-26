@@ -12,6 +12,8 @@ class Pawn:
         self.y = 0
         self.id = id_player
         self.accessibles = []
+        self.active = True
+        self.remain = 1
 
     def move(self, board, player, direction, k):
         """
@@ -63,23 +65,30 @@ class Pawn:
         we try each direction one after another and collect the data under the format
         [a, b, c, d, e, f] where each letter accounts for the number of reachable (inclusive) cases in the given direction
         """
-        x = self.x
-        y = self.y
+        if self.active:
+            x = self.x
+            y = self.y
 
-        dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
+            dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
 
-        def advance(x, y, dx, dy):
-            k = 0
-            while 0 <= x+dx < 15 and 0 <= y+dy < 8 and \
-                  board.cases_tab[y+dy][x+dx].state == 1:
-                k += 1
-                x += dx
-                y += dy
-            return k
+            def advance(x, y, dx, dy):
+                k = 0
+                while 0 <= x+dx < 15 and 0 <= y+dy < 8 and \
+                    board.cases_tab[y+dy][x+dx].state == 1:
+                    k += 1
+                    x += dx
+                    y += dy
+                return k
 
-        max_per_dir = []
+            max_per_dir = []
 
-        for (dx, dy) in dirs:
-            max_per_dir.append(advance(x, y, dx, dy))
+            for (dx, dy) in dirs:
+                max_per_dir.append(advance(x, y, dx, dy))
 
-        self.accessibles = max_per_dir
+            self.accessibles = max_per_dir
+
+            if self.accessibles == [0, 0, 0, 0, 0, 0]:
+                self.active = False
+                self.remain = 0
+        else:
+            self.remain = 1

@@ -1,8 +1,10 @@
 import pygame
-from const import *
 from pygame.locals import *
+from const import *
 
-def ai_human(N, players, board, list_number_pawns, number_pawns, display):
+def ai_human(N, players, board, list_active_pawns, display):
+
+    number_pawns = len(players[N].pawns)
 
     def getCase(t):
         x, y = t
@@ -30,7 +32,7 @@ def ai_human(N, players, board, list_number_pawns, number_pawns, display):
     def getPawnNumber(case_pawn):
         k = 0
         while k < number_pawns:
-            if k in list_number_pawns and players[N].pawns[k].x == case_pawn.x and players[N].pawns[k].y == case_pawn.y :
+            if k in list_active_pawns and players[N].pawns[k].x == case_pawn.x and players[N].pawns[k].y == case_pawn.y :
                 return k
             k += 1
         return -1
@@ -58,8 +60,11 @@ def ai_human(N, players, board, list_number_pawns, number_pawns, display):
 
     selected = False
 
-    for k in list_number_pawns:
-        print(k, players[N].pawns[k].accessibles)
+    for k in range(number_pawns):
+        if k in list_active_pawns:
+            print(k, players[N].pawns[k].accessibles)
+        else:
+            print("Le pion ", k, " ne peut pas jouer")
 
     while not(selected):
 
