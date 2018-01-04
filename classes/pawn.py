@@ -25,8 +25,8 @@ class Pawn:
         5 -> upper left (-1, -1)
         """
 
-        x0 = self.x
-        y0 = self.y
+        player.score += board.cases_tab[self.y][self.x].score
+        board.cases_tab[self.y][self.x].change_state(0)
 
         if direction == 0:
             self.x += k
@@ -45,13 +45,33 @@ class Pawn:
             self.x -= k
             self.y -= k
 
-        player.score += board.cases_tab[y0][x0].score
-
-        board.cases_tab[y0][x0].change_state(0)
-
         board.cases_tab[self.y][self.x].change_state(2)
         board.cases_tab[self.y][self.x].owner = self.id
 
+    def anti_move (self, board, player, direction, k):
+        board.cases_tab[self.y][self.x].change_state(1)
+        board.cases_tab[self.y][self.x].owner = -1
+        
+        if direction == 0:
+            self.x -= k
+            self.y += k
+        elif direction == 1:
+            self.x -= 2*k
+        elif direction == 2:
+            self.x -= k
+            self.y -= k
+        elif direction == 3:
+            self.x += k
+            self.y -= k
+        elif direction == 4:
+            self.x += 2*k
+        elif direction == 5:
+            self.x += k
+            self.y += k
+
+        player.score -= board.cases_tab[self.y][self.x].score
+        board.cases_tab[self.y][self.x].change_state(2)
+    
     def place(self, board, pos_x, pos_y):
         self.x = pos_x
         self.y = pos_y
@@ -91,4 +111,5 @@ class Pawn:
                 self.active = False
                 self.remain = 0
         else:
+            self.active = True
             self.remain = 1
