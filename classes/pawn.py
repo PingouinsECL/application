@@ -110,6 +110,5 @@ class Pawn:
             if self.accessibles == [0, 0, 0, 0, 0, 0]:
                 self.active = False
                 self.remain = 0
-        else:
-            self.active = True
-            self.remain = 1
+            else:
+                self.remain = 1
