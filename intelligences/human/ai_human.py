@@ -2,9 +2,9 @@ import pygame
 from pygame.locals import *
 from const import *
 
-def ai_human(N, players, board, list_active_pawns, display):
+def ai_human(board, players, display, player_number, list_active_pawns):
 
-    number_pawns = len(players[N].pawns)
+    number_pawns = len(players[player_number].pawns)
 
     def getCase(t):
         x, y = t
@@ -32,7 +32,8 @@ def ai_human(N, players, board, list_active_pawns, display):
     def getPawnNumber(case_pawn):
         k = 0
         while k < number_pawns:
-            if k in list_active_pawns and players[N].pawns[k].x == case_pawn.x and players[N].pawns[k].y == case_pawn.y :
+            if k in list_active_pawns and players[player_number].pawns[k].x == case_pawn.x and \
+                players[player_number].pawns[k].y == case_pawn.y :
                 return k
             k += 1
         return -1
@@ -57,14 +58,13 @@ def ai_human(N, players, board, list_active_pawns, display):
             return -1, -1
         
         
-
     selected = False
 
     for k in range(number_pawns):
         if k in list_active_pawns:
-            print(k, players[N].pawns[k].accessibles)
+            print(k, players[player_number].pawns[k].accessibles)
         else:
-            print("Le pion ", k, " ne peut pas jouer")
+            print("Le pion " + str(k) + " ne peut pas jouer")
 
     while not(selected):
 
@@ -82,7 +82,7 @@ def ai_human(N, players, board, list_active_pawns, display):
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
                     x_pawn, y_pawn = getCase(event.pos)
                     case_pawn = board.cases_tab[y_pawn][x_pawn]
-                    if case_pawn != 0 and case_pawn.owner == N:
+                    if case_pawn != 0 and case_pawn.owner == player_number:
                         pawn_number = getPawnNumber(case_pawn)
                         print("Pion selectionne")
                     else:
@@ -101,7 +101,7 @@ def ai_human(N, players, board, list_active_pawns, display):
                         direction, dist = getDirDist(x_pawn, y_pawn, x_aim, y_aim)
                         dist = int(dist)
 
-                        if (-1 < direction < 6 and 0 < dist <= players[N].pawns[pawn_number].accessibles[direction]):
+                        if (-1 < direction < 6 and 0 < dist <= players[player_number].pawns[pawn_number].accessibles[direction]):
                             print("Case sélectionnée. Déplacement")
                             selected = True
                     

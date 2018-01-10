@@ -1,13 +1,13 @@
 import random
 
-def ai_random(N, players, list_active_pawns):
+def ai_random(players, player_number, list_active_pawns):
 
     # choix du numéro du pion
     random.shuffle(list_active_pawns)
     pawn_number = list_active_pawns[0]
 
     # choix de la direction
-    accessibles_pawn = players[N].pawns[pawn_number].accessibles
+    accessibles_pawn = players[player_number].pawns[pawn_number].accessibles
 
     directions_possibles = [k for k in range(len(accessibles_pawn)) if accessibles_pawn[k] != 0]
     random_indice = random.randint(0, len(directions_possibles)-1)

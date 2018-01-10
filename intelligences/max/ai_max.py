@@ -1,6 +1,6 @@
 import copy
 
-def ai_max (N, players, board, d_max) :
+def ai_max (board, players, player_number, d_max) :
     """
     Pseudo-minimax algorith applied to the 2 to 4 players in this game.
     """
@@ -12,7 +12,7 @@ def ai_max (N, players, board, d_max) :
         # Mode minimiser le score d'un autre joueur ?
         # Mode maximiser le score d'un autre joueur ?
         # Mode bloquer les pions d'un joueur ? Ne pas bloquer ses pions ?
-        #Faire des mixtes
+        # Faire des mixtes
     
     def compute_accessible_like(pawn, board):
         if pawn.active:
@@ -51,27 +51,27 @@ def ai_max (N, players, board, d_max) :
         
         next_p = (p+1)%len(players) # Next player
         for i in range (len(players[p].pawns)):
-            compute_accessible_like (players[p].pawns[i], board)
+            compute_accessible_like(players[p].pawns[i], board)
         
         i = 0
-        while i < len(players[p].pawns) and players[p].pawns[i].remain == 0 :
+        while i < len(players[p].pawns) and players[p].pawns[i].remain == 0:
             i += 1
         if i ==  len(players[p].pawns):
-            return (max_value (next_p, board,  d-1))
+            return max_value(next_p, board,  d-1)
         
-        v = [0 for _ in range (len(players))]
-        for i in range (len(players[p].pawns)):
+        v = [0 for _ in range(len(players))]
+        for i in range(len(players[p].pawns)):
             acce = players[p].pawns[i].accessibles
-            for j in range(len(acce)) :
-                for k in range (1,acce[j]+1) :
-                    players[p].pawns[i].move (board, players[p], j, k)
+            for j in range(len(acce)):
+                for k in range(1,acce[j]+1):
+                    players[p].pawns[i].move(board, players[p], j, k)
                     w = max_value (next_p, board,  d-1)
-                    players[p].pawns[i].anti_move (board, players[p], j, k)
+                    players[p].pawns[i].anti_move(board, players[p], j, k)
                     if v[p] <= w[p] : # rajouter un choix en cas d'égalité ? limiter le max des scores des autres ? leur somme ? autre chose ?
                         if d == d_max :
                             action = [j, k, i]
                         v = copy.copy(w)
         return (action if d == d_max else v)
     
-    action = max_value(N, board, d_max)
-    return (action)
+    action = max_value(player_number, board, d_max)
+    return action

@@ -8,8 +8,6 @@ from const import *
 
 window = pygame.display.set_mode((0, 0))
 
-random.seed(0)
-
 one = pygame.image.load(path_one).convert()
 two = pygame.image.load(path_two).convert()
 three = pygame.image.load(path_three).convert()
