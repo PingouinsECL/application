@@ -38,11 +38,24 @@ my = 100
 case_height = 50
 case_width = 50
 
-path_one = "images/1.jpg"
-path_two = "images/2.jpg"
-path_three = "images/3.jpg"
+path_one = "images/1.png"
+path_two = "images/2.png"
+path_three = "images/3.png"
 
-path_a = "images/a.jpg"
-path_b = "images/b.jpg"
-path_c = "images/c.jpg"
-path_d = "images/d.jpg"
+path_a = "images/a.png"
+path_b = "images/b.png"
+path_c = "images/c.png"
+path_d = "images/d.png"
+
+
+# CHOICE MODE
+
+path_choice0 = "images/rien.png"
+path_choice1 = "images/hum.png"
+path_choice2 = "images/ia.png"
+path_end_choice = "images/play.png"
+pos_choice0 = [100, 100]
+pos_choice1 = [400, 100]
+pos_choice2 = [100, 400]
+pos_choice3 = [400, 400]
+pos_end_choice = [600, 250]

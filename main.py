@@ -71,12 +71,24 @@ mute = pygame.image.load(path_mute).convert()
 background_tutorial = pygame.image.load(path_background_tutorial).convert()
 back = pygame.image.load(path_back).convert()
 
+choice0 = pygame.image.load(path_choice0).convert()
+choice1 = pygame.image.load(path_choice1).convert()
+choice2 = pygame.image.load(path_choice2).convert()
+end_choice = pygame.image.load(path_end_choice).convert()
+choices = [choice0,choice1,choice2]
+configuration = [0]*4
+
 # Creating buttons
 but_play = Button(play, play_hover, pos_play, 0)
 but_tuto = Button(tuto, tuto_hover, pos_tuto, 0)
 but_sound = Button(sound, mute, pos_sound, 0)
 but_back = Button(back, back, pos_back, 0)
 
+but_choice0 = Button(choice0, choice0, pos_choice0,0)
+but_choice1 = Button(choice0, choice0, pos_choice1,0)
+but_choice2 = Button(choice0, choice0, pos_choice2,0)
+but_choice3 = Button(choice0, choice0, pos_choice3,0)
+but_end_choice = Button(end_choice, end_choice, pos_end_choice,0)
 
 # Setting window
 pygame.display.set_caption(window_title)
@@ -93,6 +105,7 @@ while hold:
     mode_tuto = 0
     mode_game = 0
     mode_results = 0
+    mode_choice = 0
 
     init = 0
     play = 0
@@ -130,6 +143,7 @@ while hold:
                 mode_tuto = 0
                 mode_game = 0
                 mode_results = 0
+                mode_choice = 0
                 hold = 0
 
             elif event.type == MOUSEBUTTONDOWN and event.button == 1:
@@ -137,13 +151,15 @@ while hold:
                 if but_play.hover(cursor):
                     mode_home = 0
                     mode_tuto = 0
-                    mode_game = 1
+                    mode_game = 0
                     mode_results = 0
+                    mode_choice = 1
                 elif but_tuto.hover(cursor):
                     mode_home = 0
                     mode_tuto = 1
                     mode_game = 0
                     mode_results = 0
+                    mode_choice = 0
 
             elif event.type == MOUSEMOTION:
                 cursor = event.pos
@@ -175,6 +191,7 @@ while hold:
                     mode_tuto = 0
                     mode_game = 0
                     mode_results = 0
+                    mode_choice = 0
                     hold = 0
 
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
@@ -182,6 +199,55 @@ while hold:
                     if but_back.hover(cursor):
                         mode_tuto = 0
                         mode_home = 1
+
+        # CHOICE MODE 
+        
+        while mode_choice:
+            
+            window.blit(background, pos_background)
+            
+            but_choice0.show(window, pos_choice0)
+            but_choice1.show(window, pos_choice1)     
+            but_choice2.show(window, pos_choice2)
+            but_choice3.show(window, pos_choice3)      
+            but_end_choice.show(window, pos_end_choice)
+            pygame.display.flip()
+            players = []
+            
+            for event in pygame.event.get():
+            
+                if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                    cur = event.pos
+                    if but_choice0.hover(cur):
+                        configuration[0] += 1
+                        configuration[0] = configuration[0]%3
+                        but_choice0.modify_image(choices[configuration[0]])
+                    if but_choice1.hover(cur):
+                        configuration[1] += 1
+                        configuration[1] = configuration[1]%3
+                        but_choice1.modify_image(choices[configuration[1]])
+                    if but_choice2.hover(cur):
+                        configuration[2] += 1
+                        configuration[2] = configuration[2]%3
+                        but_choice2.modify_image(choices[configuration[2]])
+                    if but_choice3.hover(cur):
+                        configuration[3] += 1
+                        configuration[3] = configuration[3]%3
+                        but_choice3.modify_image(choices[configuration[3]])                   
+                    if but_end_choice.hover(cur):
+                        mode_choice = 0        
+                        mode_home = 0
+                        mode_tuto = 0
+                        mode_game = 1
+                        mode_results = 0
+                        hold = 0
+                
+                if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+                    mode_home = 0
+                    mode_tuto = 0
+                    mode_game = 0
+                    mode_results = 0
+                    hold = 0
 
         # GAME MODE
 
@@ -195,7 +261,24 @@ while hold:
                 # creation of the players and the Board
 
                 board = Board()
-                initial_players = init_players()
+                players = []
+                number_players=0
+                
+                for element in configuration:
+                    if element != 0:
+                        number_players += 1
+                
+                pawns_per_player = 2 + 4 - number_players
+                
+                for i in range(3):    
+                    if configuration[i] == 1:
+                        mode_player = 0
+                        players.append(Player(mode_player, pawns_per_player))
+                        
+                    if configuration[i] == 2:
+                        mode_player = 1
+                        players.append(Player(mode_player, pawns_per_player))
+                initial_players = players
 
                 # printing the board
 
