@@ -249,8 +249,8 @@ while hold:
                 
                 # stopping the play if no player can move
                 if len(players_lost) == len(players):
-                            mode_game = 0
-                            mode_results = 1
+                    mode_game = 0
+                    mode_results = 1
 
                 number_turn += 1
 
