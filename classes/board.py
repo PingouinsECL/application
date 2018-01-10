@@ -8,14 +8,14 @@ from const import *
 
 window = pygame.display.set_mode((0, 0))
 
-one = pygame.image.load(path_one).convert()
-two = pygame.image.load(path_two).convert()
-three = pygame.image.load(path_three).convert()
+one = pygame.image.load(path_one)
+two = pygame.image.load(path_two)
+three = pygame.image.load(path_three)
 
-a = pygame.image.load(path_a).convert()
-b = pygame.image.load(path_b).convert()
-c = pygame.image.load(path_c).convert()
-d = pygame.image.load(path_d).convert()
+a = pygame.image.load(path_a)
+b = pygame.image.load(path_b)
+c = pygame.image.load(path_c)
+d = pygame.image.load(path_d)
 
 image_number = [one, two, three]
 image_player = [a, b, c, d]
