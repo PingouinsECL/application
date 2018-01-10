@@ -25,3 +25,6 @@ class Button:
                 
         else:
             return 0 < x_cur - self.x < self.background.get_width() and 0 < y_cur - self.y < self.background.get_height()
+
+    def modify_image(self,image):
+        self.background=image
