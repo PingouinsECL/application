@@ -23,15 +23,3 @@ class Player:
         self.pawns = p
 
         Player.number_player += 1
-
-    def can_play(self):
-
-        pawns = self.pawns
-        n = len(pawns)
-        can = n * [0]
-
-        for i, p in enumerate(pawns):
-            acc = p.accessibles
-            if acc != [0, 0, 0, 0, 0, 0]:
-                can[i] = 1
-        return can

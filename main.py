@@ -254,9 +254,9 @@ while hold:
                     print('Score de ', str(k), ' :\t', players[k].score)
                 
                 # stopping the play if no player can move
-                if len(players_lost) == len(players) :
-                            mode_game = 0
-                            mode_results = 1
+                if len(players_lost) == len(players):
+                    mode_game = 0
+                    mode_results = 1
 
                 number_turn += 1
 
