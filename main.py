@@ -31,6 +31,12 @@ sys.path.append('intelligences/human')
 sys.path.append('../intelligences/human')
 sys.path.append('../../intelligences/human')
 
+
+sys.path.append('max')
+sys.path.append('intelligences/max')
+sys.path.append('../intelligences/max')
+sys.path.append('../../intelligences/max')
+
 # Importing files
 
 from const import *
