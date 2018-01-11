@@ -85,6 +85,7 @@ class Pawn:
         we try each direction one after another and collect the data under the format
         [a, b, c, d, e, f] where each letter accounts for the number of reachable (inclusive) cases in the given direction
         """
+
         if self.active:
             x = self.x
             y = self.y
@@ -112,3 +113,5 @@ class Pawn:
                 self.remain = 0
             else:
                 self.remain = 1
+        else:
+            self.remain = 1

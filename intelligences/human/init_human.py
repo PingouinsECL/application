@@ -31,8 +31,6 @@ def init_human(board, k, display):
             return -1, -1
 
     # asking the players for coordinates
-    
-    print("Paramétrage du pion numéro ", k)
 
     x = -1
     y = -1
@@ -51,10 +49,5 @@ def init_human(board, k, display):
 
                 if case_pawn != 0 and case_pawn.score == 1 and case_pawn.state == 1:
                     selected = True
-                else:
-                    print(x, y)
-                    print("Case invalide. Choisir une case accessible et de score 1")              
-
-    print("Placé !")
 
     return x, y

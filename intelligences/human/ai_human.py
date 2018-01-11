@@ -66,20 +66,16 @@ def ai_human(board, players, display, player_number, list_active_pawns):
     for k in range(number_pawns):
         if k in list_active_pawns:
             print(k, players[player_number].pawns[k].accessibles)
-        else:
-            print("Le pion " + str(k) + " ne peut pas jouer")
 
     while not(selected):
 
         # asking choices to the player
 
-        pawn_number = -1
+        pawn_number = 100
         direction = -1
         dist = -1
 
         while (pawn_number < 0 or pawn_number > number_pawns):
-
-            # print("Selection du pion", number_pawns, pawn_number)
 
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
@@ -88,15 +84,14 @@ def ai_human(board, players, display, player_number, list_active_pawns):
                     if case_pawn != 0 and case_pawn.owner == player_number:
                         pawn_number = getPawnNumber(case_pawn)
                         if pawn_number in list_active_pawns :
+                            restart = False
                             print("Pion selectionne")
                         else:
-                            pawn_number = -1
+                            pawn_number = 100
                     else:
                         print('Case invalide')
-        
-        while (dist < 0 or direction < 0):
 
-            # print("Selection de la case cible")
+        while not(restart) and (dist < 0 or direction < 0):
 
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
@@ -113,7 +108,8 @@ def ai_human(board, players, display, player_number, list_active_pawns):
                     
                     else:
                         print("Case invalide. Sélection du pion")
-                        pawn_number = -1
+                        restart = True
+                        pawn_number = 100
                         direction = -1
                         dist = -1
         

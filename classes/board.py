@@ -104,5 +104,5 @@ class Board:
                         table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
                         table_but[k][l].show(window, [0, 0])
 
-            print(s)
+            # print(s)
         return table_but

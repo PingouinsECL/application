@@ -298,13 +298,7 @@ while hold:
                 table_button = board.display(window)
                 pygame.display.flip()
 
-                print("Le jeu peut commencer !\n")
-
             # player's play
-
-            # if play:
-
-            # play = 0
 
             # number of the current player
             player_number = number_turn % len(players)
@@ -315,7 +309,7 @@ while hold:
             table_but = board.display(window)
             pygame.display.flip()
 
-            print(str(number_turn) + 'e tour \t Tour du joueur numéro ' + str(player_number) + '\n')
+            print('\n\nTour ' + str(number_turn) + '\tAu joueur ' + str(player_number) + '\n')
 
             # selecting the move if pawns left
             if not(player_number in players_lost):
