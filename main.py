@@ -43,10 +43,10 @@ from const import *
 
 from button import *
 from board import *
+from player import *
 
 from select_mode import *
 
-from init_players import *
 from init_position import *
 
 # Initialising window
@@ -74,8 +74,9 @@ back = pygame.image.load(path_back).convert()
 choice0 = pygame.image.load(path_choice0).convert()
 choice1 = pygame.image.load(path_choice1).convert()
 choice2 = pygame.image.load(path_choice2).convert()
+choice3 = pygame.image.load(path_choice3).convert()
 end_choice = pygame.image.load(path_end_choice).convert()
-choices = [choice0,choice1,choice2]
+choices = [choice0,choice1,choice2, choice3]
 configuration = [0]*4
 
 # Creating buttons
@@ -220,19 +221,19 @@ while hold:
                     cur = event.pos
                     if but_choice0.hover(cur):
                         configuration[0] += 1
-                        configuration[0] = configuration[0]%3
+                        configuration[0] = configuration[0]%len(choices)
                         but_choice0.modify_image(choices[configuration[0]])
                     if but_choice1.hover(cur):
                         configuration[1] += 1
-                        configuration[1] = configuration[1]%3
+                        configuration[1] = configuration[1]%len(choices)
                         but_choice1.modify_image(choices[configuration[1]])
                     if but_choice2.hover(cur):
                         configuration[2] += 1
-                        configuration[2] = configuration[2]%3
+                        configuration[2] = configuration[2]%len(choices)
                         but_choice2.modify_image(choices[configuration[2]])
                     if but_choice3.hover(cur):
                         configuration[3] += 1
-                        configuration[3] = configuration[3]%3
+                        configuration[3] = configuration[3]%len(choices)
                         but_choice3.modify_image(choices[configuration[3]])                   
                     if but_end_choice.hover(cur):
                         mode_choice = 0        
@@ -270,13 +271,17 @@ while hold:
                 
                 pawns_per_player = 2 + 4 - number_players
                 
-                for i in range(3):    
+                for i in range(4):    
                     if configuration[i] == 1:
                         mode_player = 0
                         players.append(Player(mode_player, pawns_per_player))
-                        
-                    if configuration[i] == 2:
+
+                    elif configuration[i] == 2:
                         mode_player = 1
+                        players.append(Player(mode_player, pawns_per_player))
+
+                    elif configuration[i] == 3:
+                        mode_player = 2
                         players.append(Player(mode_player, pawns_per_player))
                 initial_players = players
 
@@ -297,52 +302,51 @@ while hold:
 
             # player's play
 
-            if play:
+            # if play:
 
-                play = 0
+            # play = 0
 
-                # number of the current player
-                N = number_turn % len(players);
+            # number of the current player
+            player_number = number_turn % len(players)
 
-                # refreshing the window
+            # refreshing the window
 
-                window.blit(background, pos_background)
-                table_but = board.display(window)
-                pygame.display.flip()
+            window.blit(background, pos_background)
+            table_but = board.display(window)
+            pygame.display.flip()
 
-                print(str(number_turn) + 'e tour \t Tour du joueur numéro ', str(N), '\n')
+            print(str(number_turn) + 'e tour \t Tour du joueur numéro ' + str(player_number) + '\n')
 
-                # selecting the move if pawns left
-                if not(N in players_lost):
-                    fail, pawns, (direction, dist, pawn_number) = select_mode(N, players, board, table_but)
+            # selecting the move if pawns left
+            if not(player_number in players_lost):
+                fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number)
 
-                    # if a move was found
-                    if not(fail):
-                        players[N].pawns = pawns
-                        players[N].pawns[pawn_number].move(board, players[N], direction, dist)
-                    else:
-                        print("Le joueur ", N, " ne peut plus jouer")
-                        players_lost[N] = 1
+                # if a move was found
+                if not(fail):
+                    players[player_number].pawns = pawns
+                    players[player_number].pawns[pawn_number].move(board, players[player_number], direction, dist)
                 else:
-                    print("Le tour du joueur ", N, " a été passé car il ne pouvait pas jouer")
+                    print("Le joueur " + str(player_number) + " ne peut plus jouer")
+                    players_lost[player_number] = 1
+            else:
+                print("Le tour du joueur " + str(player_number) + " a été passé car il ne pouvait pas jouer")
 
+            # printing the game after the move
+            window.blit(background, pos_background)
+            table_but = board.display(window)
+            pygame.display.flip()
 
-                # printing the game after the move
-                window.blit(background, pos_background)
-                table_but = board.display(window)
-                pygame.display.flip()
+            # printing scores
+            print("Scores actuels")
+            for k in range(len(players)):
+                print('Score de ' + str(k) + ' :\t' + str(players[k].score))
+            
+            # stopping the play if no player can move
+            if len(players_lost) == len(players):
+                mode_game = 0
+                mode_results = 1
 
-                # printing scores
-                print("Scores actuels")
-                for k in range(len(players)):
-                    print('Score de ', str(k), ' :\t', players[k].score)
-                
-                # stopping the play if no player can move
-                if len(players_lost) == len(players):
-                    mode_game = 0
-                    mode_results = 1
-
-                number_turn += 1
+            number_turn += 1
 
             # listening for events
 
@@ -377,7 +381,7 @@ while hold:
             if show_scores:
                 show_scores = 0
                 for k in range(len(i)):
-                    print("Le joueur ", i[k], " a gagné avec ", m, " points")
+                    print("Le joueur " + str(i[k]) + " a gagné avec " + str(m) + " points")
 
             # listening for events
 

@@ -5,7 +5,7 @@ window_title = "Pingouins"
 path_icon = "images/icon.png"
 pos_logo = [195, 75]
 
-path_background = "images/background.png"
+path_background = "images/background2.png"
 pos_background = [0, 0]
 
 path_logo = "images/logo.jpg"
@@ -52,7 +52,8 @@ path_d = "images/d.png"
 
 path_choice0 = "images/rien.png"
 path_choice1 = "images/hum.png"
-path_choice2 = "images/ia.png"
+path_choice2 = "images/random.png"
+path_choice3 = "images/ia.png"
 path_end_choice = "images/play.png"
 pos_choice0 = [100, 100]
 pos_choice1 = [400, 100]
