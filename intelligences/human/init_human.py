@@ -10,20 +10,23 @@ def init_human(board, k, display):
         nx = (x-mx) // case_width
         ny = (y-my) // case_height
 
-        if display[ny][nx] != 0 and display[ny][nx].hover((x, y)):
-            return nx, ny
-        elif nx > 1 and display[ny][nx-2] != 0 and display[ny][nx-2].hover((x, y)):
-            return nx-2, ny
-        elif nx > 0 and ny > 0 and display[ny-1][nx-1] != 0 and display[ny-1][nx-1].hover((x, y)):
-            return nx-1, ny-1
-        elif nx < 14 and ny > 0 and display[ny-1][nx+1] != 0 and display[ny-1][nx+1].hover((x, y)):
-            return nx+1, ny-1
-        elif nx < 13 and display[ny][nx+2] != 0 and display[ny][nx+2].hover((x, y)):
-            return nx+2, ny
-        elif nx < 14 and ny < 7 and display[ny+1][nx+1] != 0 and display[ny+1][nx+1].hover((x, y)):
-            return nx+1, ny+1
-        elif nx > 0 and ny < 7 and display[ny+1][nx-1] != 0 and display[ny+1][nx-1].hover((x, y)):
-            return nx-1, ny+1
+        if 0 < nx < 15 and 0 < ny < 8 :
+            if display[ny][nx] != 0 and display[ny][nx].hover((x, y)):
+                return nx, ny
+            elif nx > 1 and display[ny][nx-2] != 0 and display[ny][nx-2].hover((x, y)):
+                return nx-2, ny
+            elif nx > 0 and ny > 0 and display[ny-1][nx-1] != 0 and display[ny-1][nx-1].hover((x, y)):
+                return nx-1, ny-1
+            elif nx < 14 and ny > 0 and display[ny-1][nx+1] != 0 and display[ny-1][nx+1].hover((x, y)):
+                return nx+1, ny-1
+            elif nx < 13 and display[ny][nx+2] != 0 and display[ny][nx+2].hover((x, y)):
+                return nx+2, ny
+            elif nx < 14 and ny < 7 and display[ny+1][nx+1] != 0 and display[ny+1][nx+1].hover((x, y)):
+                return nx+1, ny+1
+            elif nx > 0 and ny < 7 and display[ny+1][nx-1] != 0 and display[ny+1][nx-1].hover((x, y)):
+                return nx-1, ny+1
+            else:
+                return -1, -1
         else:
             return -1, -1
 
