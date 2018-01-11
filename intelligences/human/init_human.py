@@ -10,7 +10,7 @@ def init_human(board, k, display):
         nx = (x-mx) // case_width
         ny = (y-my) // case_height
 
-        if 0 < nx < 15 and 0 < ny < 8 :
+        if -1 < nx < 15 and -1 < ny < 8 :
             if display[ny][nx] != 0 and display[ny][nx].hover((x, y)):
                 return nx, ny
             elif nx > 1 and display[ny][nx-2] != 0 and display[ny][nx-2].hover((x, y)):
@@ -52,6 +52,7 @@ def init_human(board, k, display):
                 if case_pawn != 0 and case_pawn.score == 1 and case_pawn.state == 1:
                     selected = True
                 else:
+                    print(x, y)
                     print("Case invalide. Choisir une case accessible et de score 1")              
 
     print("Placé !")

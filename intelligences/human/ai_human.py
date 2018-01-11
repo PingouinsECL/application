@@ -12,7 +12,7 @@ def ai_human(board, players, display, player_number, list_active_pawns):
         nx = (x-mx) // case_width
         ny = (y-my) // case_height
 
-        if 0 < nx < 15 and 0 < ny < 8 :
+        if -1 < nx < 15 and -1 < ny < 8 :
             if display[ny][nx] != 0 and display[ny][nx].hover((x, y)):
                 return nx, ny
             elif nx > 1 and display[ny][nx-2] != 0 and display[ny][nx-2].hover((x, y)):
@@ -87,7 +87,10 @@ def ai_human(board, players, display, player_number, list_active_pawns):
                     case_pawn = board.cases_tab[y_pawn][x_pawn]
                     if case_pawn != 0 and case_pawn.owner == player_number:
                         pawn_number = getPawnNumber(case_pawn)
-                        print("Pion selectionne")
+                        if pawn_number in list_active_pawns :
+                            print("Pion selectionne")
+                        else:
+                            pawn_number = -1
                     else:
                         print('Case invalide')
         
