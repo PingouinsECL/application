@@ -15,7 +15,7 @@ class Pawn:
         self.active = True
         self.remain = 1
 
-    def move(self, board, player, direction, k):
+    def move(self, board, player, direction, distance):
         """
         0 -> upper right (+1, -1)
         1 -> right (+2, 0)
@@ -29,45 +29,45 @@ class Pawn:
         board.cases_tab[self.y][self.x].change_state(0)
 
         if direction == 0:
-            self.x += k
-            self.y -= k
+            self.x += distance
+            self.y -= distance
         elif direction == 1:
-            self.x += 2*k
+            self.x += 2*distance
         elif direction == 2:
-            self.x += k
-            self.y += k
+            self.x += distance
+            self.y += distance
         elif direction == 3:
-            self.x -= k
-            self.y += k
+            self.x -= distance
+            self.y += distance
         elif direction == 4:
-            self.x -= 2*k
+            self.x -= 2*distance
         elif direction == 5:
-            self.x -= k
-            self.y -= k
+            self.x -= distance
+            self.y -= distance
 
         board.cases_tab[self.y][self.x].change_state(2)
         board.cases_tab[self.y][self.x].owner = self.id
 
-    def anti_move (self, board, player, direction, k):
+    def anti_move (self, board, player, direction, distance):
         board.cases_tab[self.y][self.x].change_state(1)
         board.cases_tab[self.y][self.x].owner = -1
         
         if direction == 0:
-            self.x -= k
-            self.y += k
+            self.x -= distance
+            self.y += distance
         elif direction == 1:
-            self.x -= 2*k
+            self.x -= 2*distance
         elif direction == 2:
-            self.x -= k
-            self.y -= k
+            self.x -= distance
+            self.y -= distance
         elif direction == 3:
-            self.x += k
-            self.y -= k
+            self.x += distance
+            self.y -= distance
         elif direction == 4:
-            self.x += 2*k
+            self.x += 2*distance
         elif direction == 5:
-            self.x += k
-            self.y += k
+            self.x += distance
+            self.y += distance
 
         player.score -= board.cases_tab[self.y][self.x].score
         board.cases_tab[self.y][self.x].change_state(2)

@@ -63,9 +63,11 @@ def ai_human(board, players, display, player_number, list_active_pawns):
         
     selected = False
 
+    """
     for k in range(number_pawns):
         if k in list_active_pawns:
             print(k, players[player_number].pawns[k].accessibles)
+    """
 
     while not(selected):
 
@@ -85,11 +87,11 @@ def ai_human(board, players, display, player_number, list_active_pawns):
                         pawn_number = getPawnNumber(case_pawn)
                         if pawn_number in list_active_pawns :
                             restart = False
-                            print("Pion selectionne")
+                            # print("Pion selectionne")
                         else:
                             pawn_number = 100
-                    else:
-                        print('Case invalide')
+                    # else:
+                        # print('Case invalide')
 
         while not(restart) and (dist < 0 or direction < 0):
 
@@ -103,11 +105,11 @@ def ai_human(board, players, display, player_number, list_active_pawns):
                         dist = int(dist)
 
                         if (-1 < direction < 6 and 0 < dist <= players[player_number].pawns[pawn_number].accessibles[direction]):
-                            print("Case sélectionnée. Déplacement")
+                            # print("Case sélectionnée. Déplacement")
                             selected = True
                     
                     else:
-                        print("Case invalide. Sélection du pion")
+                        # print("Case invalide. Sélection du pion")
                         restart = True
                         pawn_number = 100
                         direction = -1

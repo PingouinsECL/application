@@ -12,8 +12,8 @@ def select_mode(board, players, display, player_number):
     for i in range(number_pawns):
         for k in range(len(players)):
             players[k].pawns[i].compute_accessible(board)
-            if not(players[k].pawns[i].remain):
-                print('Le pion ' + str(i) + ' du joueur ' + str(player_number) + ' TOMBE à l\'eau')
+            # if not(players[k].pawns[i].remain):
+                # print('Le pion ' + str(i) + ' du joueur ' + str(player_number) + ' TOMBE à l\'eau')
 
     list_active_pawns = []
     for k in range(number_pawns):

@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 
 import sys
+from time import time
 
 # Adding folders to path
 
@@ -100,13 +101,19 @@ window = pygame.display.set_mode((background.get_width(), background.get_height(
 hold = 1
 show_scores = 1
 
+tstart = 0
+tend = 0
+
 while hold:
 
     mode_home = 1
     mode_tuto = 0
-    mode_game = 0
-    mode_results = 0
+
     mode_choice = 0
+    mode_game = 0
+    
+    mode_results = 0
+    mode_restart = 0
 
     init = 0
     play = 0
@@ -141,26 +148,16 @@ while hold:
 
             if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                 mode_home = 0
-                mode_tuto = 0
-                mode_game = 0
-                mode_results = 0
-                mode_choice = 0
                 hold = 0
 
             elif event.type == MOUSEBUTTONDOWN and event.button == 1:
                 cursor = event.pos
                 if but_play.hover(cursor):
                     mode_home = 0
-                    mode_tuto = 0
-                    mode_game = 0
-                    mode_results = 0
                     mode_choice = 1
                 elif but_tuto.hover(cursor):
                     mode_home = 0
                     mode_tuto = 1
-                    mode_game = 0
-                    mode_results = 0
-                    mode_choice = 0
 
             elif event.type == MOUSEMOTION:
                 cursor = event.pos
@@ -189,10 +186,6 @@ while hold:
 
                 if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                     mode_home = 0
-                    mode_tuto = 0
-                    mode_game = 0
-                    mode_results = 0
-                    mode_choice = 0
                     hold = 0
 
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
@@ -237,17 +230,10 @@ while hold:
                         but_choice3.modify_image(choices[configuration[3]])                   
                     if but_end_choice.hover(cur):
                         mode_choice = 0        
-                        mode_home = 0
-                        mode_tuto = 0
                         mode_game = 1
-                        mode_results = 0
-                        hold = 0
                 
                 if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-                    mode_home = 0
-                    mode_tuto = 0
-                    mode_game = 0
-                    mode_results = 0
+                    mode_choice = 0
                     hold = 0
 
         # GAME MODE
@@ -263,7 +249,7 @@ while hold:
 
                 board = Board()
                 players = []
-                number_players=0
+                number_players = 0
                 
                 for element in configuration:
                     if element != 0:
@@ -309,7 +295,7 @@ while hold:
             table_but = board.display(window)
             pygame.display.flip()
 
-            print('\n\nTour ' + str(number_turn) + '\tAu joueur ' + str(player_number) + '\n')
+            # print('Tour ' + str(number_turn) + '\tAu joueur ' + str(player_number))
 
             # selecting the move if pawns left
             if not(player_number in players_lost):
@@ -320,10 +306,10 @@ while hold:
                     players[player_number].pawns = pawns
                     players[player_number].pawns[pawn_number].move(board, players[player_number], direction, dist)
                 else:
-                    print("Le joueur " + str(player_number) + " ne peut plus jouer")
+                    # print("Le joueur " + str(player_number) + " ne peut plus jouer")
                     players_lost[player_number] = 1
-            else:
-                print("Le tour du joueur " + str(player_number) + " a été passé car il ne pouvait pas jouer")
+            #else:
+                # print("Le tour du joueur " + str(player_number) + " a été passé car il ne pouvait pas jouer")
 
             # printing the game after the move
             window.blit(background, pos_background)
@@ -331,9 +317,11 @@ while hold:
             pygame.display.flip()
 
             # printing scores
+            """
             print("Scores actuels")
             for k in range(len(players)):
                 print('Score de ' + str(k) + ' :\t' + str(players[k].score))
+            """
             
             # stopping the play if no player can move
             if len(players_lost) == len(players):
@@ -347,9 +335,7 @@ while hold:
             for event in pygame.event.get():
 
                 if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-                    mode_home = 0
                     mode_game = 0
-                    mode_tuto = 0
                     hold = 0
 
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
@@ -359,32 +345,79 @@ while hold:
         while mode_results:
 
             # refreshing the window
-
-            window.blit(background, pos_background)
-            window.blit(logo, pos_logo)
-
-            scores = [players[k].score for k in range(len(players))]
-            m = max(scores)
-            i = []
-            k = 0
-            while k < len(players):
-                if scores[k] == m:
-                    i.append(k)
-                k += 1
-
             if show_scores:
                 show_scores = 0
+
+                window.blit(background, pos_background)
+                window.blit(logo, pos_logo)
+                pygame.display.flip()             
+
+                scores = [players[k].score for k in range(len(players))]
+                m = max(scores)
+
+                phrase = ""
+                i = []
+                k = 0
+                while k < len(players):
+                    if scores[k] == m:
+                        i.append(k)
+                        phrase += str(k) + ", "
+                    k += 1
+
+                phrase = phrase[:-2]
+                
+                if len(i) > 1:
+                    phrase = "Victoire des joueurs " + phrase
+                else:
+                    phrase = "Victoire du joueur " + phrase
+                
+                font = pygame.font.SysFont("comicsansms", 72)
+                text = font.render(phrase, True, (128, 0, 0))
+                w, h = pygame.display.get_surface().get_size()
+                window.blit(text, ((w - text.get_width()) //2 , (h - text.get_height()) // 2))
+                pygame.display.flip()
+
                 for k in range(len(i)):
                     print("Le joueur " + str(i[k]) + " a gagné avec " + str(m) + " points")
+                
+                tstart = time()
+            tend = time()
+
+            
+            if tend - tstart > 5:
+                mode_results = 0
+                mode_restart = 1
 
             # listening for events
 
             for event in pygame.event.get():
 
                 if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-                    mode_home = 0
-                    mode_game = 0
-                    mode_tuto = 0
                     mode_results = 0
-                    mode_choice = 0
                     hold = 0
+        
+        # MODE RESTART
+
+        while mode_restart:
+            mode_home = 1
+            mode_tuto = 0
+
+            mode_choice = 0
+            mode_game = 0
+            
+            mode_results = 0
+            mode_restart = 0
+            hold = 1
+
+            init = 0
+            play = 0
+            number_turn = 0
+            table_button = []
+            players_lost = {}
+
+            Player.number_player = 0
+
+            show_scores = 1
+
+            tstart = 0
+            tend = 0
