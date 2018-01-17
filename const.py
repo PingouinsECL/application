@@ -60,3 +60,8 @@ pos_choice1 = [400, 100]
 pos_choice2 = [100, 400]
 pos_choice3 = [400, 400]
 pos_end_choice = [600, 250]
+
+# LAST SCREEN
+
+path_back_to_menu = "images/back_to_menu.png"
+pos_back_to_menu = [250,500]

@@ -76,6 +76,7 @@ choice0 = pygame.image.load(path_choice0).convert()
 choice1 = pygame.image.load(path_choice1).convert()
 choice2 = pygame.image.load(path_choice2).convert()
 choice3 = pygame.image.load(path_choice3).convert()
+back_to_menu = pygame.image.load(path_back_to_menu).convert()
 end_choice = pygame.image.load(path_end_choice).convert()
 choices = [choice0,choice1,choice2, choice3]
 configuration = [0]*4
@@ -91,6 +92,7 @@ but_choice1 = Button(choice0, choice0, pos_choice1,0)
 but_choice2 = Button(choice0, choice0, pos_choice2,0)
 but_choice3 = Button(choice0, choice0, pos_choice3,0)
 but_end_choice = Button(end_choice, end_choice, pos_end_choice,0)
+but_back_to_menu = Button(back_to_menu, back_to_menu, pos_back_to_menu,0)
 
 # Setting window
 pygame.display.set_caption(window_title)
@@ -284,6 +286,43 @@ while hold:
                 table_button = board.display(window)
                 pygame.display.flip()
 
+                # affichage des scores
+                
+                phrase = 'Joueur 0'
+                phrase1 = 'Joueur 1'
+                phrase2 = 'Joueur 2'
+                phrase3 = 'Joueur 3'
+                score = str(players[0].score)
+                score1 = str(players[1].score)
+                font = pygame.font.SysFont("plantagenetcherokee", 20)
+                text = font.render(phrase, True, (128, 0, 0))
+                text1 = font.render(phrase1, True, (128,0,0))
+                text2 = font.render(phrase2, True, (128,0,0))
+                text3 = font.render(phrase3, True, (128,0,0))
+                sc = font.render(score, True, (128,0,0))
+                sc1 = font.render(score1, True, (128,0,0))
+                window.blit(text, (60,10))
+                window.blit(text1, (695,10))
+                window.blit(sc, (60,30))
+                window.blit(sc1, (695,30))
+                window.blit(a, (3,10))
+                window.blit(b, (775,10))
+                if len(players) == 3:
+                    window.blit(text2, (60,600))
+                    sc2 = font.render(str(players[2].score),True, (128,0,0))
+                    window.blit(sc2 , (60, 620))
+                    window.blit(c, (3,600))
+                elif len(players) == 4:
+                    window.blit(text2, (60,600))
+                    window.blit(text3, (695,600))
+                    sc2 = font.render(str(players[2].score),True, (128,0,0))
+                    window.blit(sc2 , (60, 620))
+                    sc3 = font.render(str(players[3].score),True, (128,0,0))
+                    window.blit(sc3 , (695, 620))
+                    window.blit(c, (3,600))
+                    window.blit(d, (775,600))
+                pygame.display.flip()
+
             # player's play
 
             # number of the current player
@@ -292,8 +331,37 @@ while hold:
             # refreshing the window
 
             window.blit(background, pos_background)
+            
+            # affichage des scores
+            
+            window.blit(text, (60,10))
+            window.blit(text1, (695,10))
+            score = str(players[0].score)
+            score1 = str(players[1].score)
+            sc = font.render(score, True, (128,0,0))
+            sc1 = font.render(score1, True, (128,0,0))
+            window.blit(sc, (60,30))
+            window.blit(sc1, (695,30))
+            window.blit(a, (3,10))
+            window.blit(b, (775,10))
+            if len(players) == 3:
+                    window.blit(text2, (60,600))
+                    sc2 = font.render(str(players[2].score),True, (128,0,0))
+                    window.blit(sc2 , (60, 620))
+                    window.blit(c, (3,600))
+            elif len(players) == 4:
+                    window.blit(text2, (60,600))
+                    window.blit(text3, (695,600))
+                    sc2 = font.render(str(players[2].score),True, (128,0,0))
+                    window.blit(sc2 , (60, 620))
+                    sc3 = font.render(str(players[3].score),True, (128,0,0))
+                    window.blit(sc3 , (695, 620))
+                    window.blit(c, (3,600))
+                    window.blit(d, (775,600))
+                    
             table_but = board.display(window)
             pygame.display.flip()
+            
 
             # print('Tour ' + str(number_turn) + '\tAu joueur ' + str(player_number))
 
@@ -370,23 +438,21 @@ while hold:
                     phrase = "Victoire des joueurs " + phrase
                 else:
                     phrase = "Victoire du joueur " + phrase
-                
-                font = pygame.font.SysFont("comicsansms", 72)
+
+                score = 'score : ' + str(max(scores))
+                font = pygame.font.SysFont("plantagenetcherokee", 72)
                 text = font.render(phrase, True, (128, 0, 0))
+                sc = font.render(score, True, (128,0,0))
                 w, h = pygame.display.get_surface().get_size()
                 window.blit(text, ((w - text.get_width()) //2 , (h - text.get_height()) // 2))
+                window.blit(sc, ((w - text.get_width()) //2 +50 , (h - text.get_height()) // 2+70))
                 pygame.display.flip()
 
                 for k in range(len(i)):
                     print("Le joueur " + str(i[k]) + " a gagné avec " + str(m) + " points")
                 
-                tstart = time()
-            tend = time()
-
-            
-            if tend - tstart > 5:
-                mode_results = 0
-                mode_restart = 1
+            but_back_to_menu.show(window, pos_back_to_menu)
+            pygame.display.flip()         
 
             # listening for events
 
@@ -395,6 +461,11 @@ while hold:
                 if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                     mode_results = 0
                     hold = 0
+                if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                    cur = event.pos
+                    if but_back_to_menu.hover(cur):
+                        mode_results = 0
+                        mode_restart = 1
         
         # MODE RESTART
 
