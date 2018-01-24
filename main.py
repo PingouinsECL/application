@@ -42,6 +42,8 @@ sys.path.append('../../intelligences/max')
 
 from const import *
 
+import time
+
 from button import *
 from board import *
 from player import *
@@ -128,7 +130,7 @@ while hold:
     while mode_home:
         # refreshing speed
 
-        pygame.time.Clock().tick(30)
+        pygame.time.Clock().tick(50)
 
         # displaying screen
 
@@ -372,7 +374,64 @@ while hold:
                 # if a move was found
                 if not(fail):
                     players[player_number].pawns = pawns
+                    x_init,y_init = players[player_number].pawns[pawn_number].x,players[player_number].pawns[pawn_number].y
+                    board.cases_tab[y_init][x_init].change_state(0)
+                    for i in range (1,dist+1):
+                        if direction == 0:
+                            board.cases_tab[y_init-(i-1)][x_init+(i-1)].change_owner(-1)
+                            board.cases_tab[y_init-i][x_init+i].change_owner(player_number)
+                                
+                        elif direction == 1:
+                            board.cases_tab[y_init][x_init+2*(i-1)].change_owner(-1)
+                            board.cases_tab[y_init][x_init+2*i].change_owner(player_number)
+                        elif direction == 2:
+                            board.cases_tab[y_init+(i-1)][x_init+(i-1)].change_owner(-1)
+                            board.cases_tab[y_init+i][x_init+i].change_owner(player_number)
+                        elif direction == 3:
+                            board.cases_tab[y_init+(i-1)][x_init-(i-1)].change_owner(-1)
+                            board.cases_tab[y_init+i][x_init-i].change_owner(player_number)
+                        elif direction == 4:
+                            board.cases_tab[y_init][x_init-2*(i-1)].change_owner(-1)
+                            board.cases_tab[y_init][x_init-2*i].change_owner(player_number)
+                            window.blit(background, pos_background)
+                        elif direction == 5:
+                            board.cases_tab[y_init-(i-1)][x_init-(i-1)].change_owner(-1)
+                            board.cases_tab[y_init-i][x_init-i].change_owner(player_number)  
+                        
+                        window.blit(background, pos_background)
+                        # affichage des scores
+                        
+                        window.blit(text, (60,10))
+                        window.blit(text1, (695,10))
+                        score = str(players[0].score)
+                        score1 = str(players[1].score)
+                        sc = font.render(score, True, (128,0,0))
+                        sc1 = font.render(score1, True, (128,0,0))
+                        window.blit(sc, (60,30))
+                        window.blit(sc1, (695,30))
+                        window.blit(a, (3,10))
+                        window.blit(b, (775,10))
+                        if len(players) == 3:
+                                window.blit(text2, (60,600))
+                                sc2 = font.render(str(players[2].score),True, (128,0,0))
+                                window.blit(sc2 , (60, 620))
+                                window.blit(c, (3,600))
+                        elif len(players) == 4:
+                                window.blit(text2, (60,600))
+                                window.blit(text3, (695,600))
+                                sc2 = font.render(str(players[2].score),True, (128,0,0))
+                                window.blit(sc2 , (60, 620))
+                                sc3 = font.render(str(players[3].score),True, (128,0,0))
+                                window.blit(sc3 , (695, 620))
+                                window.blit(c, (3,600))
+                                window.blit(d, (775,600))
+                        table_but = board.display(window)
+                        pygame.display.flip()
+                        time.sleep(0.1)
+                    board.cases_tab[y_init][x_init].change_owner(player_number)
                     players[player_number].pawns[pawn_number].move(board, players[player_number], direction, dist)
+                    
+    
                 else:
                     # print("Le joueur " + str(player_number) + " ne peut plus jouer")
                     players_lost[player_number] = 1
@@ -381,6 +440,32 @@ while hold:
 
             # printing the game after the move
             window.blit(background, pos_background)
+            # affichage des scores
+            
+            window.blit(text, (60,10))
+            window.blit(text1, (695,10))
+            score = str(players[0].score)
+            score1 = str(players[1].score)
+            sc = font.render(score, True, (128,0,0))
+            sc1 = font.render(score1, True, (128,0,0))
+            window.blit(sc, (60,30))
+            window.blit(sc1, (695,30))
+            window.blit(a, (3,10))
+            window.blit(b, (775,10))
+            if len(players) == 3:
+                    window.blit(text2, (60,600))
+                    sc2 = font.render(str(players[2].score),True, (128,0,0))
+                    window.blit(sc2 , (60, 620))
+                    window.blit(c, (3,600))
+            elif len(players) == 4:
+                    window.blit(text2, (60,600))
+                    window.blit(text3, (695,600))
+                    sc2 = font.render(str(players[2].score),True, (128,0,0))
+                    window.blit(sc2 , (60, 620))
+                    sc3 = font.render(str(players[3].score),True, (128,0,0))
+                    window.blit(sc3 , (695, 620))
+                    window.blit(c, (3,600))
+                    window.blit(d, (775,600))
             table_but = board.display(window)
             pygame.display.flip()
 
