@@ -1,0 +1,9 @@
+{
+    "comment" : "Care about the order, it will be the one used for selecting modes",
+    "active" : [
+        "human",
+        "random",
+        "max",
+        "monte_carlo"
+    ]
+}

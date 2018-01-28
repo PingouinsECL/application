@@ -5,6 +5,7 @@ from pygame.locals import *
 
 import sys
 from time import time, sleep
+import json
 
 # Adding folders to path
 
@@ -14,29 +15,20 @@ sys.path.append('classes')
 sys.path.append('../classes')
 sys.path.append('../../classes')
 
-sys.path.append('intelligences')
-sys.path.append('../intelligences')
-sys.path.append('../../intelligences')
-
 sys.path.append('utils')
 sys.path.append('../utils')
 sys.path.append('../../utils')
 
-sys.path.append('random')
-sys.path.append('intelligences/random')
-sys.path.append('../intelligences/random')
-sys.path.append('../../intelligences/random')
+sys.path.append('intelligences')
+sys.path.append('../intelligences')
+sys.path.append('../../intelligences')
 
-sys.path.append('human')
-sys.path.append('intelligences/human')
-sys.path.append('../intelligences/human')
-sys.path.append('../../intelligences/human')
-
-
-sys.path.append('max')
-sys.path.append('intelligences/max')
-sys.path.append('../intelligences/max')
-sys.path.append('../../intelligences/max')
+active_modes = json.load(open('intelligences/config.json'))['active']
+for mode in active_modes:
+    sys.path.append(mode)
+    sys.path.append('intelligences/' + mode)
+    sys.path.append('../intelligences/' + mode)
+    sys.path.append('../../intelligences/' + mode)
 
 # Importing files
 
@@ -77,7 +69,8 @@ choice0 = pygame.image.load(path_choice0).convert()
 choice1 = pygame.image.load(path_choice1).convert()
 choice2 = pygame.image.load(path_choice2).convert()
 choice3 = pygame.image.load(path_choice3).convert()
-choices = [choice0, choice1, choice2, choice3]
+choice4 = pygame.image.load(path_choice4).convert()
+choices = [choice0, choice1, choice2, choice3, choice4]
 end_choice = pygame.image.load(path_end_choice).convert()
 back_to_menu = pygame.image.load(path_back_to_menu).convert()
 configuration = [0]*4

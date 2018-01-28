@@ -4,6 +4,7 @@ from pygame.locals import *
 from init_random import *
 from init_human import *
 from init_max import *
+from init_monte_carlo import *
 
 def init_position(board, players, display, window, background, pos_background):
 
@@ -21,6 +22,8 @@ def init_position(board, players, display, window, background, pos_background):
                 x, y = init_random(board)
             elif mode == 2 :
                 x, y = init_max(board)
+            elif mode == 3 :
+                x, y = init_monte_carlo(board)
             else:
                 x, y = 0, 0
 

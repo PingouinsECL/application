@@ -1,7 +1,10 @@
+from pawn import *
+
 from ai_random import *
 from ai_human import *
 from ai_max import *
-from pawn import *
+from ai_monte_carlo import *
+
 
 def select_mode(board, players, display, player_number):
     mode = players[player_number].mode
@@ -33,5 +36,7 @@ def select_mode(board, players, display, player_number):
             return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)
         elif mode == 2:
             return fail, players[player_number].pawns, ai_max(board, players, player_number, 3) # dernier nb à changer, pour test
+        elif mode == 3:
+            return fail, players[player_number].pawns, ai_monte_carlo(board, players, player_number, itermax=2000, timemax=2) # dernier nb à changer, pour test
         else:
             return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)
