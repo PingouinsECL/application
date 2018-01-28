@@ -26,6 +26,7 @@ class Pawn:
         """
 
         player.score += board.cases_tab[self.y][self.x].score
+        player.owned += 1
         board.cases_tab[self.y][self.x].change_state(0)
 
         if direction == 0:
@@ -50,6 +51,7 @@ class Pawn:
 
     def anti_move (self, board, player, direction, distance):
         board.cases_tab[self.y][self.x].change_state(1)
+        player.owned -= 1
         board.cases_tab[self.y][self.x].owner = -1
         
         if direction == 0:

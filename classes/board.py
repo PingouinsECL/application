@@ -70,6 +70,44 @@ class Board:
             cases_tab.append(line)
 
         self.cases_tab = cases_tab
+        self.compute_islands()
+
+
+    def compute_islands(self):
+        dirs = [(1, -1), (2, 0), (1, 1), (-1, 1), (-2, 0), (-1, -1)]
+
+        cases = self.cases_tab
+        active_cases = [(x, y) for x in range(len(cases[0])) for y in range(len(cases)) if cases[y][x] != 0 and cases[y][x].state > 0]
+
+        islands_list = []
+
+        while active_cases != []:
+            cur_island = []        
+            occupied = []
+
+            cur_case = active_cases[0]
+            if cases[cur_case[1]][cur_case[0]].state == 2:
+                occupied.append(cases[cur_case[1]][cur_case[0]].owner)
+
+            active_cases.remove(cur_case)
+            cur_island.append(cur_case)
+
+            reachable = [(cur_case[0] + d[0], cur_case[1] + d[1]) for d in dirs if (cur_case[0] + d[0], cur_case[1] + d[1]) in active_cases]
+
+            while reachable != []:
+                cur_case = reachable[0]
+                if cases[cur_case[1]][cur_case[0]].state == 2 and cases[cur_case[1]][cur_case[0]].owner not in occupied:
+                    occupied.append(cases[cur_case[1]][cur_case[0]].owner)
+
+                reachable.remove(cur_case)
+                active_cases.remove(cur_case)
+                cur_island.append(cur_case)
+
+                reachable += [(cur_case[0] + d[0], cur_case[1] + d[1]) for d in dirs if (cur_case[0] + d[0], cur_case[1] + d[1]) in active_cases and (cur_case[0] + d[0], cur_case[1] + d[1]) not in reachable]
+
+            islands_list.append([occupied, cur_island])
+
+        self.islands = islands_list
 
     def display(self, window):
 

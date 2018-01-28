@@ -13,6 +13,7 @@ class Player:
 
     def __init__(self, mode, total_number):
         self.score = 0
+        self.owned = 0
         self.mode = mode
         self.number = Player.number_player
 
