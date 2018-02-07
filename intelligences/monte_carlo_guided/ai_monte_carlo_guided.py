@@ -3,7 +3,7 @@ import random
 import time
 import copy
 
-def ai_monte_carlo(board, players, player_number, itermax, timemax):
+def ai_monte_carlo_guided(board, players, player_number, itermax, timemax):
 
     (pawn_number, direction, dist) = UTC(board, players, player_number, itermax=itermax, timemax=timemax)
     

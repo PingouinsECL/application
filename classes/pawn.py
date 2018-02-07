@@ -117,3 +117,31 @@ class Pawn:
                 self.remain = 1
         else:
             self.remain = 1
+
+    def compute_accessible_like(pawn, board):
+        if pawn.active:
+            x = pawn.x
+            y = pawn.y
+
+            dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
+
+            def advance(x, y, dx, dy):
+                k = 0
+                while 0 <= x+dx < 15 and 0 <= y+dy < 8 and \
+                    board.cases_tab[y+dy][x+dx].state == 1:
+                    k += 1
+                    x += dx
+                    y += dy
+                return k
+
+            max_per_dir = []
+
+            for (dx, dy) in dirs:
+                max_per_dir.append(advance(x, y, dx, dy))
+
+            pawn.accessibles = max_per_dir
+
+            if pawn.accessibles == [0, 0, 0, 0, 0, 0]:
+                pawn.remain = 0
+            else:
+                pawn.remain = 1

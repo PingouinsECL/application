@@ -65,12 +65,10 @@ mute = pygame.image.load(path_mute).convert()
 background_tutorial = pygame.image.load(path_background_tutorial).convert()
 back = pygame.image.load(path_back).convert()
 
-choice0 = pygame.image.load(path_choice0).convert()
-choice1 = pygame.image.load(path_choice1).convert()
-choice2 = pygame.image.load(path_choice2).convert()
-choice3 = pygame.image.load(path_choice3).convert()
-choice4 = pygame.image.load(path_choice4).convert()
-choices = [choice0, choice1, choice2, choice3, choice4]
+choices = []
+for path_choice in path_choice_array:
+    choices.append(pygame.image.load(path_choice).convert())
+
 end_choice = pygame.image.load(path_end_choice).convert()
 back_to_menu = pygame.image.load(path_back_to_menu).convert()
 configuration = [0]*4
@@ -81,10 +79,10 @@ but_tuto = Button(tuto, tuto_hover, pos_tuto, 0)
 but_sound = Button(sound, mute, pos_sound, 0)
 but_back = Button(back, back, pos_back, 0)
 
-but_choice0 = Button(choice0, choice0, pos_choice0, 0)
-but_choice1 = Button(choice0, choice0, pos_choice1, 0)
-but_choice2 = Button(choice0, choice0, pos_choice2, 0)
-but_choice3 = Button(choice0, choice0, pos_choice3, 0)
+but_choice0 = Button(choices[0], choices[0], pos_choice0, 0)
+but_choice1 = Button(choices[0], choices[0], pos_choice1, 0)
+but_choice2 = Button(choices[0], choices[0], pos_choice2, 0)
+but_choice3 = Button(choices[0], choices[0], pos_choice3, 0)
 but_end_choice = Button(end_choice, end_choice, pos_end_choice, 0)
 but_back_to_menu = Button(back_to_menu, back_to_menu, pos_back_to_menu, 0)
 

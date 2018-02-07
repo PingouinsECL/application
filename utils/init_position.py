@@ -3,8 +3,10 @@ from pygame.locals import *
 
 from init_random import *
 from init_human import *
-from init_max import *
+from init_maxN import *
+from init_maxN_ab import *
 from init_monte_carlo import *
+from init_monte_carlo_guided import *
 
 def init_position(board, players, display, window, background, pos_background):
 
@@ -21,9 +23,13 @@ def init_position(board, players, display, window, background, pos_background):
             elif mode == 1:
                 x, y = init_random(board)
             elif mode == 2 :
-                x, y = init_max(board)
+                x, y = init_maxN(board)
             elif mode == 3 :
+                x, y = init_maxN_ab(board)
+            elif mode == 4 :
                 x, y = init_monte_carlo(board)
+            elif mode == 5 :
+                x, y = init_monte_carlo_guided(board)
             else:
                 x, y = 0, 0
 

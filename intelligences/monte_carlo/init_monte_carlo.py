@@ -1,6 +1,6 @@
 import random
 
-def init_monte_carlo(board):
+def init_monte_carlo_guided(board):
     h, w = len(board.cases_tab), len(board.cases_tab[0])
     candidates = []
 

@@ -3,7 +3,9 @@
     "active" : [
         "human",
         "random",
-        "max",
-        "monte_carlo"
+        "maxN",
+        "maxN_ab",
+        "monte_carlo",
+        "monte_carlo_guided"
     ]
 }
