@@ -1,0 +1,33 @@
+def init_3 (board) :
+    h, w = len(board.cases_tab), len(board.cases_tab[0])
+    
+    def find_3 (x, y, board):
+        case = board.cases_tab[y][x]
+        if case != 0 and case.state == 1 and case.score == 1 :
+            dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
+            def advance(x, y, dx, dy):
+                nb_3 = 0
+                while 0 <= x+dx < 15 and 0 <= y+dy < 8 and board.cases_tab[y+dy][x+dx].state == 1 :
+                    if board.cases_tab[y+dy][x+dx].score == 3 :
+                        nb_3 += 1
+                    x += dx
+                    y += dy
+                return (nb_3)
+            nb = 0
+            for (dx, dy) in dirs :
+                nb += advance(x, y, dx, dy)
+            return (nb)
+        else :
+            return (-1)
+    
+    def max_3 (board) :
+        n = -1
+        (xp, yp) = (-1, -1)
+        for y in range (h) :
+            for x in range (w) :
+                n_bis = find_3 (x, y, board)
+                if n_bis > n :
+                    (xp, yp) = (x, y)
+                    n = n_bis
+        return (xp, yp)
+    return(max_3(board))
