@@ -2,14 +2,51 @@ from Node import *
 import random
 import time
 import copy
+import tensorflow as tf
+import numpy as np
 
-def ai_monte_carlo_guided(board, players, player_number, itermax, timemax):
+sess = tf.InteractiveSession()
+saver = tf.train.import_meta_graph("/home/moby/ECL/PE/Pingouin/intelligences/monte_carlo_guided/model.meta")
+saver.restore(sess, "/home/moby/ECL/PE/Pingouin/intelligences/monte_carlo_guided/final")
+graph = tf.get_default_graph()
 
-    (pawn_number, direction, dist) = UTC(board, players, player_number, itermax=itermax, timemax=timemax)
+X = graph.get_tensor_by_name('inputs/X:0')
+Yp = graph.get_tensor_by_name('resnet/prediction/Relu:0')
+
+def make_input(players, board, number_player):
+    number_players = len(players)
+    number_pawns = 6 - number_players
     
-    return direction, dist, pawn_number
+    data = np.zeros((8, 15, 5))
+    
+    # ajout du score des cases si accessibles, 0 sinon
+    for k in range(len(board.cases_tab)):
+        for l in range(len(board.cases_tab[0])):
+            if board.cases_tab[k][l] != 0:
+                case = board.cases_tab[k][l]
+                if case.state == 1:
+                    data[k, l, 1+case.score] = 1
+                    
+    for number_pawn in range(number_pawns):
+        pawn = players[number_player].pawns[number_pawn]
+        x, y = pawn.x, pawn.y
+        data[y, x, 0] = 1
+    
+    for number_pawn in range(number_pawns):
+        pawn = players[1-number_player].pawns[number_pawn]
+        x, y = pawn.x, pawn.y
+        data[y, x, 1] = 1
+    
+    return data
+
+def compute_output(inputs):    
+    if type(inputs) != list:
+        inputs = [inputs]
+        
+    return sess.run(Yp, feed_dict={X:inputs})
 
 def UTC(rootboard, rootplayers, rootplayernumber, itermax, timemax, verbose=False):
+    
     rootnode = Node(board=rootboard, players=rootplayers, playerNumber=rootplayernumber)
     numberPlayers = len(rootplayers)
     
@@ -38,18 +75,7 @@ def UTC(rootboard, rootplayers, rootplayernumber, itermax, timemax, verbose=Fals
         sep = "\t"
         
         # Select
-        while node.untriedMoves == [] and node.childNodes != []:
-            
-            # suppression des mouvements peu intéressants
-            k = 0
-            while k < len(node.childNodes):
-                ratio = node.childNodes[k].wins / node.childNodes[k].visits
-                if node.childNodes[k].visits > 20 and ratio < 0.5:                  
-                    node.childNodes.remove(node.childNodes[k])
-                    deleted += 1
-                else:
-                    k+=1
-            
+        while node.untriedMoves == [] and node.childNodes != []:            
             node = node.UTCselectChild()
             pawnNumber, direction, distance = node.move
             players_copy[currentplayer].pawns[pawnNumber].move(board_copy, players_copy[currentplayer], direction, distance)
@@ -62,7 +88,26 @@ def UTC(rootboard, rootplayers, rootplayernumber, itermax, timemax, verbose=Fals
         if node.untriedMoves != []:
             if verbose:
                 print(sep + "Exploration d'un nouveau node")
-            m = random.choice(node.untriedMoves)
+            
+            inputs = []
+            for (pawnNumber, direction, distance) in node.untriedMoves:
+                players_copy_copy = copy.deepcopy(players_copy)
+                board_copy_copy = copy.deepcopy(board_copy)
+                
+                players_copy_copy[currentplayer].pawns[pawnNumber].move(board_copy_copy, players_copy_copy[currentplayer], direction, distance)
+                inputs.append(make_input(players_copy_copy, board_copy_copy, currentplayer))
+            
+            probas = compute_output(inputs)
+            
+            max_proba = 0
+            m = None
+            i = 0
+            while i < len(node.untriedMoves):
+                if probas[i] >= max_proba:
+                    m = node.untriedMoves[i]
+                    max_proba = probas[i]
+                i += 1
+            
             pawnNumber, direction, distance = m
             
             nextplayer = (currentplayer + 1) % numberPlayers
@@ -77,40 +122,8 @@ def UTC(rootboard, rootplayers, rootplayernumber, itermax, timemax, verbose=Fals
         # Rollout
         if verbose:
             print(sep + "Jeu de la partie")
-        
-        # on fait jouer jusqu'à ce qu'un seul joueur puisse jouer
-        while len(players_lost) < numberPlayers - 1:
 
-            possibles = []
-            for p in range(len(players_copy[currentplayer].pawns)):
-                players_copy[currentplayer].pawns[p].compute_accessible(board_copy)
-                pawnMoves = players_copy[currentplayer].pawns[p].accessibles
-                for direction in range(len(pawnMoves)):
-                    possibles += [(p, direction, distancek) for distancek in range(1, pawnMoves[direction]+1) if pawnMoves[direction] > 0]
-            if possibles == []:
-                players_lost[currentplayer] = 1
-            else:
-                pawnNumber, direction, distance = random.choice(possibles)
-                players_copy[currentplayer].pawns[pawnNumber].move(board_copy, players_copy[currentplayer], direction, distance)
-                
-            currentplayer = (currentplayer + 1) % numberPlayers
-
-        # on fait jouer le joueur suivant dans ses iles
-        board_copy.compute_islands()
-        for (owners, island_cases) in board_copy.islands:
-            if owners == [currentplayer]:
-                players_copy[currentplayer].score += sum([board_copy.cases_tab[y][x].score for (x, y) in island_cases])
-            
-        if verbose:
-            print(sep + "Partie terminée")
-            
-        scores = sorted([(players_copy[k].score, k) for k in range(len(players_copy))], reverse=True)
-        m = scores[0][0]
-        winners_ex_aequo = sorted([(players_copy[k].owned, k) for (score, k) in scores if score == m], reverse=True)
-        m = winners_ex_aequo[0][0]
-        winners = [k for (owned, k) in winners_ex_aequo if owned == m]
-        
-        result = rootplayernumber in winners
+        result = compute_output(make_input(players_copy, board_copy, rootplayernumber)) > 0.5
 
         if verbose:
             print("")
@@ -131,6 +144,10 @@ def UTC(rootboard, rootplayers, rootplayernumber, itermax, timemax, verbose=Fals
         k += 1
     best = sorted(ordered[:k], key=lambda c: c.visits)[-1]
 
-    # print(time.time() - time_start, sorted([(round(c.wins/c.visits, 3), c.wins, c.visits) for c in rootnode.childNodes], reverse=True)[:5])
-    # print(str(iteration) + " simulations en " + str(round(time.time() - time_start, 2)) + "s")
     return best.move
+
+def ai_monte_carlo_guided(board, players, player_number, itermax, timemax):
+
+    (pawn_number, direction, dist) = UTC(board, players, player_number, itermax=itermax, timemax=timemax)
+    
+    return direction, dist, pawn_number
