@@ -6,8 +6,8 @@ import tensorflow as tf
 import numpy as np
 
 sess = tf.InteractiveSession()
-saver = tf.train.import_meta_graph("/home/moby/ECL/PE/Pingouin/intelligences/monte_carlo_guided/model.meta")
-saver.restore(sess, "/home/moby/ECL/PE/Pingouin/intelligences/monte_carlo_guided/final")
+saver = tf.train.import_meta_graph("/home/moby/ECL/PE/WORKING/intelligences/monte_carlo_guided/model.meta")
+saver.restore(sess, "/home/moby/ECL/PE/WORKING/intelligences/monte_carlo_guided/final")
 graph = tf.get_default_graph()
 
 X = graph.get_tensor_by_name('inputs/X:0')

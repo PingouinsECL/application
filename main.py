@@ -51,7 +51,7 @@ window = pygame.display.set_mode((0, 0))
 # Loading images
 icon = pygame.image.load(path_icon).convert()
 background = pygame.image.load(path_background).convert()
-logo = pygame.image.load(path_logo).convert()
+logo = pygame.image.load(path_logo)
 
 play = pygame.image.load(path_play).convert()
 play_hover = pygame.image.load(path_play_hover).convert()

@@ -10,6 +10,8 @@ b = pygame.image.load(path_b)
 c = pygame.image.load(path_c)
 d = pygame.image.load(path_d)
 
+p = pygame.image.load(pannel)
+
 def display_scores(scores, window):
     """
         Printing the scores on the screen
@@ -23,23 +25,27 @@ def display_scores(scores, window):
 
     number_players = len(scores)
 
-    window.blit(text0, (60, 10))
+    window.blit(p, (3,3))
+    window.blit(text0, (65, 10))
     sc = font.render(str(scores[0]), True, (128, 0, 0))
-    window.blit(sc, (60,30))
-    window.blit(a, (3,10))  
-
-    window.blit(text1, (695, 10))
+    window.blit(sc, (100,40))
+    window.blit(a, (10,15))
+    
+    window.blit(p, (675,3))
+    window.blit(text1, (682, 10))
     sc = font.render(str(scores[1]), True, (128, 0, 0))
-    window.blit(sc, (695,30))
-    window.blit(b, (775,10))
+    window.blit(sc, (717,40))
+    window.blit(b, (765,15))
 
     if number_players >= 3:
-        window.blit(text2, (60, 600))
+        window.blit(p, (3,588))
+        window.blit(text2, (65, 595))
         sc = font.render(str(scores[2]), True, (128, 0, 0))
-        window.blit(sc , (60, 620))
-        window.blit(c, (3, 600))
+        window.blit(sc , (100, 623))
+        window.blit(c, (10, 600))
     if number_players == 4:
-        window.blit(text3, (695, 600))
+        window.blit(p, (675,588))
+        window.blit(text3, (682, 595))
         sc = font.render(str(scores[3]), True, (128, 0, 0))
-        window.blit(sc, (695, 620))
-        window.blit(d, (775, 600))
+        window.blit(sc, (717, 623))
+        window.blit(d, (765, 600))
