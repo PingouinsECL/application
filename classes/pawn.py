@@ -8,8 +8,8 @@ class Pawn:
     """
 
     def __init__(self, id_player):
-        self.x = 0
-        self.y = 0
+        self.x = -1
+        self.y = -1
         self.id = id_player
         self.accessibles = []
         self.active = True
@@ -103,14 +103,12 @@ class Pawn:
                     y += dy
                 return k
 
-            max_per_dir = []
+            self.accessibles = []
 
             for (dx, dy) in dirs:
-                max_per_dir.append(advance(x, y, dx, dy))
+                self.accessibles.append(advance(x, y, dx, dy))
 
-            self.accessibles = max_per_dir
-
-            if self.accessibles == [0, 0, 0, 0, 0, 0]:
+            if self.accessibles == [0, 0, 0, 0, 0, 0] :
                 self.active = False
                 self.remain = 0
             else:
@@ -118,10 +116,10 @@ class Pawn:
         else:
             self.remain = 1
 
-    def compute_accessible_like(pawn, board):
-        if pawn.active:
-            x = pawn.x
-            y = pawn.y
+    def compute_accessible_like (self, board):
+        if self.active:
+            x = self.x
+            y = self.y
 
             dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
 
@@ -134,14 +132,6 @@ class Pawn:
                     y += dy
                 return k
 
-            max_per_dir = []
-
-            for (dx, dy) in dirs:
-                max_per_dir.append(advance(x, y, dx, dy))
-
-            pawn.accessibles = max_per_dir
-
-            if pawn.accessibles == [0, 0, 0, 0, 0, 0]:
-                pawn.remain = 0
-            else:
-                pawn.remain = 1
+            self.accessibles = []
+            for (dx, dy) in dirs :
+                self.accessibles.append(advance(x, y, dx, dy))
