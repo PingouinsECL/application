@@ -5,8 +5,11 @@ from init_random import *
 from init_human import *
 from init_maxN import *
 from init_maxN_ab import *
+from init_maxN_time import *
 from init_monte_carlo import *
 from init_monte_carlo_guided import *
+
+from init_lexicographic import *
 
 def init_position(board, players, display, window, background, pos_background):
 
@@ -17,7 +20,7 @@ def init_position(board, players, display, window, background, pos_background):
             x, y = 0, 0
 
             # selecting the position mode
-
+            """
             if mode == 0:
                 x, y = init_human(board, l, display)
             elif mode == 1:
@@ -27,11 +30,16 @@ def init_position(board, players, display, window, background, pos_background):
             elif mode == 3 :
                 x, y = init_maxN_ab(board)
             elif mode == 4 :
-                x, y = init_monte_carlo(board)
+                x, y = init_maxN_time(board)
             elif mode == 5 :
+                x, y = init_monte_carlo(board)
+            elif mode == 6 :
                 x, y = init_monte_carlo_guided(board)
+            """
+            if mode == 0:
+                x, y = init_human(board, l, display)
             else:
-                x, y = 0, 0
+                x, y = init_lexicographic(board)
 
             players[k].pawns[l].place(board, x, y)
 

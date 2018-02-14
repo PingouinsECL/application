@@ -4,6 +4,7 @@ from ai_random import *
 from ai_human import *
 from ai_maxN import *
 from ai_maxN_ab import *
+from ai_maxN_time import *
 from ai_monte_carlo import *
 from ai_monte_carlo_guided import *
 
@@ -41,8 +42,10 @@ def select_mode(board, players, display, player_number):
         elif mode == 3:
             return fail, players[player_number].pawns, ai_maxN_ab(board, players, player_number, 3) # dernier nb à changer, pour test
         elif mode == 4:
-            return fail, players[player_number].pawns, ai_monte_carlo(board, players, player_number, itermax=2000, timemax=2) # dernier nb à changer, pour test
+            return fail, players[player_number].pawns, ai_maxN_time(board, players, player_number, 2) # dernier nb à changer, pour test
         elif mode == 5:
-            return fail, players[player_number].pawns, ai_monte_carlo_guided(board, players, player_number, itermax=2000, timemax=2) # dernier nb à changer, pour test
+            return fail, players[player_number].pawns, ai_monte_carlo(board, players, player_number, itermax=2000, timemax=3) # dernier nb à changer, pour test
+        elif mode == 6:
+            return fail, players[player_number].pawns, ai_monte_carlo_guided(board, players, player_number, itermax=2000, timemax=3) # dernier nb à changer, pour test
         else:
             return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)

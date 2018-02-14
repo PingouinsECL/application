@@ -111,7 +111,7 @@ class Board:
 
     def display(self, window):
 
-        sx, sy = a.get_width(), a.get_height()
+        sx, sy = case_width, case_height
         table_but = [[0 for k in range(15)] for k in range(8)]
 
         for k in range(0, 8):

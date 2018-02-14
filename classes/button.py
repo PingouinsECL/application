@@ -44,11 +44,11 @@ class Button:
         """ 
 
         if self.type == 1:
-            a = self.background.get_width()/2
+            a = self.background.get_height()/2
             h = 3**0.5 * a / 2
 
-            xc = self.x + a
-            yc = self.y + h
+            xc = self.x + h
+            yc = self.y + a
 
             x0 = xc
             y0 = yc - a

@@ -1,6 +1,6 @@
 import time
 
-def ai_maxN_ab_time (board, players, player_number, t_max) :
+def ai_maxN_time (board, players, player_number, t_max) :
     """
     Maxn algorith applied to the 2 to 4 players in this game.
     """

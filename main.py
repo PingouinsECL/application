@@ -280,7 +280,7 @@ while hold:
         display_scores(scores, window)
                 
         # printing the board
-        table_but = board.display(window)
+        table_button = board.display(window)
         pygame.display.flip()
         
         # computing islands and removing unaccessible cases
@@ -317,7 +317,7 @@ while hold:
                     display_scores(scores, window)
 
                     # printing the board
-                    table_but = board.display(window)
+                    table_button = board.display(window)
                     pygame.display.flip()
 
                     sleep(0.15)
