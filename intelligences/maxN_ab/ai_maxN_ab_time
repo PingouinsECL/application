@@ -84,8 +84,6 @@ def ai_maxN_ab_time (board, players, player_number, t_max) :
             acce = players[p].pawns[i].accessibles
             for j in range(len(acce)) :
                 for k in range (1,acce[j]+1) :
-                    if k > players[p].pawns[i].compute_accessible_like(board)[j] :
-                        print(k, players[p].pawns[i].accessibles[j])
                     if v[p] >= bound :
                         return (action if d == d_max else v)
                     if terminate () :
