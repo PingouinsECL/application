@@ -129,7 +129,7 @@ class Board:
             for l in range(0, 15):
                 if self.cases_tab[k][l] != 0:
                     c = self.cases_tab[k][l]
-                    pos = [sx * real_l + mx + (k%2)*sx//2, sy * k + my - k*sy//4]
+                    pos = [sx * real_l + mx + (k%2)*sx//2, sy * k + my]
                     real_l += 1
 
                     if c.state == 0:
