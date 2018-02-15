@@ -30,13 +30,16 @@ pos_background_tutorial = [0, 0]
 path_back = "images/back.png"
 pos_back = [0, 0]
 
+back_width = 828
+back_height = 659
+
 # GAME MODE
 
-mx = 40
-my = 100
+case_height = 70
+case_width = 61
 
-case_height = 47
-case_width = 41
+mx = (back_width - 8*case_width)//2
+my = (back_height - 8*case_height)//2
 
 path_one = "images/1.png"
 path_two = "images/2.png"

@@ -9,27 +9,21 @@ def ai_human(board, players, display, player_number, list_active_pawns):
     def getCase(t):
         x, y = t
 
-        nx = (x-mx) // case_width
+        
         ny = (y-my) // case_height
-
-        if -1 < nx < 15 and -1 < ny < 8 :
-            if display[ny][nx] != 0 and display[ny][nx].hover((x, y)):
-                return nx, ny
-            elif nx > 1 and display[ny][nx-2] != 0 and display[ny][nx-2].hover((x, y)):
-                return nx-2, ny
-            elif nx > 0 and ny > 0 and display[ny-1][nx-1] != 0 and display[ny-1][nx-1].hover((x, y)):
-                return nx-1, ny-1
-            elif nx < 14 and ny > 0 and display[ny-1][nx+1] != 0 and display[ny-1][nx+1].hover((x, y)):
-                return nx+1, ny-1
-            elif nx < 13 and display[ny][nx+2] != 0 and display[ny][nx+2].hover((x, y)):
-                return nx+2, ny
-            elif nx < 14 and ny < 7 and display[ny+1][nx+1] != 0 and display[ny+1][nx+1].hover((x, y)):
-                return nx+1, ny+1
-            elif nx > 0 and ny < 7 and display[ny+1][nx-1] != 0 and display[ny+1][nx-1].hover((x, y)):
-                return nx-1, ny+1
-            else:
-                return -1, -1
+        if ny % 2 == 0:
+            nx = 2 * int((x-mx) // case_width)
         else:
+            nx = 2 * int((x-mx-case_width//2)//case_width) + 1
+
+        print(nx, ny)
+
+        if -1 < nx < 15 and -1 < ny < 8 and display[ny][nx] != 0 and display[ny][nx].hover((x, y)):
+                return nx, ny
+        else:
+            print(display[ny][nx])
+            if display[ny][nx] != 0:
+                print("Non vide ", display[ny][nx].hover((x, y)))
             return -1, -1
     
     def getPawnNumber(case_pawn):

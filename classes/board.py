@@ -124,11 +124,13 @@ class Board:
             s = ''
             if k % 2 == 1:
                 s += ' '
+            real_l = 0
 
             for l in range(0, 15):
                 if self.cases_tab[k][l] != 0:
                     c = self.cases_tab[k][l]
-                    pos = [sx * l + mx, sy * k + my]
+                    pos = [sx * real_l + mx + (k%2)*sx//2, sy * k + my - k*sy//4]
+                    real_l += 1
 
                     if c.state == 0:
                         s += '* '
