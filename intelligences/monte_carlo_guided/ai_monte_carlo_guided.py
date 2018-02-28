@@ -7,7 +7,7 @@ import numpy as np
 import os
 
 sess = tf.InteractiveSession()
-saver = tf.train.import_meta_graph("/home/moby/ECL/PE/BUILDING/intelligences/monte_carlo_guided/model.meta")
+saver = tf.train.import_meta_graph(os.getcwd() + "/intelligences/monte_carlo_guided/model.meta")
 saver.restore(sess, os.getcwd() + "/intelligences/monte_carlo_guided/final")
 graph = tf.get_default_graph()
 
