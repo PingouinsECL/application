@@ -11,7 +11,7 @@ class Pawn:
         self.x = 0
         self.y = 0
         self.id = id_player
-        self.accessibles = []
+        self.accessibles = None
         self.active = True
         self.isolate = False
         self.remaining_actions = []
@@ -51,7 +51,7 @@ class Pawn:
         board.cases_tab[self.y][self.x].change_state(2)
         board.cases_tab[self.y][self.x].owner = self.id
 
-    def anti_move (self, board, player, direction, distance):
+    def anti_move (self, board, player, direction, distance) :
         board.cases_tab[self.y][self.x].change_state(1)
         player.owned -= 1
         board.cases_tab[self.y][self.x].owner = -1
@@ -79,9 +79,14 @@ class Pawn:
     def place(self, board, pos_x, pos_y):
         self.x = pos_x
         self.y = pos_y
-
         board.cases_tab[pos_y][pos_x].change_state(2)
         board.cases_tab[pos_y][pos_x].owner = self.id
+
+    def anti_place (self, board) :
+        board.cases_tab[self.y][self.x].change_state (1)
+        board.cases_tab[self.y][self.x].owner = -1
+        self.x = -1
+        self.y = -1
 
     def compute_accessible(self, board):
 
