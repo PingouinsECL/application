@@ -9,16 +9,16 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
 
     def getCase(t):
         x, y = t
-
         
-        ny = (y-my) // case_height
+        ny = (y-my) // (case_height - case_height_margin)
+
         if ny % 2 == 0:
             nx = 2 * int((x-mx) // case_width)
         else:
             nx = 2 * int((x-mx-case_width//2)//case_width) + 1
 
         if -1 < nx < 15 and -1 < ny < 8 and display[ny][nx] != 0 and display[ny][nx].hover((x, y)):
-                return nx, ny
+            return nx, ny
         else:
             return -1, -1
     
@@ -80,6 +80,7 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
                     x_pawn, y_pawn = getCase(event.pos)
+                    print(x_pawn, y_pawn)
                     case_pawn = board.cases_tab[y_pawn][x_pawn]
                     if case_pawn != 0 and case_pawn.owner == player_number:
                         pawn_number = getPawnNumber(case_pawn)

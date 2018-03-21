@@ -7,8 +7,8 @@ def init_human(board, k, display):
     def getCase(t):
         x, y = t
 
-        
-        ny = (y-my) // case_height
+        ny = (y-my) // (case_height - case_height_margin)
+
         if ny % 2 == 0:
             nx = 2 * int((x-mx) // case_width)
         else:

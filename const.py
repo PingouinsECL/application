@@ -36,6 +36,7 @@ back_height = 659
 # GAME MODE
 
 case_height = 70
+case_height_margin = 19
 case_width = 61
 
 mx = (back_width - 8*case_width)//2
