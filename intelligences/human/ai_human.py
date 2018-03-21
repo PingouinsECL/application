@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from const import *
+from display_scores import *
 
 def ai_human(board, players, display, player_number, list_active_pawns, window, background, pos_background):
 
@@ -16,14 +17,9 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
         else:
             nx = 2 * int((x-mx-case_width//2)//case_width) + 1
 
-        print(nx, ny)
-
         if -1 < nx < 15 and -1 < ny < 8 and display[ny][nx] != 0 and display[ny][nx].hover((x, y)):
                 return nx, ny
         else:
-            print(display[ny][nx])
-            if display[ny][nx] != 0:
-                print("Non vide ", display[ny][nx].hover((x, y)))
             return -1, -1
     
     def getPawnNumber(case_pawn):
@@ -97,8 +93,11 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
 
         while not(restart) and (dist < 0 or direction < 0):
             
+            scores = [player.score for player in players]
+
             window.blit(background, pos_background)
             board.display(window,list_access(players[player_number].pawns[pawn_number]))
+            display_scores(scores, window)
             pygame.display.flip()
             
             for event in pygame.event.get():
@@ -121,5 +120,4 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
                         direction = -1
                         dist = -1
         
-    print("Joué !")
     return direction, dist, pawn_number

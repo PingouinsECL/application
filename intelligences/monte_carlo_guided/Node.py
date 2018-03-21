@@ -6,7 +6,7 @@ class Node:
     
     number = 0
     
-    def __init__(self, move=None, lip, parent=None, board=None, players=None, playerNumber=None):
+    def __init__(self, lip, move=None, parent=None, board=None, players=None, playerNumber=None):
         self.move = move
         self.parentNode = parent
         self.board = board
@@ -34,7 +34,7 @@ class Node:
         return s
     
     def addChild(self, move, board, players, playerNumber):
-        n = Node(move=move, parent=self, board=board, players=players, playerNumber=playerNumber)
+        n = Node(lip=None, move=move, parent=self, board=board, players=players, playerNumber=playerNumber)
         self.untriedMoves.remove(move)
         self.childNodes.append(n)
         return n

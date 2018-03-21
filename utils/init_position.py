@@ -3,10 +3,7 @@ from pygame.locals import *
 
 from init_random import *
 from init_human import *
-from init_maxN import *
-from init_maxN_ab import *
 from init_maxN_time import *
-from init_monte_carlo import *
 from init_monte_carlo_guided import *
 
 from init_lexicographic import *

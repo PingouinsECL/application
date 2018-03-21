@@ -2,11 +2,8 @@ from pawn import *
 
 from ai_random import *
 from ai_human import *
-from ai_maxN import *
-from ai_maxN_ab import *
 from ai_maxN_time import *
 from ai_alphabeta import *
-from ai_monte_carlo import *
 from ai_monte_carlo_guided import *
 
 
@@ -41,14 +38,13 @@ def select_mode(board, players, display, player_number, players_lost, window, ba
     else:
         if mode == 0:
             return fail, players[player_number].pawns, ai_human(board, players, display, player_number, list_active_pawns+list_isolated_pawns, window, background, pos_background)
+        
         elif len(list_active_pawns) != 0:
+            
             if mode == 1:
                 return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)
+
             elif mode == 2:
-                return fail, players[player_number].pawns, ai_maxN(board, players, player_number, 3) # dernier nb à changer, pour test
-            elif mode == 3:
-                return fail, players[player_number].pawns, ai_maxN_ab(board, players, player_number, 3) # dernier nb à changer, pour test
-            elif mode == 4:
                 tmax = 10
                 if sum(players_lost[:len(players)]) == len(players) - 2:
                     adversary_number = 0
@@ -59,13 +55,16 @@ def select_mode(board, players, display, player_number, players_lost, window, ba
                     return fail, players[player_number].pawns, ai_alphabeta(board, players, player_number, adversary_number, tmax)
                 else:
                     return fail, players[player_number].pawns, ai_maxN_time(board, players, player_number, tmax)
-            elif mode == 5:
-                return fail, players[player_number].pawns, ai_monte_carlo(board, players, player_number, itermax=2000, timemax=3) # dernier nb à changer, pour test
-            elif mode == 6:
+            
+            elif mode == 3:
                 return fail, players[player_number].pawns, ai_monte_carlo_guided(board, players, player_number, list_isolated_pawns, itermax=2000, timemax=3) # dernier nb à changer, pour test
+            
             else:
                 return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)
+        
+        # sequence to maximise score on the island
         elif len(list_isolated_pawns) != 0:
             return fail, players[player_number].pawns, players[player_number].pawns[list_isolated_pawns[0]].remaining_actions.pop()
+        
         else:
             return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)

@@ -48,7 +48,7 @@ def compute_output(inputs):
 
 def UTC(rootboard, rootplayers, rootplayernumber, list_isolated_pawns, itermax, timemax, verbose=False):
     
-    rootnode = Node(list_isolated_pawns, board=rootboard, players=rootplayers, playerNumber=rootplayernumber)
+    rootnode = Node(lip=list_isolated_pawns, board=rootboard, players=rootplayers, playerNumber=rootplayernumber)
     numberPlayers = len(rootplayers)
     
     if len(rootnode.untriedMoves) == 1:

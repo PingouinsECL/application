@@ -14,14 +14,9 @@ def init_human(board, k, display):
         else:
             nx = 2 * int((x-mx-case_width//2)//case_width) + 1
 
-        print(nx, ny)
-
         if -1 < nx < 15 and -1 < ny < 8 and display[ny][nx] != 0 and display[ny][nx].hover((x, y)):
-                return nx, ny
+            return nx, ny
         else:
-            print(display[ny][nx])
-            if display[ny][nx] != 0:
-                print("Non vide ", display[ny][nx].hover((x, y)))
             return -1, -1
 
     # asking the players for coordinates

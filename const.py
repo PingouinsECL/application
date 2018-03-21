@@ -62,12 +62,9 @@ pannel = "images/tile.jpg"
 path_choice0 = "images/rien.png"
 path_choice1 = "images/human.png"
 path_choice2 = "images/random.png"
-path_choice3 = "images/maxN.png"
-path_choice4 = "images/maxN_ab.png"
-path_choice5 = "images/maxN_time.png"
-path_choice6 = "images/monte_carlo.png"
-path_choice7 = "images/monte_carlo_guided.png"
-path_choice_array = [path_choice0, path_choice1, path_choice2, path_choice3, path_choice4, path_choice5, path_choice6, path_choice7]
+path_choice3 = "images/maxN_time.png"
+path_choice4 = "images/monte_carlo_guided.png"
+path_choice_array = [path_choice0, path_choice1, path_choice2, path_choice3, path_choice4]
 
 path_end_choice = "images/play.png"
 pos_choice0 = [170, 210]
