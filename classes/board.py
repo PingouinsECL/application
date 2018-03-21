@@ -84,7 +84,7 @@ class Board:
         return numberLeft, scoreLeft
 
 
-     def compute_islands(self):
+    def compute_islands(self):
         dirs = [(1, -1), (2, 0), (1, 1), (-1, 1), (-2, 0), (-1, -1)]
 
         cases = self.cases_tab
