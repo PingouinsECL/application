@@ -44,6 +44,8 @@ from max_island import *
 from init_position import *
 from display_scores import *
 
+from add_data import *
+
 # Initialising window
 pygame.init()
 
@@ -259,7 +261,9 @@ while hold:
 
         # positioning the pawns
         players = init_position(board, initial_players, table_button, window, background, pos_background)
-
+        
+        save_board (board)
+        save_pos_init (players)
         mode_init = 0
         mode_game = 1
 
@@ -315,6 +319,7 @@ while hold:
 
             # if a move was found
             if not(fail):
+                save_move (player_number, direction, dist, pawn_number)
                 players[player_number].pawns = pawns
                 x_init,y_init = players[player_number].pawns[pawn_number].x,players[player_number].pawns[pawn_number].y
                 board.cases_tab[y_init][x_init].change_state(0)
@@ -377,13 +382,20 @@ while hold:
 
             window.blit(background, pos_background)
             window.blit(logo, pos_logo)
-            pygame.display.flip()             
-
-            scores = sorted([(players[k].score, k) for k in range(len(players))], reverse=True)
+            pygame.display.flip()
+            
+            scores = [[players[k].score, k] for k in range(len(players))]
+            for i in range (len(players)) :
+                for j in range (len(players[i].pawns)) :
+                    scores[i][0] += board.cases_tab[players[i].pawns[j].y][players[i].pawns[j].x].score
+            save_scores (scores)
+            
+            scores = sorted(scores, reverse=True)             
             max_score = scores[0][0]
             winners_ex_aequo = sorted([(players[k].owned, k) for (score, k) in scores if score == max_score], reverse=True)
             max_owned = winners_ex_aequo[0][0]
-            winners = [k for (owned, k) in winners_ex_aequo if owned == max_owned]
+            winners = [k for (owned, k) in winners_ex_aequo if owned == max_owned]            
+            save_victory(players, winners)
 
             phrase = (", ").join([str(winner) for winner in winners])
             
