@@ -30,7 +30,7 @@ def init_position(board, players, display, window, background, pos_background):
             elif mode == 3 :
                 x, y = init_maxN_ab(board)
             elif mode == 4 :
-                x, y = init_maxN_time(board)
+                x, y = init_lexicographic(board)
             elif mode == 5 :
                 x, y = init_monte_carlo(board)
             elif mode == 6 :
