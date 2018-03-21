@@ -117,4 +117,4 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
         ac = max_value (d_max, -float('inf'), float('inf'), root = True)
         if ac != None :
             action = ac
-return (action)
+    return (action)
