@@ -84,7 +84,7 @@ class Board:
         return numberLeft, scoreLeft
 
 
-    def compute_islands(self):
+     def compute_islands(self):
         dirs = [(1, -1), (2, 0), (1, 1), (-1, 1), (-2, 0), (-1, -1)]
 
         cases = self.cases_tab
@@ -94,6 +94,7 @@ class Board:
 
         while active_cases != []:
             cur_island = []        
+            island_score = 0   
             occupied = []
 
             cur_case = active_cases[0]
@@ -102,6 +103,7 @@ class Board:
 
             active_cases.remove(cur_case)
             cur_island.append(cur_case)
+            island_score +=cases[cur_case[1]][cur_case[0]].score
 
             reachable = [(cur_case[0] + d[0], cur_case[1] + d[1]) for d in dirs if (cur_case[0] + d[0], cur_case[1] + d[1]) in active_cases]
 
@@ -113,12 +115,14 @@ class Board:
                 reachable.remove(cur_case)
                 active_cases.remove(cur_case)
                 cur_island.append(cur_case)
+                island_score +=cases[cur_case[1]][cur_case[0]].score
 
                 reachable += [(cur_case[0] + d[0], cur_case[1] + d[1]) for d in dirs if (cur_case[0] + d[0], cur_case[1] + d[1]) in active_cases and (cur_case[0] + d[0], cur_case[1] + d[1]) not in reachable]
 
-            islands_list.append([occupied, cur_island])
+            islands_list.append([occupied, cur_island, island_score])
 
         self.islands = islands_list
+
 
     def display(self, window):
 
