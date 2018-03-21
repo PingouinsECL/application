@@ -39,6 +39,7 @@ from board import *
 from player import *
 
 from select_mode import *
+from max_island import *
 
 from init_position import *
 from display_scores import *
