@@ -22,6 +22,7 @@ c = pygame.image.load(path_c)
 d = pygame.image.load(path_d)
 
 image_number = [one, two, three]
+image_number_highlight = [one_2, two_2, three_2]
 image_player = [a, b, c, d]
 
 class Board:
