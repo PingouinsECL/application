@@ -124,7 +124,18 @@ def UTC(rootboard, rootplayers, rootplayernumber, itermax, timemax, verbose=Fals
         if verbose:
             print(sep + "Jeu de la partie")
 
-        result = compute_output(make_input(players_copy, board_copy, rootplayernumber)) > 0.5
+
+        ######
+        ###### TODO CHANGER L'EXPLOITATION DU RESULTAT EN MULTIPLIANT PAR LE NOMBRE
+        ###### DE CASES RESTANTES ET COMPARER LES SCORES DES DEUX JOUEURS POUR SAVOIR
+        ###### SI ON A GAGNE OU PERDU
+        ######
+        result = compute_output(make_input(players_copy, board_copy, rootplayernumber))
+        numberLeft, scoreLeft = board_copy.casesStat()
+
+        ###### mode uniforme
+        anticipatedScore = int(scoreLeft / numberLeft * result)
+        result = players_copy[rootplayernumber].score + anticipatedScore > players_copy[1-rootplayernumber].score + scoreLeft - anticipatedScore
 
         if verbose:
             print("")

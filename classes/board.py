@@ -71,6 +71,17 @@ class Board:
 
         self.cases_tab = cases_tab
         self.compute_islands()
+    
+    def casesStat(self):
+        numberLeft = 0
+        scoreLeft = 0
+        for i in range(0, 8):
+            for j in range(0, 15):
+                if self.cases_tab[i][j] != 0:
+                    if self.cases_tab[i][j].state == 1:
+                        numberLeft += 1
+                        scoreLeft += self.cases_tab[i][j].score
+        return numberLeft, scoreLeft
 
 
     def compute_islands(self):
