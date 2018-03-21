@@ -12,6 +12,10 @@ one = pygame.image.load(path_one)
 two = pygame.image.load(path_two)
 three = pygame.image.load(path_three)
 
+one_2 = pygame.image.load(path_one_2)
+two_2 = pygame.image.load(path_two_2)
+three_2 = pygame.image.load(path_three_2)
+
 a = pygame.image.load(path_a)
 b = pygame.image.load(path_b)
 c = pygame.image.load(path_c)
@@ -124,7 +128,7 @@ class Board:
         self.islands = islands_list
 
 
-    def display(self, window):
+    def display(self, window, list=[]):
 
         sx, sy = case_width, case_height
         table_but = [[0 for k in range(15)] for k in range(8)]
@@ -154,6 +158,10 @@ class Board:
                         s += letter + ' '
                         table_but[k][l] = Button(image_player[c.owner], image_player[c.owner], pos, 1)
                         table_but[k][l].show(window, [0, 0])
+                    elif [l,k] in list:
+                        s += str(c.score) + ' '
+                        table_but[k][l] = Button(image_number_highlight[c.score - 1], one, pos, 1)
+                        table_but[k][l].show(window, [0, 0])
                     else:
                         s += str(c.score) + ' '
                         table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
@@ -161,3 +169,4 @@ class Board:
 
             # print(s)
         return table_but
+
