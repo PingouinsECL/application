@@ -1,5 +1,7 @@
 def save_board (board) :
     data = open('data.txt', 'a')
+    data.write("__début__")
+    data.write("\n")
     for line in board.cases_tab :
         for case in line :
             if case != 0 :
@@ -59,6 +61,6 @@ def save_victory (players, winners) :
         if players[w].mode == 0 :
             data.write("*")
             data.write("\n")
-    data.write("____")
+    data.write("__fin__")
     data.write("\n")
     data.close()
