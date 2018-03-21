@@ -49,14 +49,14 @@ def select_mode(board, players, display, player_number, players_lost):
             elif mode == 3:
                 return fail, players[player_number].pawns, ai_maxN_ab(board, players, player_number, 3) # dernier nb à changer, pour test
             elif mode == 4:
-                if sum(players_lost[:len(players)]) == len(players) - 2 :
+                if sum(players_lost[:len(players)]) == len(players) - 2:
                     adversary_number = 0
                     b = adversary_number != player_number and players_lost[adversary_number] == 0
                     while adversary_number < len(players) and not b:
                         adversary_number += 1
                         b = adversary_number != player_number and players_lost[adversary_number] == 0
                     return fail, players[player_number].pawns, ai_alphabeta(board, players, player_number, adversary_number, 2)
-                else :
+                else:
                     return fail, players[player_number].pawns, ai_maxN_time(board, players, player_number, 2) # dernier nb à changer, pour test
             elif mode == 5:
                 return fail, players[player_number].pawns, ai_monte_carlo(board, players, player_number, itermax=2000, timemax=3) # dernier nb à changer, pour test
