@@ -310,7 +310,7 @@ while hold:
 
         # selecting the move if pawns left
         if players_lost[player_number] != 1:
-            fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number)
+            fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number, players_lost)
 
             # if a move was found
             if not(fail):
