@@ -40,7 +40,7 @@ def select_mode(board, players, display, player_number):
         if mode == 0:
             return fail, players[player_number].pawns, ai_human(board, players, display, player_number, list_active_pawns+list_isolated_pawns)
         elif len(list_active_pawns) != 0:
-            elif mode == 1:
+            if mode == 1:
                 return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)
             elif mode == 2:
                 return fail, players[player_number].pawns, ai_maxN(board, players, player_number, 3) # dernier nb à changer, pour test
