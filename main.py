@@ -120,7 +120,7 @@ while hold:
     play = 0
     number_turn = 0
     table_button = []
-    players_lost = {}
+    players_lost = [0, 0, 0, 0]
 
     # HOME
     """
@@ -292,7 +292,7 @@ while hold:
                     board.cases_tab[y][x].change_state(0)
 
         # selecting the move if pawns left
-        if not(player_number in players_lost):
+        if players_lost[player_number] != 1:
             fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number)
 
             # if a move was found
@@ -331,7 +331,7 @@ while hold:
                 players_lost[player_number] = 1
         
         # stopping the game if no player can move anymore
-        if len(players_lost) == len(players):
+        if sum(players_lost) == len(players):
             mode_game = 0
             mode_results = 1
 
@@ -421,7 +421,7 @@ while hold:
         play = 0
         number_turn = 0
         table_button = []
-        players_lost = {}
+        players_lost = [0, 0, 0, 0]
 
         Player.number_player = 0
 
