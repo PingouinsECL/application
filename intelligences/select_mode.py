@@ -61,7 +61,7 @@ def select_mode(board, players, display, player_number, players_lost):
             elif mode == 5:
                 return fail, players[player_number].pawns, ai_monte_carlo(board, players, player_number, itermax=2000, timemax=3) # dernier nb à changer, pour test
             elif mode == 6:
-                return fail, players[player_number].pawns, ai_monte_carlo_guided(board, players, player_number, itermax=2000, timemax=3) # dernier nb à changer, pour test
+                return fail, players[player_number].pawns, ai_monte_carlo_guided(board, players, player_number, list_isolated_pawns, itermax=2000, timemax=3) # dernier nb à changer, pour test
             else:
                 return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)
         elif len(list_isolated_pawns) != 0:

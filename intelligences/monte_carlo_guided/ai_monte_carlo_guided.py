@@ -46,9 +46,9 @@ def compute_output(inputs):
         
     return sess.run(Yp, feed_dict={X:inputs})
 
-def UTC(rootboard, rootplayers, rootplayernumber, itermax, timemax, verbose=False):
+def UTC(rootboard, rootplayers, rootplayernumber, list_isolated_pawns, itermax, timemax, verbose=False):
     
-    rootnode = Node(board=rootboard, players=rootplayers, playerNumber=rootplayernumber)
+    rootnode = Node(list_isolated_pawns, board=rootboard, players=rootplayers, playerNumber=rootplayernumber)
     numberPlayers = len(rootplayers)
     
     if len(rootnode.untriedMoves) == 1:
@@ -134,7 +134,7 @@ def UTC(rootboard, rootplayers, rootplayernumber, itermax, timemax, verbose=Fals
         numberLeft, scoreLeft = board_copy.casesStat()
 
         ###### mode uniforme
-        anticipatedScore = int(scoreLeft / numberLeft * result)
+        anticipatedScore = int(scoreLeft / (numberLeft+1) * result)
         result = players_copy[rootplayernumber].score + anticipatedScore > players_copy[1-rootplayernumber].score + scoreLeft - anticipatedScore
 
         if verbose:
@@ -158,8 +158,8 @@ def UTC(rootboard, rootplayers, rootplayernumber, itermax, timemax, verbose=Fals
 
     return best.move
 
-def ai_monte_carlo_guided(board, players, player_number, itermax, timemax):
+def ai_monte_carlo_guided(board, players, player_number, list_isolated_pawns, itermax, timemax):
 
-    (pawn_number, direction, dist) = UTC(board, players, player_number, itermax=itermax, timemax=timemax)
+    (pawn_number, direction, dist) = UTC(board, players, player_number, list_isolated_pawns, itermax=itermax, timemax=timemax)
     
     return direction, dist, pawn_number

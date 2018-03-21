@@ -6,7 +6,7 @@ class Node:
     
     number = 0
     
-    def __init__(self, move=None, parent=None, board=None, players=None, playerNumber=None):
+    def __init__(self, move=None, lip, parent=None, board=None, players=None, playerNumber=None):
         self.move = move
         self.parentNode = parent
         self.board = board
@@ -23,10 +23,11 @@ class Node:
         self.untriedMoves = []
         
         for p in range(len(players[0].pawns)):
-            players[self.playerNumber].pawns[p].compute_accessible(board)
-            pawnMoves = players[self.playerNumber].pawns[p].accessibles
-            for direction in range(len(pawnMoves)):
-                self.untriedMoves += [(p, direction, distancek) for distancek in range(1, pawnMoves[direction]+1) if pawnMoves[direction] > 0]
+            if lip != None and p not in lip:
+                players[self.playerNumber].pawns[p].compute_accessible(board)
+                pawnMoves = players[self.playerNumber].pawns[p].accessibles
+                for direction in range(len(pawnMoves)):
+                    self.untriedMoves += [(p, direction, distancek) for distancek in range(1, pawnMoves[direction]+1) if pawnMoves[direction] > 0]
     
     def UTCselectChild(self):
         s = sorted(self.childNodes, key = lambda c : c.wins / c.visits + UTCK * sqrt(log(self.visits)/c.visits))[-1]
