@@ -291,12 +291,12 @@ while hold:
             if occupiers == []:
                 for (x, y) in island_cases:
                     board.cases_tab[y][x].change_state(0)
-            if len(occupiers) == 1 and len(island_cases)!=1:
-                pawns_on_island=[]
-                calc=False
+            if len(occupiers) == 1 and len(island_cases) != 1:
+                pawns_on_island = []
+                calc = False
                 for i in range(len(players[occupiers[0]].pawns)):
-                    pawn=players[occupiers[0]].pawns[i]
-                    if (pawn.x,pawn.y) in island_cases:
+                    pawn = players[occupiers[0]].pawns[i]
+                    if (pawn.x, pawn.y) in island_cases:
                         if pawn.isolate == False:
                             pawn.isolate = True
                             pawns_on_island.append(i)
@@ -304,9 +304,9 @@ while hold:
                             calc = True
                             break
                 if not calc:
-                    m_island=max_island(board,players,occupiers[0],pawns_on_island, score)
+                    m_island = max_island(board,players,occupiers[0],pawns_on_island, score)
                     for i in pawns_on_island:
-                        players[occupiers[0]].pawns[i].remaining_actions=m_island
+                        players[occupiers[0]].pawns[i].remaining_actions = m_island
 
         # selecting the move if pawns left
         if players_lost[player_number] != 1:

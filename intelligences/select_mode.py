@@ -23,6 +23,7 @@ def select_mode(board, players, display, player_number):
 
     list_active_pawns = []
     list_isolated_pawns = []
+    
     for k in range(number_pawns):
         if players[player_number].pawns[k].active:
             if not players[player_number].pawns[k].isolate:

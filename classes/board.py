@@ -103,7 +103,7 @@ class Board:
 
             active_cases.remove(cur_case)
             cur_island.append(cur_case)
-            island_score +=cases[cur_case[1]][cur_case[0]].score
+            island_score += cases[cur_case[1]][cur_case[0]].score
 
             reachable = [(cur_case[0] + d[0], cur_case[1] + d[1]) for d in dirs if (cur_case[0] + d[0], cur_case[1] + d[1]) in active_cases]
 

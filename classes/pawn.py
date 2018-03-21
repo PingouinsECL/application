@@ -150,6 +150,7 @@ class Pawn:
                 pawn.remain = 0
             else:
                 pawn.remain = 1
+                
     def compute_accessible_island(pawn,board):
         if pawn.active:
             x = pawn.x
