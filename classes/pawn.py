@@ -8,11 +8,13 @@ class Pawn:
     """
 
     def __init__(self, id_player):
-        self.x = -1
-        self.y = -1
+        self.x = 0
+        self.y = 0
         self.id = id_player
         self.accessibles = []
         self.active = True
+        self.isolate = False
+        self.remaining_actions = []
         self.remain = 1
 
     def move(self, board, player, direction, distance):
@@ -103,12 +105,14 @@ class Pawn:
                     y += dy
                 return k
 
-            self.accessibles = []
+            max_per_dir = []
 
             for (dx, dy) in dirs:
-                self.accessibles.append(advance(x, y, dx, dy))
+                max_per_dir.append(advance(x, y, dx, dy))
 
-            if self.accessibles == [0, 0, 0, 0, 0, 0] :
+            self.accessibles = max_per_dir
+
+            if self.accessibles == [0, 0, 0, 0, 0, 0]:
                 self.active = False
                 self.remain = 0
             else:
@@ -116,10 +120,13 @@ class Pawn:
         else:
             self.remain = 1
 
-    def compute_accessible_like (self, board):
-        if self.active:
-            x = self.x
-            y = self.y
+    def compute_accessible_like(pawn, board):
+        if pawn.isolate:
+            pawn.accessibles = [0, 0, 0, 0, 0, 0]
+            
+        elif pawn.active:
+            x = pawn.x
+            y = pawn.y
 
             dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
 
@@ -132,6 +139,41 @@ class Pawn:
                     y += dy
                 return k
 
-            self.accessibles = []
-            for (dx, dy) in dirs :
-                self.accessibles.append(advance(x, y, dx, dy))
+            max_per_dir = []
+
+            for (dx, dy) in dirs:
+                max_per_dir.append(advance(x, y, dx, dy))
+
+            pawn.accessibles = max_per_dir
+
+            if pawn.accessibles == [0, 0, 0, 0, 0, 0]:
+                pawn.remain = 0
+            else:
+                pawn.remain = 1
+    def compute_accessible_island(pawn,board):
+        if pawn.active:
+            x = pawn.x
+            y = pawn.y
+
+            dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
+
+            def advance(x, y, dx, dy):
+                k = 0
+                while 0 <= x+dx < 15 and 0 <= y+dy < 8 and \
+                    board.cases_tab[y+dy][x+dx].state == 1:
+                    k += 1
+                    x += dx
+                    y += dy
+                return k
+
+            max_per_dir = []
+
+            for (dx, dy) in dirs:
+                max_per_dir.append(advance(x, y, dx, dy))
+
+            pawn.accessibles = max_per_dir
+
+            if pawn.accessibles == [0, 0, 0, 0, 0, 0]:
+                pawn.remain = 0
+            else:
+                pawn.remain = 1
