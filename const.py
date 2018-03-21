@@ -75,4 +75,4 @@ pos_end_choice = [300, 435]
 # LAST SCREEN
 
 path_back_to_menu = "images/back_to_menu.png"
-pos_back_to_menu = [250,500]
+pos_back_to_menu = [300,500]

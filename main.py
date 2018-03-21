@@ -39,7 +39,6 @@ from board import *
 from player import *
 
 from select_mode import *
-from max_island import *
 
 from init_position import *
 from display_scores import *
@@ -173,7 +172,6 @@ while hold:
 
         # displaying background and button
         window.blit(background_tutorial, pos_background_tutorial)
-        but_back.show(window, cursor)
         pygame.display.flip()
 
         # listening for events
@@ -183,7 +181,7 @@ while hold:
                 mode_home = 0
                 hold = 0
 
-            if event.type == MOUSEBUTTONDOWN and event.button == 1:
+            if event.type == MOUSEBUTTONDOWN and event.pos[0]<=60 and event.pos[1]<=60:
                 cursor = event.pos
                 if but_back.hover(cursor):
                     mode_tuto = 0
@@ -287,30 +285,14 @@ while hold:
         # computing islands and removing unaccessible cases
         board.compute_islands()
         for island in board.islands:
-            occupiers, island_cases, score = island
+            occupiers, island_cases = island
             if occupiers == []:
                 for (x, y) in island_cases:
                     board.cases_tab[y][x].change_state(0)
-            if len(occupiers) == 1 and len(island_cases) != 1:
-                pawns_on_island = []
-                calc = False
-                for i in range(len(players[occupiers[0]].pawns)):
-                    pawn = players[occupiers[0]].pawns[i]
-                    if (pawn.x, pawn.y) in island_cases:
-                        if pawn.isolate == False:
-                            pawn.isolate = True
-                            pawns_on_island.append(i)
-                        else:
-                            calc = True
-                            break
-                if not calc:
-                    m_island = max_island(board,players,occupiers[0],pawns_on_island, score)
-                    for i in pawns_on_island:
-                        players[occupiers[0]].pawns[i].remaining_actions = m_island
 
         # selecting the move if pawns left
         if players_lost[player_number] != 1:
-            fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number, players_lost)
+            fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number)
 
             # if a move was found
             if not(fail):
