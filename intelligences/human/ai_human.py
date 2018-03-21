@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from const import *
 
-def ai_human(board, players, display, player_number, list_active_pawns):
+def ai_human(board, players, display, player_number, list_active_pawns, window, background, pos_background):
 
     number_pawns = len(players[player_number].pawns)
 
@@ -54,6 +54,14 @@ def ai_human(board, players, display, player_number, list_active_pawns):
         else:
             return -1, -1
         
+    def list_access(pawn):
+        access=pawn.accessibles
+        dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
+        list=[]
+        for i in range(6):
+            for h in range(access[i]+1):
+                list.append([pawn.x+h*dirs[i][0],pawn.y+h*dirs[i][1]])
+        return(list)
         
     selected = False
 
@@ -88,7 +96,11 @@ def ai_human(board, players, display, player_number, list_active_pawns):
                         # print('Case invalide')
 
         while not(restart) and (dist < 0 or direction < 0):
-
+            
+            window.blit(background, pos_background)
+            board.display(window,list_access(players[player_number].pawns[pawn_number]))
+            pygame.display.flip()
+            
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
                     x_aim, y_aim = getCase(event.pos)
