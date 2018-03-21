@@ -172,6 +172,7 @@ while hold:
 
         # displaying background and button
         window.blit(background_tutorial, pos_background_tutorial)
+        window.blit(logo, (pos_logo[0],pos_logo[1]+400))
         pygame.display.flip()
 
         # listening for events
