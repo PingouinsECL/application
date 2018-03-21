@@ -45,6 +45,10 @@ path_one = "images/1.png"
 path_two = "images/2.png"
 path_three = "images/3.png"
 
+path_one_2 = "images/1_2.png"
+path_two_2 = "images/2_2.png"
+path_three_2 = "images/3_2.png"
+
 path_a = "images/a.png"
 path_b = "images/b.png"
 path_c = "images/c.png"
