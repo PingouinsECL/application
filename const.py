@@ -254,18 +254,18 @@ animation_speed = 0.05
 pannel = "images/tile.jpg"
 p = pygame.image.load(pannel)
 
-case_height = 70
-case_height_margin = 19
-case_width = 61
+case_height = 100
+case_height_margin = 45
+case_width = 87
 
 mx = (back_width - 8*case_width)//2
-my = (back_height - 8*case_height)//2
+my = (back_height - 5*case_height)//2
 
 # PAWNS
 
-path_one = "images/1.png"
-path_two = "images/2.png"
-path_three = "images/3.png"
+path_one = "images/case1.png"
+path_two = "images/case2.png"
+path_three = "images/case3.png"
 
 one = pygame.image.load(path_one)
 two = pygame.image.load(path_two)
