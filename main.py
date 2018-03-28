@@ -113,7 +113,7 @@ while hold:
     mode_choice = 0
     mode_init = 0
     mode_game = 0
-    
+
     mode_results = 0
     mode_restart = 0
 
@@ -138,7 +138,7 @@ while hold:
 
         # creating cursor if not exists
         if not('cursor' in locals() or 'cursor' in globals()):
-            cursor = [0, 0]        
+            cursor = [0, 0]
 
         # listening for events
 
@@ -195,21 +195,21 @@ while hold:
     """
         FIRST STEP IN LAUNCHING A GAME TO SELECT PLAYERS' MODE
     """
-    
+
     while mode_choice:
-        
+
         # displaying background and buttons
         window.blit(background, pos_background)
         window.blit(logo, pos_logo)
         but_choice0.show(window, pos_choice0)
-        but_choice1.show(window, pos_choice1)     
+        but_choice1.show(window, pos_choice1)
         but_choice2.show(window, pos_choice2)
-        but_choice3.show(window, pos_choice3)      
+        but_choice3.show(window, pos_choice3)
         but_end_choice.show(window, pos_end_choice)
         pygame.display.flip()
-        
+
         for event in pygame.event.get():
-        
+
             if event.type == MOUSEBUTTONDOWN and event.button == 1:
                 cur = event.pos
                 if but_choice0.hover(cur):
@@ -223,11 +223,11 @@ while hold:
                     but_choice2.modify_image(choices[configuration[2]])
                 if but_choice3.hover(cur):
                     configuration[3] = (configuration[3] + 1) % len(choices)
-                    but_choice3.modify_image(choices[configuration[3]])                   
+                    but_choice3.modify_image(choices[configuration[3]])
                 if but_end_choice.hover(cur):
-                    mode_choice = 0        
+                    mode_choice = 0
                     mode_init = 1
-            
+
             if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                 mode_choice = 0
                 hold = 0
@@ -242,12 +242,12 @@ while hold:
         board = Board()
         players = []
         number_players = 0
-        
+
         for mode in configuration:
             number_players += (mode > 0)
-        
+
         pawns_per_player = 2 + 4 - number_players
-        
+
         for mode in configuration:
             if mode > 0:
                 mode_player = mode - 1
@@ -261,7 +261,7 @@ while hold:
 
         # positioning the pawns
         players = init_position(board, initial_players, table_button, window, background, pos_background)
-        
+
         save_board (board)
         save_pos_init (players)
         mode_init = 0
@@ -280,15 +280,15 @@ while hold:
 
         # refreshing the window
         window.blit(background, pos_background)
-        
+
         # printing the scores
         scores = [players[k].score for k in range(len(players))]
         display_scores(scores, window)
-                
+
         # printing the board
         table_button = board.display(window)
         pygame.display.flip()
-        
+
         # computing islands and removing unaccessible cases
         board.compute_islands()
         for island in board.islands:
@@ -320,59 +320,70 @@ while hold:
             # if a move was found
             if not(fail):
                 players[player_number].pawns = pawns
-                x_init,y_init = players[player_number].pawns[pawn_number].x,players[player_number].pawns[pawn_number].y
-                
+                x_init, y_init = players[player_number].pawns[pawn_number].x, players[player_number].pawns[pawn_number].y
+
+                # Starting coordinates
+
+                if y_init % 2 == 0:
+                    x_init_anim = int(x_init / 2)
+                else:
+                    x_init_anim = int((x_init + 1) / 2 - 1) + 1 / 2
+
+                y_init_anim = y_init
+
+                # New coordinates
+
                 dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
                 dx, dy = dirs[direction]
-                window.blit(background, pos_background)
-                const = 10
-                if y_init%2==0:
-                    x_init_anim=int(x_init/2)
-                if y_init%2==1:
-                    x_init_anim=int((x_init+1)/2-1)+1/2
+
+                x_end = x_init + dx * dist
+                y_end = y_init + dy * dist
+
+                if y_end % 2 == 0:
+                    x_end = int(x_end / 2)
+                else:
+                    x_end = int((x_end + 1) / 2 - 1) + 1 / 2
                 
-                y_copy = y_init
-                # y_init -= y_init*case_height_margin
-                
-                for i in range (1,const*dist+1):
+                # Animation
+
+                animation_number = animation_number_unit * dist
+
+                for i in range(animation_number + 1):
+
+                    # Static printings 
                     window.blit(background, pos_background)
-                    table_but = board.display(window,l_init=x_init,k_init=y_init)
-                    marge = 0
-                    
-                    
-                    if direction == 0:
-                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim+i/(2*const))*case_width
-                        ,my+(y_init-i/const)*(case_height+marge)))
-                    
-                    elif direction == 1:
-                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim+i/(const))*case_width,my+(y_init)*(case_height+marge)))
-                        
-                    elif direction == 2:
-                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim+i/(2*const))*case_width,my+(y_init+i/const)*(case_height+marge)))
-                        
-                    elif direction == 3:
-                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim-i/(2*const))*case_width,my+(y_init+i/const)*(case_height+marge)))
-                            
-                    elif direction == 4:
-                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim-i/(const))*case_width,my+(y_init)*(case_height+marge)))
-                        
-                    elif direction == 5:
-                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim-i/(2*const))*case_width,my+(y_init-i/const)*(case_height+marge)))
-                        
+
+                    scores = [players[k].score for k in range(len(players))]
+                    display_scores(scores, window)
+
+                    table_but = board.display(window, l_init=x_init, k_init=y_init)
+
+                    # Dynamic printings
+                    alpha = i / animation_number
+                    xcur = (1-alpha) * x_init_anim + alpha * x_end
+                    xcur *= case_width
+                    xcur += mx
+                    xcur = int(xcur)
+
+                    ycur = (1-alpha) * y_init_anim + alpha * y_end 
+                    ycur *= case_height - case_height_margin
+                    ycur += my
+                    ycur = int(ycur)
+
+                    window.blit(image_player_animation[player_number][direction][i%4], (xcur, ycur))
+
                     pygame.display.flip()
                     time.sleep(0.05)
 
                 # finally completing the move
-                y_init = y_copy
-                print(y_init)
                 board.cases_tab[y_init][x_init].change_state(0)
                 board.cases_tab[y_init][x_init].change_owner(player_number)
                 players[player_number].pawns[pawn_number].move(board, players[player_number], direction, dist)
-            
+
             # if no move was found
             else:
                 players_lost[player_number] = 1
-        
+
         # stopping the game if no player can move anymore
         if sum(players_lost) == len(players):
             mode_game = 0
@@ -403,22 +414,22 @@ while hold:
             window.blit(background, pos_background)
             window.blit(logo, pos_logo)
             pygame.display.flip()
-            
+
             scores = [[players[k].score, k] for k in range(len(players))]
             for i in range (len(players)) :
                 for j in range (len(players[i].pawns)) :
                     scores[i][0] += board.cases_tab[players[i].pawns[j].y][players[i].pawns[j].x].score
             save_scores (scores)
-            
-            scores = sorted(scores, reverse=True)             
+
+            scores = sorted(scores, reverse=True)
             max_score = scores[0][0]
             winners_ex_aequo = sorted([(players[k].owned, k) for (score, k) in scores if score == max_score], reverse=True)
             max_owned = winners_ex_aequo[0][0]
-            winners = [k for (owned, k) in winners_ex_aequo if owned == max_owned]            
+            winners = [k for (owned, k) in winners_ex_aequo if owned == max_owned]
             save_victory(players, winners)
 
             phrase = (", ").join([str(winner) for winner in winners])
-            
+
             if len(winners) > 1:
                 phrase = "Victoire des joueurs " + phrase
             else:
@@ -434,9 +445,9 @@ while hold:
             window.blit(text, ((w - text.get_width()) //2 , (h - text.get_height()) // 2))
             window.blit(sc, ((w - text.get_width()) //2 +50 , (h - text.get_height()) // 2+70))
             pygame.display.flip()
-            
+
         but_back_to_menu.show(window, pos_back_to_menu)
-        pygame.display.flip()         
+        pygame.display.flip()
 
         # listening for events
 
@@ -450,7 +461,7 @@ while hold:
                 if but_back_to_menu.hover(cur):
                     mode_results = 0
                     mode_restart = 1
-        
+
     # MODE RESTART
 
     while mode_restart:
@@ -461,7 +472,7 @@ while hold:
         mode_choice = 0
         mode_init = 0
         mode_game = 0
-        
+
         mode_results = 0
         mode_restart = 0
         hold = 1

@@ -97,7 +97,7 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
             scores = [player.score for player in players]
 
             window.blit(background, pos_background)
-            board.display(window,list_access(players[player_number].pawns[pawn_number]))
+            board.display(window, list=list_access(players[player_number].pawns[pawn_number]))
             display_scores(scores, window)
             pygame.display.flip()
             
