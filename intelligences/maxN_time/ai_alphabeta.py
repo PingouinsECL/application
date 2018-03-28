@@ -1,11 +1,10 @@
-
-import time
+from time import clock
 
 def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
     """
     Minmax algorith with alphabeta applied to the only 2 players in this game.
     """
-    t_f = time.clock() + t_max
+    t_f = clock() + t_max
     nb_pawns = len(players[player_number].pawns)
     
     def terminate () :
@@ -13,7 +12,7 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
         Return a boolean telling if the given time is elapsed.
         """
         nonlocal t_f
-        return (time.clock() > t_f)
+        return (clock() > t_f)
     
     def evaluate () :
         """
@@ -48,7 +47,7 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
         acce = players[player_number].pawns[iu].accessibles[:]
         v = min
         
-        for i in range(iu, len(players[player_number].pawns)) :
+        for i in range(iu, nb_pawns) :
             if i != iu :
                 players[player_number].pawns[i].compute_accessible_like (board)
                 acce = players[player_number].pawns[i].accessibles
