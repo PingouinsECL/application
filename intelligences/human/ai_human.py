@@ -76,11 +76,17 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
         dist = -1
 
         while (pawn_number < 0 or pawn_number > number_pawns):
+            
+            scores = [player.score for player in players]
+            
+            window.blit(background, pos_background)
+            board.display(window)
+            display_scores(scores, window)
+            pygame.display.flip()
 
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
                     x_pawn, y_pawn = getCase(event.pos)
-                    print(x_pawn, y_pawn)
                     case_pawn = board.cases_tab[y_pawn][x_pawn]
                     if case_pawn != 0 and case_pawn.owner == player_number:
                         pawn_number = getPawnNumber(case_pawn)
@@ -103,9 +109,11 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
             
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                    
                     x_aim, y_aim = getCase(event.pos)
+                    case_aim = board.cases_tab[y_aim][x_aim]
 
-                    if board.cases_tab[y_aim][x_aim] != 0:
+                    if case_aim != 0:
 
                         direction, dist = getDirDist(x_pawn, y_pawn, x_aim, y_aim)
                         dist = int(dist)
@@ -113,6 +121,15 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
                         if (-1 < direction < 6 and 0 < dist <= players[player_number].pawns[pawn_number].accessibles[direction]):
                             # print("Case sélectionnée. Déplacement")
                             selected = True
+                        
+                        elif case_aim.owner == player_number:
+                            x_pawn, y_pawn = x_aim, y_aim
+                            pawn_number = getPawnNumber(case_aim)
+                            direction = -1
+                            dist = -1
+                            if pawn_number not in list_active_pawns :
+                                restart = True
+                                pawn_number = 100
                     
                     else:
                         # print("Case invalide. Sélection du pion")
