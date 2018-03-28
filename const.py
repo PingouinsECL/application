@@ -24,6 +24,10 @@ path_sound = "images/sound_on.jpg"
 path_mute = "images/sound_off.jpg"
 pos_sound = [760, 13]
 
+path_hint="images/hint.png"
+path_hint_hover="images/hint_highlight.png"
+pos_hint = [10, 300]
+
 # TUTORIAL MODE
 
 path_background_tutorial = "images/tutorial.jpg"
@@ -272,6 +276,16 @@ two = pygame.image.load(path_two)
 three = pygame.image.load(path_three)
 
 image_number = [one, two, three]
+
+path_one_hint = "images/1_hint.png"
+path_two_hint = "images/2_hint.png"
+path_three_hint = "images/3_hint.png"
+
+one_hint = pygame.image.load(path_one_hint)
+two_hint = pygame.image.load(path_two_hint)
+three_hint = pygame.image.load(path_three_hint)
+
+image_number_hint = [one_hint, two_hint, three_hint]
 
 path_one_highlight = "images/1_2.png"
 path_two_highlight = "images/2_2.png"

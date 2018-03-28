@@ -110,7 +110,7 @@ class Board:
 
         self.islands = islands_list
 
-    def display(self, window, list=[], l_init=-10, k_init=-10):
+    def display(self, window, list=[[], []], l_init=-10, k_init=-10):
 
         sx, sy = case_width, case_height - case_height_margin
         table_but = [[0 for k in range(15)] for k in range(8)]
@@ -138,11 +138,20 @@ class Board:
                     elif c.owner != -1:
                         letter = chr(ord('a')+c.owner)
                         s += letter + ' '
-                        table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
+                        if [l,k] in list[1]:
+                            table_but[k][l] = Button(image_number_hint[c.score - 1], one, pos, 1)
+                        else:
+                            table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
                         table_but[k][l].show(window, [0, 0])
-                        if (k != k_init or l != l_init):
-                            window.blit(image_player[c.owner], (pos[0], pos[1]))
-                    elif [l,k] in list:
+                        if (k!=k_init or l!=l_init):
+                            window.blit(image_player[c.owner], (pos[0],pos[1]))
+                            
+                    elif [l,k] in list[1]:
+                        s += str(c.score) + ' '
+                        table_but[k][l] = Button(image_number_hint[c.score - 1], one, pos, 1)
+                        table_but[k][l].show(window, [0, 0])
+                        
+                    elif [l,k] in list[0]:
                         s += str(c.score) + ' '
                         table_but[k][l] = Button(image_number_highlight[c.score - 1], one, pos, 1)
                         table_but[k][l].show(window, [0, 0])
