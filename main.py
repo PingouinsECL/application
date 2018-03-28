@@ -319,33 +319,53 @@ while hold:
 
             # if a move was found
             if not(fail):
-                save_move(player_number, direction, dist, pawn_number)
                 players[player_number].pawns = pawns
                 x_init,y_init = players[player_number].pawns[pawn_number].x,players[player_number].pawns[pawn_number].y
-                board.cases_tab[y_init][x_init].change_state(0)
                 
                 dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
                 dx, dy = dirs[direction]
-
-                # animating the move
-                for i in range (1, dist + 1):
-                    board.cases_tab[y_init+(i-1)*dy][x_init+(i-1)*dx].change_owner(-1)
-                    board.cases_tab[y_init+i*dy][x_init+i*dx].change_owner(player_number)
-
-                    # refreshing the screen
+                window.blit(background, pos_background)
+                const = 10
+                if y_init%2==0:
+                    x_init_anim=int(x_init/2)
+                if y_init%2==1:
+                    x_init_anim=int((x_init+1)/2-1)+1/2
+                
+                y_copy = y_init
+                # y_init -= y_init*case_height_margin
+                
+                for i in range (1,const*dist+1):
                     window.blit(background, pos_background)
+                    table_but = board.display(window,l_init=x_init,k_init=y_init)
+                    marge = 0
                     
-                    # printint scores
-                    scores = [players[k].score for k in range(len(players))]
-                    display_scores(scores, window)
-
-                    # printing the board
-                    table_button = board.display(window)
+                    
+                    if direction == 0:
+                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim+i/(2*const))*case_width
+                        ,my+(y_init-i/const)*(case_height+marge)))
+                    
+                    elif direction == 1:
+                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim+i/(const))*case_width,my+(y_init)*(case_height+marge)))
+                        
+                    elif direction == 2:
+                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim+i/(2*const))*case_width,my+(y_init+i/const)*(case_height+marge)))
+                        
+                    elif direction == 3:
+                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim-i/(2*const))*case_width,my+(y_init+i/const)*(case_height+marge)))
+                            
+                    elif direction == 4:
+                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim-i/(const))*case_width,my+(y_init)*(case_height+marge)))
+                        
+                    elif direction == 5:
+                        window.blit(image_player_animation[player_number][direction][i%4], (mx+(x_init_anim-i/(2*const))*case_width,my+(y_init-i/const)*(case_height+marge)))
+                        
                     pygame.display.flip()
-
-                    sleep(0.15)
+                    time.sleep(0.05)
 
                 # finally completing the move
+                y_init = y_copy
+                print(y_init)
+                board.cases_tab[y_init][x_init].change_state(0)
                 board.cases_tab[y_init][x_init].change_owner(player_number)
                 players[player_number].pawns[pawn_number].move(board, players[player_number], direction, dist)
             
