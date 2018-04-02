@@ -381,7 +381,7 @@ while hold:
                 players[player_number].pawns[pawn_number].move(board, players[player_number], direction, dist)
                 board.cases_tab[y_init][x_init].change_state(2)
                 # finally completing the move
-                for z in range (1,6):
+                for z in range (1,9):
                     window.blit(background, pos_background)
                     table_but = board.display(window, l_init=x_init, k_init=y_init,z=z)
                     display_scores(scores, window)

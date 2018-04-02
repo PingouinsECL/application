@@ -130,7 +130,7 @@ class Board:
                 if self.cases_tab[k][l] != 0:
                     if k == k_init and l == l_init:
                         c = self.cases_tab[k][l]
-                        pos = [sx * real_l + mx + (k%2)*sx//2, sy * k + my+z*5]
+                        pos = [sx * real_l + mx + (k%2)*sx//2+((-1)**z)*3, sy * k + my+z*5]
                         real_l += 1
     
                         if c.state == 0:
