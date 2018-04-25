@@ -110,8 +110,7 @@ class Board:
 
         self.islands = islands_list
 
-    def display(self, window, list=[[], []], l_init=-10, k_init=-10):
-
+    def display(self, window, list=[[], []], l_init=-10, k_init=-10, z=0):
         sx, sy = case_width, case_height - case_height_margin
         table_but = [[0 for k in range(15)] for k in range(8)]
 
@@ -129,36 +128,71 @@ class Board:
 
             for l in range(0, 15):
                 if self.cases_tab[k][l] != 0:
-                    c = self.cases_tab[k][l]
-                    pos = [sx * real_l + mx + (k%2)*sx//2, sy * k + my]
-                    real_l += 1
-
-                    if c.state == 0:
-                        s += '* '
-                    elif c.owner != -1:
-                        letter = chr(ord('a')+c.owner)
-                        s += letter + ' '
-                        if [l,k] in list[1]:
+                    if k == k_init and l == l_init:
+                        c = self.cases_tab[k][l]
+                        pos = [sx * real_l + mx + (k%2)*sx//2+((-1)**z)*3, sy * k + my+z*5]
+                        real_l += 1
+    
+                        if c.state == 0:
+                            s += '* '
+                        elif c.owner != -1:
+                            letter = chr(ord('a')+c.owner)
+                            s += letter + ' '
+                            if [l,k] in list[1]:
+                                table_but[k][l] = Button(image_number_hint[c.score - 1], one, pos, 1)
+                            else:
+                                table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
+                            if (k!=k_init or l!=l_init):
+                                window.blit(image_player[c.owner], (pos[0],pos[1]))
+                                
+                        elif [l,k] in list[1]:
+                            s += str(c.score) + ' '
                             table_but[k][l] = Button(image_number_hint[c.score - 1], one, pos, 1)
-                        else:
-                            table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
-                        table_but[k][l].show(window, [0, 0])
-                        if (k!=k_init or l!=l_init):
-                            window.blit(image_player[c.owner], (pos[0],pos[1]))
+                            table_but[k][l].show(window, [0, 0])
                             
-                    elif [l,k] in list[1]:
-                        s += str(c.score) + ' '
-                        table_but[k][l] = Button(image_number_hint[c.score - 1], one, pos, 1)
-                        table_but[k][l].show(window, [0, 0])
-                        
-                    elif [l,k] in list[0]:
-                        s += str(c.score) + ' '
-                        table_but[k][l] = Button(image_number_highlight[c.score - 1], one, pos, 1)
-                        table_but[k][l].show(window, [0, 0])
+                        elif [l,k] in list[0]:
+                            s += str(c.score) + ' '
+                            table_but[k][l] = Button(image_number_highlight[c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
+                        else:
+                            s += str(c.score) + ' '
+                            table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
                     else:
-                        s += str(c.score) + ' '
-                        table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
-                        table_but[k][l].show(window, [0, 0])
-
+                        c = self.cases_tab[k][l]
+                        pos = [sx * real_l + mx + (k%2)*sx//2, sy * k + my]
+                        real_l += 1
+    
+                        if c.state == 0:
+                            s += '* '
+                        elif c.owner != -1:
+                            letter = chr(ord('a')+c.owner)
+                            s += letter + ' '
+                            if [l,k] in list[1]:
+                                table_but[k][l] = Button(image_number_hint[c.score - 1], one, pos, 1)
+                            else:
+                                table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
+                            if (k!=k_init or l!=l_init):
+                                window.blit(image_player[c.owner], (pos[0],pos[1]))
+                                
+                        elif [l,k] in list[1]:
+                            s += str(c.score) + ' '
+                            table_but[k][l] = Button(image_number_hint[c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
+                            
+                        elif [l,k] in list[0]:
+                            s += str(c.score) + ' '
+                            table_but[k][l] = Button(image_number_highlight[c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
+                        else:
+                            s += str(c.score) + ' '
+                            table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
+            
             # print(s)
         return table_but
+        
+        
+            

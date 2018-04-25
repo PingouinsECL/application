@@ -4,6 +4,7 @@
         "human",
         "random",
         "maxN_time",
-        "monte_carlo_guided"
+        "monte_carlo_guided",
+        "impaler"
     ]
 }
