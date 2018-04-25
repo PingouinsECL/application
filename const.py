@@ -12,6 +12,9 @@ pos_background = [0, 0]
 
 path_logo = "images/logo.png"
 
+path_club_jeu = "images/club.png"
+pos_club = [720, 550]
+
 path_play = "images/jouer.png"
 path_play_hover = "images/jouer_hover.png"
 pos_play = [310, 340]
