@@ -1,7 +1,9 @@
 import pygame
 from pygame.locals import *
 from const import *
+from button import *
 from display_scores import *
+from ai_maxN_time import *
 
 def ai_human(board, players, display, player_number, list_active_pawns, window, background, pos_background):
 
@@ -50,10 +52,17 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
         else:
             return -1, -1
         
-    def list_access(pawn):
-        access=pawn.accessibles
+    def list_access(pawn,access=[]):
+        if access == []:
+            access=pawn.accessibles
+            dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
+            list=[]
+            for i in range(6):
+                for h in range(access[i]+1):
+                    list.append([pawn.x+h*dirs[i][0],pawn.y+h*dirs[i][1]])
+            return(list)
         dirs = [[1, -1], [2, 0], [1, 1], [-1, 1], [-2, 0], [-1, -1]]
-        list=[]
+        list=[[pawn.x,pawn.y]]
         for i in range(6):
             for h in range(access[i]+1):
                 list.append([pawn.x+h*dirs[i][0],pawn.y+h*dirs[i][1]])
@@ -74,19 +83,27 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
         pawn_number = 100
         direction = -1
         dist = -1
+        hint_image = pygame.image.load(path_hint).convert()
+        hint_image_hover = pygame.image.load(path_hint_hover).convert()
+        hint_but = Button(hint_image, hint_image_hover, pos_hint, 0)
+        hint = False
+        hinted_cases=[]
+        cursor = [0, 0]
 
         while (pawn_number < 0 or pawn_number > number_pawns):
             
             scores = [player.score for player in players]
             
             window.blit(background, pos_background)
-            board.display(window)
+            board.display(window,list=[[],hinted_cases])
             display_scores(scores, window)
+            hint_but.show(window,cursor)
             pygame.display.flip()
 
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
-                    x_pawn, y_pawn = getCase(event.pos)
+                    cursor = event.pos
+                    x_pawn, y_pawn = getCase(cursor)
                     case_pawn = board.cases_tab[y_pawn][x_pawn]
                     if case_pawn != 0 and case_pawn.owner == player_number:
                         pawn_number = getPawnNumber(case_pawn)
@@ -95,22 +112,37 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
                             # print("Pion selectionne")
                         else:
                             pawn_number = 100
+                    if hint_but.hover(cursor):
+                        hint = True
+                        if hinted_cases == []:
+                            h_direction, h_dist, h_pawn_number = ai_maxN_time(board, players, player_number, 3)
+                            for i in range(number_pawns):
+                                players[player_number].pawns[i].compute_accessible(board)
+                            access=[0,0,0,0,0,0]
+                            access[h_direction]=h_dist
+                            hinted_cases=list_access(players[player_number].pawns[h_pawn_number],access)
+                        
+                elif event.type == MOUSEMOTION:
+                    cursor = event.pos
+                    
+            
                     # else:
                         # print('Case invalide')
 
         while not(restart) and (dist < 0 or direction < 0):
-            
+
             scores = [player.score for player in players]
 
             window.blit(background, pos_background)
-            board.display(window, list=list_access(players[player_number].pawns[pawn_number]))
+            board.display(window,list=[list_access(players[player_number].pawns[pawn_number]),hinted_cases])
             display_scores(scores, window)
+            hint_but.show(window,cursor)
             pygame.display.flip()
             
             for event in pygame.event.get():
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
-                    
-                    x_aim, y_aim = getCase(event.pos)
+                    cursor = event.pos
+                    x_aim, y_aim = getCase(cursor)
                     case_aim = board.cases_tab[y_aim][x_aim]
 
                     if case_aim != 0:
@@ -130,12 +162,22 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
                             if pawn_number not in list_active_pawns :
                                 restart = True
                                 pawn_number = 100
-                    
+                    elif hint_but.hover(cursor):
+                        hint = True
+                        if hinted_cases == []:
+                            h_direction, h_dist, h_pawn_number = ai_maxN_time(board, players, player_number, 3)
+                            for i in range(number_pawns):
+                                players[player_number].pawns[i].compute_accessible(board)
+                            access=[0,0,0,0,0,0]
+                            access[h_direction]=h_dist
+                            hinted_cases=list_access(players[player_number].pawns[h_pawn_number],access)
                     else:
                         # print("Case invalide. Sélection du pion")
                         restart = True
                         pawn_number = 100
                         direction = -1
                         dist = -1
+                elif event.type == MOUSEMOTION:
+                    cursor = event.pos
         
     return direction, dist, pawn_number

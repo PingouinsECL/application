@@ -24,6 +24,10 @@ path_sound = "images/sound_on.jpg"
 path_mute = "images/sound_off.jpg"
 pos_sound = [760, 13]
 
+path_hint="images/hint.png"
+path_hint_hover="images/hint_highlight.png"
+pos_hint = [10, 300]
+
 # TUTORIAL MODE
 
 path_background_tutorial = "images/tutorial.jpg"
@@ -254,24 +258,34 @@ animation_speed = 0.05
 pannel = "images/tile.jpg"
 p = pygame.image.load(pannel)
 
-case_height = 70
-case_height_margin = 19
-case_width = 61
+case_height = 100
+case_height_margin = 45
+case_width = 87
 
 mx = (back_width - 8*case_width)//2
-my = (back_height - 8*case_height)//2
+my = (back_height - 5*case_height)//2
 
 # PAWNS
 
-path_one = "images/1.png"
-path_two = "images/2.png"
-path_three = "images/3.png"
+path_one = "images/case1.png"
+path_two = "images/case2.png"
+path_three = "images/case3.png"
 
 one = pygame.image.load(path_one)
 two = pygame.image.load(path_two)
 three = pygame.image.load(path_three)
 
 image_number = [one, two, three]
+
+path_one_hint = "images/1_hint.png"
+path_two_hint = "images/2_hint.png"
+path_three_hint = "images/3_hint.png"
+
+one_hint = pygame.image.load(path_one_hint)
+two_hint = pygame.image.load(path_two_hint)
+three_hint = pygame.image.load(path_three_hint)
+
+image_number_hint = [one_hint, two_hint, three_hint]
 
 path_one_highlight = "images/1_2.png"
 path_two_highlight = "images/2_2.png"

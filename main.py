@@ -279,14 +279,16 @@ while hold:
         player_number = number_turn % number_players
 
         # refreshing the window
-        window.blit(background, pos_background)
-
-        # printing the scores
         scores = [players[k].score for k in range(len(players))]
-        display_scores(scores, window)
+        
+        window.blit(background, pos_background)
 
         # printing the board
         table_button = board.display(window)
+        
+        # printing the scores
+        display_scores(scores, window)
+        
         pygame.display.flip()
 
         # computing islands and removing unaccessible cases
@@ -374,11 +376,20 @@ while hold:
 
                     pygame.display.flip()
                     time.sleep(0.05)
-
+                    
+                
+                players[player_number].pawns[pawn_number].move(board, players[player_number], direction, dist)
+                board.cases_tab[y_init][x_init].change_state(2)
                 # finally completing the move
+                for z in range (1,9):
+                    window.blit(background, pos_background)
+                    table_but = board.display(window, l_init=x_init, k_init=y_init,z=z)
+                    display_scores(scores, window)
+                    pygame.display.flip()
+                    time.sleep(0.05)
+                
                 board.cases_tab[y_init][x_init].change_state(0)
                 board.cases_tab[y_init][x_init].change_owner(player_number)
-                players[player_number].pawns[pawn_number].move(board, players[player_number], direction, dist)
 
             # if no move was found
             else:
