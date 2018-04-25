@@ -5,8 +5,10 @@ from init_random import *
 from init_human import *
 from init_maxN_time import *
 from init_monte_carlo_guided import *
+from init_impaler import *
 
 from init_lexicographic import *
+from init_sum import *
 
 def init_position(board, players, display, window, background, pos_background):
 
@@ -35,6 +37,10 @@ def init_position(board, players, display, window, background, pos_background):
             """
             if mode == 0:
                 x, y = init_human(board, l, display)
+            elif mode == 3:
+                x,y=init_sum(board)
+            elif mode==1:
+                x,y=init_impaler(board,players,0)
             else:
                 x, y = init_lexicographic(board)
 

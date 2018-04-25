@@ -8,8 +8,8 @@ class Pawn:
     """
 
     def __init__(self, id_player):
-        self.x = 0
-        self.y = 0
+        self.x = -1
+        self.y = -1
         self.id = id_player
         self.accessibles = None
         self.active = True

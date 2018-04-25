@@ -1,5 +1,5 @@
 from time import clock
-from random import randint
+from random import choice
 
 def ai_maxN_time (board, players, player_number, t_max) :
     """
@@ -105,7 +105,7 @@ def ai_maxN_time (board, players, player_number, t_max) :
                             if d == d_max :
                                 action = [[j, k, i]]
                             v = [w[:]]
-        return (action[randint(0, len(v)-1)] if d == d_max else v[randint(0, len(v)-1)])
+        return (choice(action) if d == d_max else choice(v))
     
     d_max = 1
     action = max_value (player_number, d_max, sum)
