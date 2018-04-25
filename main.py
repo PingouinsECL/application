@@ -55,6 +55,7 @@ window = pygame.display.set_mode((0, 0))
 icon = pygame.image.load(path_icon).convert()
 background = pygame.image.load(path_background).convert()
 logo = pygame.image.load(path_logo)
+club = pygame.image.load(path_club_jeu)
 
 play = pygame.image.load(path_play).convert()
 play_hover = pygame.image.load(path_play_hover).convert()
@@ -135,6 +136,7 @@ while hold:
         # displaying background
         window.blit(background, pos_background)
         window.blit(logo, pos_logo)
+        window.blit(club, pos_club)
 
         # creating cursor if not exists
         if not('cursor' in locals() or 'cursor' in globals()):
