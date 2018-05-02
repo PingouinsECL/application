@@ -399,10 +399,10 @@ while hold:
                     ycur = int(ycur)
 
                     if p == 1 :
-                        window.blit(image_player_animation_sliding[player_number][direction], (xcur, ycur))
+                        window.blit(image_player_animation_sliding[player_number][direction], (xcur+offset_x, ycur))
                         
                     else :
-                        window.blit(image_player_animation[player_number][direction][i%4], (xcur, ycur))
+                        window.blit(image_player_animation[player_number][direction][i%4], (xcur+offset_x, ycur))
                     pygame.display.flip()
                     time.sleep(0.05)
                     
