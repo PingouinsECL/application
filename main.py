@@ -2,6 +2,7 @@
 
 import pygame
 from pygame.locals import *
+import numpy as np
 
 import sys
 from time import time, sleep
@@ -69,29 +70,29 @@ mute = pygame.image.load(path_mute).convert()
 background_tutorial = pygame.image.load(path_background_tutorial).convert()
 back = pygame.image.load(path_back).convert()
 
-choices = []
-for path_choice in path_choice_array:
-    choices.append(pygame.image.load(path_choice).convert())
+choices = [pygame.image.load(path_choice).convert() for path_choice in path_choice_array]
+choices_impaler = [pygame.image.load(path_impaler).convert() for path_impaler in path_impaler_array]
+void = pygame.image.load(path_void).convert()
 
 end_choice = pygame.image.load(path_end_choice).convert()
 back_to_menu = pygame.image.load(path_back_to_menu).convert()
 configuration = [0]*4
-
-#loading songs
-pygame.mixer.music.load("musique.wav")
-poc = pygame.mixer.Sound("poc.wav")
+configuration_impaler = [0]*4
 
 # Creating buttons
 but_play = Button(play, play_hover, pos_play, 0)
 but_tuto = Button(tuto, tuto_hover, pos_tuto, 0)
-but_sound = Button(sound, sound, pos_sound, 0)
-but_mute = Button(mute, mute, pos_sound, 0)
+but_sound = Button(sound, mute, pos_sound, 0)
 but_back = Button(back, back, pos_back, 0)
 
 but_choice0 = Button(choices[0], choices[0], pos_choice0, 0)
 but_choice1 = Button(choices[0], choices[0], pos_choice1, 0)
 but_choice2 = Button(choices[0], choices[0], pos_choice2, 0)
 but_choice3 = Button(choices[0], choices[0], pos_choice3, 0)
+but_choice_impaler0 = Button(void, void, pos_choice_impaler0, 0)
+but_choice_impaler1 = Button(void, void, pos_choice_impaler1, 0)
+but_choice_impaler2 = Button(void, void, pos_choice_impaler2, 0)
+but_choice_impaler3 = Button(void, void, pos_choice_impaler3, 0)
 but_end_choice = Button(end_choice, end_choice, pos_end_choice, 0)
 but_back_to_menu = Button(back_to_menu, back_to_menu, pos_back_to_menu, 0)
 
@@ -135,10 +136,7 @@ while hold:
     """
         DECIDE TO PLAY GAME OR TUTORIAL
     """
-    
-    pygame.mixer.music.play()
-    pygame.mixer.music.set_volume(0.7) 
-    i = 0
+
     while mode_home:
 
         # displaying background
@@ -166,16 +164,6 @@ while hold:
                 elif but_tuto.hover(cursor):
                     mode_home = 0
                     mode_tuto = 1
-                elif but_sound.hover(cursor) and i%2 == 0:
-                    pygame.mixer.music.stop()
-                    but_sound.modify_image(mute)
-                    i+=1
-                elif but_sound.hover(cursor) and i%2 == 1:
-                    pygame.mixer.music.play()
-                    but_sound.modify_image(sound)
-                    i+=1
-                
-                    
 
             elif event.type == MOUSEMOTION:
                 cursor = event.pos
@@ -217,7 +205,6 @@ while hold:
     """
 
     while mode_choice:
-
         # displaying background and buttons
         window.blit(background, pos_background)
         window.blit(logo, pos_logo)
@@ -225,25 +212,57 @@ while hold:
         but_choice1.show(window, pos_choice1)
         but_choice2.show(window, pos_choice2)
         but_choice3.show(window, pos_choice3)
+        but_choice_impaler0.show(window, pos_choice_impaler0)
+        but_choice_impaler1.show(window, pos_choice_impaler1)
+        but_choice_impaler2.show(window, pos_choice_impaler2)
+        but_choice_impaler3.show(window, pos_choice_impaler3)
         but_end_choice.show(window, pos_end_choice)
         pygame.display.flip()
-
+        
         for event in pygame.event.get():
-
+            window.blit(background, pos_background)
             if event.type == MOUSEBUTTONDOWN and event.button == 1:
                 cur = event.pos
                 if but_choice0.hover(cur):
                     configuration[0] = (configuration[0] + 1) % len(choices)
                     but_choice0.modify_image(choices[configuration[0]])
+                    if configuration[0] == 5 :
+                        but_choice_impaler0.modify_image(choices_impaler[configuration_impaler[0]])
+                    if configuration[0] != 5 :
+                        but_choice_impaler0.modify_image(void)
                 if but_choice1.hover(cur):
                     configuration[1] = (configuration[1] + 1) % len(choices)
                     but_choice1.modify_image(choices[configuration[1]])
+                    if configuration[1] == 5 :
+                        but_choice_impaler1.modify_image(choices_impaler[configuration_impaler[1]])
+                    if configuration[1] != 5 :
+                        but_choice_impaler1.modify_image(void)
                 if but_choice2.hover(cur):
                     configuration[2] = (configuration[2] + 1) % len(choices)
                     but_choice2.modify_image(choices[configuration[2]])
+                    if configuration[2] == 5 :
+                        but_choice_impaler2.modify_image(choices_impaler[configuration_impaler[2]])
+                    if configuration[2] != 5 :
+                        but_choice_impaler2.modify_image(void)
                 if but_choice3.hover(cur):
                     configuration[3] = (configuration[3] + 1) % len(choices)
                     but_choice3.modify_image(choices[configuration[3]])
+                    if configuration[3] == 5 :
+                        but_choice_impaler3.modify_image(choices_impaler[configuration_impaler[3]])
+                    if configuration[3] != 5 :
+                        but_choice_impaler3.modify_image(void)
+                if configuration[0] == 5 and but_choice_impaler0.hover(cur) :
+                    configuration_impaler[0] = (configuration_impaler[0] + 1) % len(choices_impaler)
+                    but_choice_impaler0.modify_image(choices_impaler[configuration_impaler[0]])
+                if configuration[1] == 5 and but_choice_impaler1.hover(cur) :
+                    configuration_impaler[1] = (configuration_impaler[1] + 1) % len(choices_impaler)
+                    but_choice_impaler1.modify_image(choices_impaler[configuration_impaler[1]])
+                if configuration[2] == 5 and but_choice_impaler2.hover(cur) :
+                    configuration_impaler[2] = (configuration_impaler[2] + 1) % len(choices_impaler)
+                    but_choice_impaler2.modify_image(choices_impaler[configuration_impaler[2]])
+                if configuration[3] == 5 and but_choice_impaler3.hover(cur) :
+                    configuration_impaler[3] = (configuration_impaler[3] + 1) % len(choices_impaler)
+                    but_choice_impaler3.modify_image(choices_impaler[configuration_impaler[3]])
                 if but_end_choice.hover(cur):
                     mode_choice = 0
                     mode_init = 1
@@ -267,11 +286,16 @@ while hold:
             number_players += (mode > 0)
 
         pawns_per_player = 2 + 4 - number_players
-
-        for mode in configuration:
-            if mode > 0:
-                mode_player = mode - 1
+        
+        adversary_numbers = []
+        for mode in range(len(configuration)) :
+            if configuration[mode] > 0:
+                mode_player = configuration[mode] - 1
                 players.append(Player(mode_player, pawns_per_player))
+                if configuration[mode] == 5 :
+                    adversary_numbers.append(configuration_impaler[mode])
+                else :
+                    adversary_numbers.append(1)
         initial_players = players
 
         # printing the board
@@ -312,32 +336,11 @@ while hold:
         pygame.display.flip()
 
         # computing islands and removing unaccessible cases
-        board.compute_islands()
-        for island in board.islands:
-            occupiers, island_cases, score = island
-            if occupiers == []:
-                for (x, y) in island_cases:
-                    board.cases_tab[y][x].change_state(0)
-            if len(occupiers) == 1 and len(island_cases)!=1:
-                pawns_on_island = []
-                calc = False
-                for i in range(len(players[occupiers[0]].pawns)):
-                    pawn = players[occupiers[0]].pawns[i]
-                    if (pawn.x,pawn.y) in island_cases:
-                        if pawn.isolate == False:
-                            pawn.isolate = True
-                            pawns_on_island.append(i)
-                        else:
-                            calc = True
-                            break
-                if not calc:
-                    m_island = max_island(board,players,occupiers[0],pawns_on_island, score)
-                    for i in pawns_on_island:
-                        players[occupiers[0]].pawns[i].remaining_actions = m_island
+        update_islands(board, players, False)
 
         # selecting the move if pawns left
         if players_lost[player_number] != 1:
-            fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number, players_lost, window, background, pos_background)
+            fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number, players_lost, window, background, pos_background, adversary_numbers)
 
             # if a move was found
             if not(fail):
@@ -369,6 +372,8 @@ while hold:
                 # Animation
 
                 animation_number = animation_number_unit * dist
+                
+                p=np.random.binomial(1,proba_sliding)
 
                 for i in range(animation_number + 1):
 
@@ -379,6 +384,7 @@ while hold:
                     display_scores(scores, window)
 
                     table_but = board.display(window, l_init=x_init, k_init=y_init)
+                    
 
                     # Dynamic printings
                     alpha = i / animation_number
@@ -392,8 +398,11 @@ while hold:
                     ycur += my
                     ycur = int(ycur)
 
-                    window.blit(image_player_animation[player_number][direction][i%4], (xcur, ycur))
-
+                    if p == 1 :
+                        window.blit(image_player_animation_sliding[player_number][direction], (xcur, ycur))
+                        
+                    else :
+                        window.blit(image_player_animation[player_number][direction][i%4], (xcur, ycur))
                     pygame.display.flip()
                     time.sleep(0.05)
                     
@@ -432,7 +441,6 @@ while hold:
 
             if event.type == MOUSEBUTTONDOWN and event.button == 1:
                 play = 1
-               
 
 
     # RESULTS
@@ -444,7 +452,9 @@ while hold:
             show_scores = 0
 
             window.blit(background, pos_background)
-            window.blit(logo, pos_logo)
+            board.display_end(window)
+            scores = [players[k].score for k in range(len(players))]
+            display_scores(scores, window)
             pygame.display.flip()
 
             scores = [[players[k].score, k] for k in range(len(players))]
@@ -470,12 +480,12 @@ while hold:
             font = pygame.font.SysFont("plantagenetcherokee", 72)
             text = font.render(phrase, True, (128, 0, 0))
 
-            score = 'Score : ' + str(max_score)
-            sc = font.render(score, True, (128,0,0))
+            # score = 'Score : ' + str(max_score)
+            # sc = font.render(score, True, (128,0,0))
 
             w, h = pygame.display.get_surface().get_size()
-            window.blit(text, ((w - text.get_width()) //2 , (h - text.get_height()) // 2))
-            window.blit(sc, ((w - text.get_width()) //2 +50 , (h - text.get_height()) // 2+70))
+            window.blit(text, ((w - text.get_width()) //2 , 0))
+            # window.blit(sc, ((w - text.get_width()) //2 +50 , (h - text.get_height()) // 2+70))
             pygame.display.flip()
 
         but_back_to_menu.show(window, pos_back_to_menu)
