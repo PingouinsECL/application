@@ -35,14 +35,6 @@ class Button:
     def hover(self, cur):
         x_cur, y_cur = cur
 
-        """
-        xc, yc = self.x+a/2, self.y+a/2
-        h=sqrt(2)*a/(2+sqrt(2)) 
-        # when hovered
-        if self.type == 1:
-            return xc-a/2<= x_cur <= xc+a/2  and yc-a/2 <= y_cur <= yc+a/2 and y_cur >= -x_cur + yc +xc - (a+h)/2 and y_cur >= x_cur + yc - xc - (a+h)/2 and y_cur <= -x_cur + yc +xc + (a+h)/2 and y_cur <= x_cur + yc -xc +(a+h)/2
-        """ 
-
         if self.type == 1:
             a = self.background.get_height()/2
             h = 3**0.5 * a / 2

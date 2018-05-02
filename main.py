@@ -251,6 +251,7 @@ while hold:
                         but_choice_impaler3.modify_image(choices_impaler[configuration_impaler[3]])
                     if configuration[3] != 5 :
                         but_choice_impaler3.modify_image(void)
+                        
                 if configuration[0] == 5 and but_choice_impaler0.hover(cur) :
                     configuration_impaler[0] = (configuration_impaler[0] + 1) % len(choices_impaler)
                     but_choice_impaler0.modify_image(choices_impaler[configuration_impaler[0]])

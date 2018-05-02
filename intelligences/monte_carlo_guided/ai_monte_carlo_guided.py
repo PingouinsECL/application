@@ -131,7 +131,7 @@ def UTC(rootboard, rootplayers, rootplayernumber, list_isolated_pawns, itermax, 
         ###### SI ON A GAGNE OU PERDU
         ######
         result = compute_output(make_input(players_copy, board_copy, rootplayernumber))
-        numberLeft, scoreLeft = board_copy.casesStat()
+        numberLeft, scoreLeft = board_copy.cases_stat()
 
         ###### mode uniforme
         anticipatedScore = int(scoreLeft / (numberLeft+1) * result)

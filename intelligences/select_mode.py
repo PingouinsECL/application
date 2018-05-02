@@ -17,8 +17,6 @@ def select_mode(board, players, display, player_number, players_lost, window, ba
     for i in range(number_pawns):
         for k in range(len(players)):
             players[k].pawns[i].compute_accessible(board)
-            # if not(players[k].pawns[i].remain):
-                # print('Le pion ' + str(i) + ' du joueur ' + str(player_number) + ' TOMBE à l\'eau')
 
     list_active_pawns = []
     list_isolated_pawns = []
@@ -31,7 +29,6 @@ def select_mode(board, players, display, player_number, players_lost, window, ba
                 list_isolated_pawns.append(k)
 
     # selection of the game mode
-
     fail = (len(list_active_pawns) == 0 and len(list_isolated_pawns) == 0)
 
     if fail:

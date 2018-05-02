@@ -60,7 +60,7 @@ class Board:
         self.cases_tab = cases_tab
         self.compute_islands()
 
-    def casesStat(self):
+    def cases_stat(self):
         numberLeft = 0
         scoreLeft = 0
         for i in range(0, 8):

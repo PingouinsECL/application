@@ -24,11 +24,12 @@ def display_scores(scores, window):
     window.blit(sc, (100,40))
     window.blit(image_player[0], (10,15))
 
-    window.blit(p, (675,3))
-    window.blit(text1, (682, 10))
-    sc = font.render(str(scores[1]), True, (128, 0, 0))
-    window.blit(sc, (717,40))
-    window.blit(image_player[1], (765,15))
+    if number_players >= 2:
+        window.blit(p, (675,3))
+        window.blit(text1, (682, 10))
+        sc = font.render(str(scores[1]), True, (128, 0, 0))
+        window.blit(sc, (717,40))
+        window.blit(image_player[1], (765,15))
 
     if number_players >= 3:
         window.blit(p, (3,588))
@@ -36,6 +37,7 @@ def display_scores(scores, window):
         sc = font.render(str(scores[2]), True, (128, 0, 0))
         window.blit(sc , (100, 623))
         window.blit(image_player[2], (10, 600))
+        
     if number_players == 4:
         window.blit(p, (675,588))
         window.blit(text3, (682, 595))

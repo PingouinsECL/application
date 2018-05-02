@@ -27,51 +27,40 @@ class Pawn:
         5 -> upper left (-1, -1)
         """
 
+        # adding score and owned and changing state
+
         player.score += board.cases_tab[self.y][self.x].score
         player.owned += 1
         board.cases_tab[self.y][self.x].change_state(0)
 
-        if direction == 0:
-            self.x += distance
-            self.y -= distance
-        elif direction == 1:
-            self.x += 2*distance
-        elif direction == 2:
-            self.x += distance
-            self.y += distance
-        elif direction == 3:
-            self.x -= distance
-            self.y += distance
-        elif direction == 4:
-            self.x -= 2*distance
-        elif direction == 5:
-            self.x -= distance
-            self.y -= distance
+        # moving the pawn
 
+        dirs = [(1, -1), (2, 0), (1, 1), (-1, 1), (-2, 0), (-1, -1)]
+        dx, dy = dirs[direction]
+        self.x += distance * dx
+        self.y += distance * dy
+
+        # changing the state of the new case
+        
         board.cases_tab[self.y][self.x].change_state(2)
         board.cases_tab[self.y][self.x].owner = self.id
 
     def anti_move (self, board, player, direction, distance) :
+
+        # restoring case state and owned
+
         board.cases_tab[self.y][self.x].change_state(1)
         player.owned -= 1
         board.cases_tab[self.y][self.x].owner = -1
-        
-        if direction == 0:
-            self.x -= distance
-            self.y += distance
-        elif direction == 1:
-            self.x -= 2*distance
-        elif direction == 2:
-            self.x -= distance
-            self.y -= distance
-        elif direction == 3:
-            self.x += distance
-            self.y -= distance
-        elif direction == 4:
-            self.x += 2*distance
-        elif direction == 5:
-            self.x += distance
-            self.y += distance
+
+        # moving the pawn back to its original position
+
+        dirs = [(1, -1), (2, 0), (1, 1), (-1, 1), (-2, 0), (-1, -1)]
+        dx, dy = dirs[direction]
+        self.x -= distance * dx
+        self.y -= distance * dy
+
+        # updating the score and case state
 
         player.score -= board.cases_tab[self.y][self.x].score
         board.cases_tab[self.y][self.x].change_state(2)
@@ -82,17 +71,17 @@ class Pawn:
         board.cases_tab[pos_y][pos_x].change_state(2)
         board.cases_tab[pos_y][pos_x].owner = self.id
 
-    def anti_place (self, board) :
+    def anti_place(self, board) :
         board.cases_tab[self.y][self.x].change_state (1)
         board.cases_tab[self.y][self.x].owner = -1
         self.x = -1
         self.y = -1
 
     def compute_accessible(self, board):
-
         """
-        we try each direction one after another and collect the data under the format
-        [a, b, c, d, e, f] where each letter accounts for the number of reachable (inclusive) cases in the given direction
+            we try each direction one after another and collect the data under the format
+            [a, b, c, d, e, f] where each letter accounts for the number of 
+            reachable (inclusive) cases in the given direction
         """
 
         if self.active:
