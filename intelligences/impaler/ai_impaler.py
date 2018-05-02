@@ -1,4 +1,5 @@
 from ai_maxN_time import *
+tmax = 3
 
 def ai_impaler (board, players, player_number, adversary_number, list_active_pawns) :
     """
@@ -79,7 +80,10 @@ def ai_impaler (board, players, player_number, adversary_number, list_active_paw
     targets = [] # (c, [(x,y)]) is adjacency cases of pawn c
     places = [] # Number of escapes for each pawn
     for c in range(nb_pawns) :
-        a = adjacence(players[adversary_number].pawns[c].x, players[adversary_number].pawns[c].y)
+        try :
+            a = adjacence(players[adversary_number].pawns[c].x, players[adversary_number].pawns[c].y)
+        except IndexError :
+            return ai_maxN_time (board, players, player_number, tmax)
         targets.append((c, a))
         places.append((len(a), c))
     
@@ -147,4 +151,4 @@ def ai_impaler (board, players, player_number, adversary_number, list_active_paw
         return [j, k, attacker]
     
     # If no attack has been found : maxn
-    return ai_maxN_time (board, players, player_number, 3)
+    return ai_maxN_time (board, players, player_number, tmax)
