@@ -144,7 +144,7 @@ class Board:
                                 table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
                             table_but[k][l].show(window, [0, 0])
                             if (k!=k_init or l!=l_init):
-                                window.blit(image_player[c.owner], (pos[0],pos[1]))
+                                window.blit(image_player[c.owner], (pos[0]+offset_x,pos[1]))
                                 
                         elif [l,k] in list[1]:
                             s += str(c.score) + ' '
@@ -175,7 +175,7 @@ class Board:
                                 table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
                             table_but[k][l].show(window, [0, 0])
                             if (k!=k_init or l!=l_init):
-                                window.blit(image_player[c.owner], (pos[0],pos[1]))
+                                window.blit(image_player[c.owner], (pos[0]+offset_x,pos[1]))
                                 
                         elif [l,k] in list[1]:
                             s += str(c.score) + ' '

@@ -335,6 +335,8 @@ animation_number_unit = 10
 animation_speed = 0.5
 proba_sliding = 0.5
 
+offset_x = 20
+
 # TILES
 
 pannel = "images/tile.jpg"
