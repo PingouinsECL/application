@@ -1,4 +1,4 @@
-from random import choice    
+from random import choice
 from init_random import *
 
 def init_impaler (board, players, adversary_number) :
@@ -18,7 +18,7 @@ def init_impaler (board, players, adversary_number) :
                     ad.append((x+dx, y+dy))
             except :
                 pass
-        return (ad)
+        return ad
     
     def path_to (case) :
         """
@@ -34,7 +34,7 @@ def init_impaler (board, players, adversary_number) :
                         ad.append((x+i*dx, y+i*dy))
                 except :
                     pass
-        return (ad)
+        return ad
     
     targets = [(pawn.x, pawn.y) for pawn in players[adversary_number].pawns]
     attacks = {}

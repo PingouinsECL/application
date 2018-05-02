@@ -20,7 +20,7 @@ def ai_impaler (board, players, player_number, adversary_number, list_active_paw
                     ad.append((x+dx, y+dy))
             except AttributeError :
                 pass
-        return (ad)
+        return ad
     
     def path_to (case) :
         """
@@ -37,7 +37,7 @@ def ai_impaler (board, players, player_number, adversary_number, list_active_paw
                         ad.append((x+i*dx, y+i*dy))
                 except AttributeError :
                     pass
-        return (ad)
+        return ad
 
     def list_access (pawn) :
         """
@@ -49,7 +49,7 @@ def ai_impaler (board, players, player_number, adversary_number, list_active_paw
         for i in range(6) :
             for h in range(1, pawn.accessibles[i]+1) :
                 list.append([pawn.x+h*dirs[i][0],pawn.y+h*dirs[i][1]])
-        return(list)
+        return list
     
     def getDirDist(x_pawn, y_pawn, x_aim, y_aim) :
         """

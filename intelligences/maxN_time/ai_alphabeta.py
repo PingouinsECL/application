@@ -12,7 +12,7 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
         Return a boolean telling if the given time is elapsed.
         """
         nonlocal t_f
-        return (clock() > t_f)
+        return clock() > t_f
     
     def evaluate () :
         """
@@ -23,7 +23,7 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
         for q in range (len(players[player_number].pawns)) :
             value += board.cases_tab[players[player_number].pawns[q].y][players[player_number].pawns[q].x].score
             value -= board.cases_tab[players[adversary_number].pawns[q].y][players[adversary_number].pawns[q].x].score
-        return (value)
+        return value
 
     def max_value (d, min, max, r = 0, root = False) :
         """
@@ -31,9 +31,9 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
         """
         nonlocal board, players, player_number, nb_pawns
         if d == 0 or r == 2 :
-            return (evaluate ())
+            return evaluate ()
         if terminate () :
-            return (None)
+            return
 
         iu = 0
         players[player_number].pawns[iu].compute_accessible_like (board)
@@ -42,31 +42,31 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
             if iu < nb_pawns :
                 players[player_number].pawns[iu].compute_accessible_like (board)
         if iu ==  nb_pawns :
-            return (min_value (d-1, min, max, r = r + 1))
+            return min_value (d-1, min, max, r = r + 1)
         
         acce = players[player_number].pawns[iu].accessibles[:]
         v = min
         
-        for i in range(iu, nb_pawns) :
+        for i in range (iu, nb_pawns) :
             if i != iu :
                 players[player_number].pawns[i].compute_accessible_like (board)
                 acce = players[player_number].pawns[i].accessibles
-            for j in range(len(acce)) :
+            for j in range (len(acce)) :
                 for k in range (1,acce[j]+1) :
                     if terminate () :
-                        return (None)
+                        return
                     players[player_number].pawns[i].move (board, players[player_number], j, k)
                     w = min_value (d-1, v, max)
                     players[player_number].pawns[i].anti_move (board, players[player_number], j, k)
                     if w == None :
-                        return (None)
+                        return
                     if v < w : # rajouter un choix en cas d'égalité ? choix aléatoire ?
                         v = w
                         if v > max :
                             return max
                         if root :
                             action = [j, k, i]
-        return (action if root else v)
+        return action if root else v
     
     def min_value (d, min, max, r = 0) :
         """
@@ -74,9 +74,9 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
         """
         nonlocal board, players, adversary_number, nb_pawns
         if d == 0 or r == 2 :
-            return (evaluate ())
+            return evaluate ()
         if terminate () :
-            return (None)
+            return
 
         iu = 0
         players[adversary_number].pawns[iu].compute_accessible_like (board)
@@ -85,7 +85,7 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
             if iu < nb_pawns :
                 players[adversary_number].pawns[iu].compute_accessible_like (board)
         if iu ==  nb_pawns :
-            return (min_value (d-1, min, max, r = r + 1))
+            return min_value (d-1, min, max, r = r + 1)
         
         acce = players[adversary_number].pawns[iu].accessibles[:]
         v = max
@@ -94,20 +94,20 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
             if i != iu :
                 players[adversary_number].pawns[i].compute_accessible_like (board)
                 acce = players[adversary_number].pawns[i].accessibles
-            for j in range(len(acce)) :
+            for j in range (len(acce)) :
                 for k in range (1,acce[j]+1) :
                     if terminate () :
-                        return (None)
+                        return
                     players[adversary_number].pawns[i].move (board, players[adversary_number], j, k)
                     w = max_value (d-1, min, v)
                     players[adversary_number].pawns[i].anti_move (board, players[adversary_number], j, k)
                     if w == None :
-                        return (None)
+                        return
                     if v > w : # rajouter un choix en cas d'égalité ? choix aléatoire ?
                         v = w
                         if v < min :
                             return min
-        return (v)
+        return v
     
     d_max = 1
     action = max_value (d_max, -float('inf'), float('inf'), root = True)
@@ -116,4 +116,4 @@ def ai_alphabeta (board, players, player_number, adversary_number, t_max) :
         ac = max_value (d_max, -float('inf'), float('inf'), root = True)
         if ac != None :
             action = ac
-    return (action)
+    return action

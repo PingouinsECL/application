@@ -307,11 +307,23 @@ path_choice4 = "images/monte_carlo_guided.png"
 path_choice5 = "images/impaler.png"
 path_choice_array = [path_choice0, path_choice1, path_choice2, path_choice3, path_choice4, path_choice5]
 
+path_impaler0 = "images/nombre_0.png"
+path_impaler1 = "images/nombre_1.png"
+path_impaler2 = "images/nombre_2.png"
+path_impaler3 = "images/nombre_3.png"
+path_impaler_array = [path_impaler0, path_impaler1, path_impaler2, path_impaler3]
+
+path_void = "images/void.png"
+
 path_end_choice = "images/play.png"
 pos_choice0 = [170, 210]
 pos_choice1 = [430, 210]
 pos_choice2 = [170, 315]
 pos_choice3 = [430, 315]
+pos_choice_impaler0 = [70, 210]
+pos_choice_impaler1 = [650, 210]
+pos_choice_impaler2 = [70, 315]
+pos_choice_impaler3 = [650, 315]
 pos_end_choice = [300, 435]
 
 # LAST SCREEN

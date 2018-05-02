@@ -46,7 +46,7 @@ def select_mode(board, players, display, player_number, players_lost, window, ba
                 return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)
 
             elif mode == 2:
-                tmax = 10
+                tmax = 4
                 if sum(players_lost[:len(players)]) == len(players) - 2:
                     adversary_number = 0
                     b = adversary_number != player_number and players_lost[adversary_number] == 0
