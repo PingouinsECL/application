@@ -253,8 +253,87 @@ image_player = [player021,player121,player221,player321]
 
 image_player_animation = [[[player001,player002,player003,player002],[player011,player012,player013,player012],[player021,player022,player023,player022],[player031,player032,player033,player032],[player041,player042,player043,player042],[player051,player052,player053,player052]],[[player101,player102,player103,player102],[player111,player112,player113,player112],[player121,player122,player123,player122],[player131,player132,player133,player132],[player141,player142,player143,player142],[player151,player152,player153,player152]],[[player201,player202,player203,player202],[player211,player212,player213,player212],[player221,player222,player223,player222],[player231,player232,player233,player232],[player241,player242,player243,player242],[player251,player252,player253,player252]],[[player301,player302,player303,player302],[player311,player312,player313,player312],[player321,player322,player323,player322],[player331,player332,player333,player332],[player341,player342,player343,player342],[player351,player352,player353,player352]]]
 
-animation_number_unit = 5
-animation_speed = 0.05
+
+# Slinding images
+
+# Player 0
+path_player01 = "images/animation/sliding/player01.png"
+path_player02 = "images/animation/sliding/player02.png"
+path_player03 = "images/animation/sliding/player03.png"
+path_player04 = "images/animation/sliding/player04.png"
+path_player05 = "images/animation/sliding/player05.png"
+path_player06 = "images/animation/sliding/player06.png"
+
+
+# Player 1
+path_player11 = "images/animation/sliding/player11.png"
+path_player12 = "images/animation/sliding/player12.png"
+path_player13 = "images/animation/sliding/player13.png"
+path_player14 = "images/animation/sliding/player14.png"
+path_player15 = "images/animation/sliding/player15.png"
+path_player16 = "images/animation/sliding/player16.png"
+
+
+# Player 2
+path_player21 = "images/animation/sliding/player21.png"
+path_player22 = "images/animation/sliding/player22.png"
+path_player23 = "images/animation/sliding/player23.png"
+path_player24 = "images/animation/sliding/player24.png"
+path_player25 = "images/animation/sliding/player25.png"
+path_player26 = "images/animation/sliding/player26.png"
+
+
+# Player 3
+path_player31 = "images/animation/sliding/player31.png"
+path_player32 = "images/animation/sliding/player32.png"
+path_player33 = "images/animation/sliding/player33.png"
+path_player34 = "images/animation/sliding/player34.png"
+path_player35 = "images/animation/sliding/player35.png"
+path_player36 = "images/animation/sliding/player36.png"
+
+
+
+# Player 0
+player01 = pygame.image.load(path_player01)
+player02 = pygame.image.load(path_player02)
+player03 = pygame.image.load(path_player03)
+player04 = pygame.image.load(path_player04)
+player05 = pygame.image.load(path_player05)
+player06 = pygame.image.load(path_player06)
+
+
+# Player 1
+player11 = pygame.image.load(path_player11)
+player12 = pygame.image.load(path_player12)
+player13 = pygame.image.load(path_player13)
+player14 = pygame.image.load(path_player14)
+player15 = pygame.image.load(path_player15)
+player16 = pygame.image.load(path_player16)
+
+
+# Player 2
+player21 = pygame.image.load(path_player21)
+player22 = pygame.image.load(path_player22)
+player23 = pygame.image.load(path_player23)
+player24 = pygame.image.load(path_player24)
+player25 = pygame.image.load(path_player25)
+player26 = pygame.image.load(path_player26)
+
+
+# Player 3
+player31 = pygame.image.load(path_player31)
+player32 = pygame.image.load(path_player32)
+player33 = pygame.image.load(path_player33)
+player34 = pygame.image.load(path_player34)
+player35 = pygame.image.load(path_player35)
+player36 = pygame.image.load(path_player36)
+
+image_player_animation_sliding= [[player01,player02,player03,player04,player05,player06],[player11,player12,player13,player14,player15,player16],[player21,player22,player23,player24,player25,player26],[player31,player32,player33,player34,player35,player36]]
+
+
+animation_number_unit = 10
+animation_speed = 0.5
+proba_sliding = 0.5
 
 # TILES
 

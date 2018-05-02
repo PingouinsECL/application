@@ -2,6 +2,7 @@
 
 import pygame
 from pygame.locals import *
+import numpy as np
 
 import sys
 from time import time, sleep
@@ -330,6 +331,8 @@ while hold:
                 # Animation
 
                 animation_number = animation_number_unit * dist
+                
+                p=np.random.binomial(1,proba_sliding)
 
                 for i in range(animation_number + 1):
 
@@ -340,6 +343,7 @@ while hold:
                     display_scores(scores, window)
 
                     table_but = board.display(window, l_init=x_init, k_init=y_init)
+                    
 
                     # Dynamic printings
                     alpha = i / animation_number
@@ -353,8 +357,11 @@ while hold:
                     ycur += my
                     ycur = int(ycur)
 
-                    window.blit(image_player_animation[player_number][direction][i%4], (xcur, ycur))
-
+                    if p == 1 :
+                        window.blit(image_player_animation_sliding[player_number][direction], (xcur, ycur))
+                        
+                    else :
+                        window.blit(image_player_animation[player_number][direction][i%4], (xcur, ycur))
                     pygame.display.flip()
                     time.sleep(0.05)
                     
