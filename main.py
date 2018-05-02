@@ -2,6 +2,7 @@
 
 import pygame
 from pygame.locals import *
+import numpy as np
 
 import sys
 from time import time, sleep
@@ -55,6 +56,7 @@ window = pygame.display.set_mode((0, 0))
 icon = pygame.image.load(path_icon).convert()
 background = pygame.image.load(path_background).convert()
 logo = pygame.image.load(path_logo)
+club = pygame.image.load(path_club_jeu)
 
 play = pygame.image.load(path_play).convert()
 play_hover = pygame.image.load(path_play_hover).convert()
@@ -140,6 +142,7 @@ while hold:
         # displaying background
         window.blit(background, pos_background)
         window.blit(logo, pos_logo)
+        window.blit(club, pos_club)
 
         # creating cursor if not exists
         if not('cursor' in locals() or 'cursor' in globals()):
@@ -328,28 +331,7 @@ while hold:
         pygame.display.flip()
 
         # computing islands and removing unaccessible cases
-        board.compute_islands()
-        for island in board.islands:
-            occupiers, island_cases, score = island
-            if occupiers == []:
-                for (x, y) in island_cases:
-                    board.cases_tab[y][x].change_state(0)
-            if len(occupiers) == 1 and len(island_cases)!=1:
-                pawns_on_island = []
-                calc = False
-                for i in range(len(players[occupiers[0]].pawns)):
-                    pawn = players[occupiers[0]].pawns[i]
-                    if (pawn.x,pawn.y) in island_cases:
-                        if pawn.isolate == False:
-                            pawn.isolate = True
-                            pawns_on_island.append(i)
-                        else:
-                            calc = True
-                            break
-                if not calc:
-                    m_island = max_island(board,players,occupiers[0],pawns_on_island, score)
-                    for i in pawns_on_island:
-                        players[occupiers[0]].pawns[i].remaining_actions = m_island
+        update_islands(board, players, False)
 
         # selecting the move if pawns left
         if players_lost[player_number] != 1:
@@ -385,6 +367,8 @@ while hold:
                 # Animation
 
                 animation_number = animation_number_unit * dist
+                
+                p=np.random.binomial(1,proba_sliding)
 
                 for i in range(animation_number + 1):
 
@@ -395,6 +379,7 @@ while hold:
                     display_scores(scores, window)
 
                     table_but = board.display(window, l_init=x_init, k_init=y_init)
+                    
 
                     # Dynamic printings
                     alpha = i / animation_number
@@ -408,8 +393,11 @@ while hold:
                     ycur += my
                     ycur = int(ycur)
 
-                    window.blit(image_player_animation[player_number][direction][i%4], (xcur, ycur))
-
+                    if p == 1 :
+                        window.blit(image_player_animation_sliding[player_number][direction], (xcur, ycur))
+                        
+                    else :
+                        window.blit(image_player_animation[player_number][direction][i%4], (xcur, ycur))
                     pygame.display.flip()
                     time.sleep(0.05)
                     
@@ -459,7 +447,9 @@ while hold:
             show_scores = 0
 
             window.blit(background, pos_background)
-            window.blit(logo, pos_logo)
+            board.display_end(window)
+            scores = [players[k].score for k in range(len(players))]
+            display_scores(scores, window)
             pygame.display.flip()
 
             scores = [[players[k].score, k] for k in range(len(players))]
@@ -485,12 +475,12 @@ while hold:
             font = pygame.font.SysFont("plantagenetcherokee", 72)
             text = font.render(phrase, True, (128, 0, 0))
 
-            score = 'Score : ' + str(max_score)
-            sc = font.render(score, True, (128,0,0))
+            # score = 'Score : ' + str(max_score)
+            # sc = font.render(score, True, (128,0,0))
 
             w, h = pygame.display.get_surface().get_size()
-            window.blit(text, ((w - text.get_width()) //2 , (h - text.get_height()) // 2))
-            window.blit(sc, ((w - text.get_width()) //2 +50 , (h - text.get_height()) // 2+70))
+            window.blit(text, ((w - text.get_width()) //2 , 0))
+            # window.blit(sc, ((w - text.get_width()) //2 +50 , (h - text.get_height()) // 2+70))
             pygame.display.flip()
 
         but_back_to_menu.show(window, pos_back_to_menu)
