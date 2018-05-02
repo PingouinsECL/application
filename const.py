@@ -270,9 +270,9 @@ my = (back_height - 5*case_height)//2
 
 # PAWNS
 
-path_one = "images/case1.png"
-path_two = "images/case2.png"
-path_three = "images/case3.png"
+path_one = "images/cases/case1.png"
+path_two = "images/cases/case2.png"
+path_three = "images/cases/case3.png"
 
 one = pygame.image.load(path_one)
 two = pygame.image.load(path_two)
@@ -280,9 +280,9 @@ three = pygame.image.load(path_three)
 
 image_number = [one, two, three]
 
-path_one_hint = "images/1_hint.png"
-path_two_hint = "images/2_hint.png"
-path_three_hint = "images/3_hint.png"
+path_one_hint = "images/cases/1_hint.png"
+path_two_hint = "images/cases/2_hint.png"
+path_three_hint = "images/cases/3_hint.png"
 
 one_hint = pygame.image.load(path_one_hint)
 two_hint = pygame.image.load(path_two_hint)
@@ -290,15 +290,49 @@ three_hint = pygame.image.load(path_three_hint)
 
 image_number_hint = [one_hint, two_hint, three_hint]
 
-path_one_highlight = "images/1_2.png"
-path_two_highlight = "images/2_2.png"
-path_three_highlight = "images/3_2.png"
+path_one_highlight = "images/cases/1_2.png"
+path_two_highlight = "images/cases/2_2.png"
+path_three_highlight = "images/cases/3_2.png"
 
 one_highlight = pygame.image.load(path_one_highlight)
 two_highlight = pygame.image.load(path_two_highlight)
 three_highlight = pygame.image.load(path_three_highlight)
 
 image_number_highlight = [one_highlight, two_highlight, three_highlight]
+
+path_one_P0 = "images/cases/1_P0.png"
+path_two_P0 = "images/cases/2_P0.png"
+path_three_P0 = "images/cases/3_P0.png"
+
+path_one_P1 = "images/cases/1_P1.png"
+path_two_P1 = "images/cases/2_P1.png"
+path_three_P1 = "images/cases/3_P1.png"
+
+path_one_P2 = "images/cases/1_P2.png"
+path_two_P2 = "images/cases/2_P2.png"
+path_three_P2 = "images/cases/3_P2.png"
+
+path_one_P3 = "images/cases/1_P3.png"
+path_two_P3 = "images/cases/2_P3.png"
+path_three_P3 = "images/cases/3_P3.png"
+
+one_P0 = pygame.image.load(path_one_P0)
+two_P0 = pygame.image.load(path_two_P0)
+three_P0 = pygame.image.load(path_three_P0)
+
+one_P1 = pygame.image.load(path_one_P1)
+two_P1 = pygame.image.load(path_two_P1)
+three_P1 = pygame.image.load(path_three_P1)
+
+one_P2 = pygame.image.load(path_one_P2)
+two_P2 = pygame.image.load(path_two_P2)
+three_P2 = pygame.image.load(path_three_P2)
+
+one_P3 = pygame.image.load(path_one_P3)
+two_P3 = pygame.image.load(path_two_P3)
+three_P3 = pygame.image.load(path_three_P3)
+
+image_cases_players = [[one_P0, two_P0, three_P0], [one_P1, two_P1, three_P1], [one_P2, two_P2, three_P2], [one_P3, two_P3, three_P3]]
 
 # CHOICE MODE
 
@@ -320,4 +354,4 @@ pos_end_choice = [300, 435]
 # LAST SCREEN
 
 path_back_to_menu = "images/back_to_menu.png"
-pos_back_to_menu = [300,500]
+pos_back_to_menu = [300,560]

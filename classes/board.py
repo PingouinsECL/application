@@ -194,5 +194,42 @@ class Board:
             # print(s)
         return table_but
         
+    def display_end(self, window, l_init=-10, k_init=-10, z=0):
+        sx, sy = case_width, case_height - case_height_margin
+        table_but = [[0 for k in range(15)] for k in range(8)]
+
+        for k in range(0, 8):
+
+            if k % 2 == 0:
+                n_case = 8
+            else:
+                n_case = 7
+            real_l = 0
+
+            for l in range(0, 15):
+                if self.cases_tab[k][l] != 0:
+                    if k == k_init and l == l_init:
+                        c = self.cases_tab[k][l]
+                        pos = [sx * real_l + mx + (k%2)*sx//2+((-1)**z)*3, sy * k + my+z*5]
+                        real_l += 1
+    
+                        if c.owner != -1:
+                            table_but[k][l] = Button(image_cases_players[c.owner][c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
+                        else:
+                            table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
+                    else:
+                        c = self.cases_tab[k][l]
+                        pos = [sx * real_l + mx + (k%2)*sx//2, sy * k + my]
+                        real_l += 1
+                        
+                        if c.owner != -1:
+                            table_but[k][l] = Button(image_cases_players[c.owner][c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
+                        else:
+                            table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
+                            table_but[k][l].show(window, [0, 0])
+        
         
             

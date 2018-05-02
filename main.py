@@ -404,7 +404,9 @@ while hold:
             show_scores = 0
 
             window.blit(background, pos_background)
-            window.blit(logo, pos_logo)
+            board.display_end(window)
+            scores = [players[k].score for k in range(len(players))]
+            display_scores(scores, window)
             pygame.display.flip()
 
             scores = [[players[k].score, k] for k in range(len(players))]
@@ -430,12 +432,12 @@ while hold:
             font = pygame.font.SysFont("plantagenetcherokee", 72)
             text = font.render(phrase, True, (128, 0, 0))
 
-            score = 'Score : ' + str(max_score)
-            sc = font.render(score, True, (128,0,0))
+            # score = 'Score : ' + str(max_score)
+            # sc = font.render(score, True, (128,0,0))
 
             w, h = pygame.display.get_surface().get_size()
-            window.blit(text, ((w - text.get_width()) //2 , (h - text.get_height()) // 2))
-            window.blit(sc, ((w - text.get_width()) //2 +50 , (h - text.get_height()) // 2+70))
+            window.blit(text, ((w - text.get_width()) //2 , 0))
+            # window.blit(sc, ((w - text.get_width()) //2 +50 , (h - text.get_height()) // 2+70))
             pygame.display.flip()
 
         but_back_to_menu.show(window, pos_back_to_menu)
