@@ -267,16 +267,11 @@ while hold:
             number_players += (mode > 0)
 
         pawns_per_player = 2 + 4 - number_players
-        
-        adversary_numbers = []
-        for mode in range(len(configuration)) :
-            if configuration[mode] > 0:
-                mode_player = configuration[mode] - 1
+
+        for mode in configuration:
+            if mode > 0:
+                mode_player = mode - 1
                 players.append(Player(mode_player, pawns_per_player))
-                if configuration[mode] == 5 :
-                    adversary_numbers.append(configuration_impaler[mode])
-                else :
-                    adversary_numbers.append(1)
         initial_players = players
 
         # printing the board
@@ -342,7 +337,7 @@ while hold:
 
         # selecting the move if pawns left
         if players_lost[player_number] != 1:
-            fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number, players_lost, window, background, pos_background, adversary_numbers)
+            fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number, players_lost, window, background, pos_background)
 
             # if a move was found
             if not(fail):
