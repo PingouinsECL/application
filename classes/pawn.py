@@ -16,6 +16,7 @@ class Pawn:
         self.isolate = False
         self.remaining_actions = []
         self.remain = 1
+        self.island_number = None
 
     def move(self, board, player, direction, distance):
         """

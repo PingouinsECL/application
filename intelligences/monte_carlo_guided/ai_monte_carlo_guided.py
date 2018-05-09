@@ -1,54 +1,21 @@
 from Node import *
+from utils_mc import anticipate_score
+
 import random
 import time
 import copy
-import tensorflow as tf
 import numpy as np
 import os
 
-sess = tf.InteractiveSession()
-saver = tf.train.import_meta_graph(os.getcwd() + "/intelligences/monte_carlo_guided/model.meta")
-saver.restore(sess, os.getcwd() + "/intelligences/monte_carlo_guided/final")
-graph = tf.get_default_graph()
+from sklearn.externals import joblib
 
-X = graph.get_tensor_by_name('inputs/X:0')
-Yp = graph.get_tensor_by_name('resnet/prediction/Relu:0')
+model = joblib.load(os.getcwd() + '/intelligences/monte_carlo_guided/model.pkl')
 
-def make_input(players, board, number_player):
-    number_players = len(players)
-    number_pawns = 6 - number_players
-    
-    data = np.zeros((8, 15, 5))
-    
-    # ajout du score des cases si accessibles, 0 sinon
-    for k in range(len(board.cases_tab)):
-        for l in range(len(board.cases_tab[0])):
-            if board.cases_tab[k][l] != 0:
-                case = board.cases_tab[k][l]
-                if case.state == 1:
-                    data[k, l, 1+case.score] = 1
-                    
-    for number_pawn in range(number_pawns):
-        pawn = players[number_player].pawns[number_pawn]
-        x, y = pawn.x, pawn.y
-        data[y, x, 0] = 1
-    
-    for number_pawn in range(number_pawns):
-        pawn = players[1-number_player].pawns[number_pawn]
-        x, y = pawn.x, pawn.y
-        data[y, x, 1] = 1
-    
-    return data
+UTCK = 2
 
-def compute_output(inputs):    
-    if type(inputs) != list:
-        inputs = [inputs]
-        
-    return sess.run(Yp, feed_dict={X:inputs})
-
-def UTC(rootboard, rootplayers, rootplayernumber, list_isolated_pawns, itermax, timemax, verbose=False):
+def UTC(rootboard, rootplayers, rootplayernumber, itermax, timemax, verbose=False):
     
-    rootnode = Node(lip=list_isolated_pawns, board=rootboard, players=rootplayers, playerNumber=rootplayernumber)
+    rootnode = Node(board=rootboard, players=rootplayers, playerNumber=rootplayernumber)
     numberPlayers = len(rootplayers)
     
     if len(rootnode.untriedMoves) == 1:
@@ -90,25 +57,8 @@ def UTC(rootboard, rootplayers, rootplayernumber, list_isolated_pawns, itermax, 
             if verbose:
                 print(sep + "Exploration d'un nouveau node")
             
-            inputs = []
-            for (pawnNumber, direction, distance) in node.untriedMoves:
-                players_copy_copy = copy.deepcopy(players_copy)
-                board_copy_copy = copy.deepcopy(board_copy)
-                
-                players_copy_copy[currentplayer].pawns[pawnNumber].move(board_copy_copy, players_copy_copy[currentplayer], direction, distance)
-                inputs.append(make_input(players_copy_copy, board_copy_copy, currentplayer))
-            
-            probas = compute_output(inputs)
-            
-            max_proba = 0
-            m = None
-            i = 0
-            while i < len(node.untriedMoves):
-                if probas[i] >= max_proba:
-                    m = node.untriedMoves[i]
-                    max_proba = probas[i]
-                i += 1
-            
+            n = np.random.randint(len(node.untriedMoves))
+            m = node.untriedMoves[n]
             pawnNumber, direction, distance = m
             
             nextplayer = (currentplayer + 1) % numberPlayers
@@ -119,27 +69,24 @@ def UTC(rootboard, rootplayers, rootplayernumber, list_isolated_pawns, itermax, 
             board_copy = copy.deepcopy(node.board)
             
             currentplayer = nextplayer
-        
-        # Rollout
+             
+        # Simulate
         if verbose:
             print(sep + "Jeu de la partie")
-
-
-        ######
-        ###### TODO CHANGER L'EXPLOITATION DU RESULTAT EN MULTIPLIANT PAR LE NOMBRE
-        ###### DE CASES RESTANTES ET COMPARER LES SCORES DES DEUX JOUEURS POUR SAVOIR
-        ###### SI ON A GAGNE OU PERDU
-        ######
-        result = compute_output(make_input(players_copy, board_copy, rootplayernumber))
-        numberLeft, scoreLeft = board_copy.cases_stat()
-
-        ###### mode uniforme
-        anticipatedScore = int(scoreLeft / (numberLeft+1) * result)
-        result = players_copy[rootplayernumber].score + anticipatedScore > players_copy[1-rootplayernumber].score + scoreLeft - anticipatedScore
+        
+        my_anticipated_score = anticipate_score(model, board_copy, players_copy, rootplayernumber)
+        other_anticipated_score = []
+        
+        for p in range(len(players_copy)):
+            if p != rootplayernumber:
+                other_anticipated_score.append(anticipate_score(model, board_copy, players_copy, p))
+        
+        result = my_anticipated_score >= max(other_anticipated_score)
 
         if verbose:
             print("")
         
+        # Rollout
         while node != None:
             node.update(result) # (node.playerNumber in winners)
             if verbose:
@@ -158,8 +105,15 @@ def UTC(rootboard, rootplayers, rootplayernumber, list_isolated_pawns, itermax, 
 
     return best.move
 
-def ai_monte_carlo_guided(board, players, player_number, list_isolated_pawns, itermax, timemax):
+def ai_monte_carlo_guided(board, players, player_number, itermax, timemax):
 
-    (pawn_number, direction, dist) = UTC(board, players, player_number, list_isolated_pawns, itermax=itermax, timemax=timemax)
+    (pawn_number, direction, dist) = UTC(board, players, player_number, itermax=itermax, timemax=timemax)
+    
+    return direction, dist, pawn_number
+
+
+def ai_monte_carlo_guided(board, players, player_number, itermax, timemax):
+
+    (pawn_number, direction, dist) = UTC(board, players, player_number, itermax=itermax, timemax=timemax)
     
     return direction, dist, pawn_number

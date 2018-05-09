@@ -1,3 +1,5 @@
+from numpy import sqrt, log
+
 UTCK = 2
 
 from numpy import sqrt, log
@@ -6,7 +8,7 @@ class Node:
     
     number = 0
     
-    def __init__(self, lip, move=None, parent=None, board=None, players=None, playerNumber=None):
+    def __init__(self, move=None, parent=None, board=None, players=None, playerNumber=None):
         self.move = move
         self.parentNode = parent
         self.board = board
@@ -22,6 +24,14 @@ class Node:
         self.childNodes = []
         self.untriedMoves = []
         
+        lip = []
+        for k, (owners, _, score) in enumerate(board.islands): # score on isolated pawns
+            if owners == [playerNumber]:
+                for l in range(len(players[playerNumber].pawns)):
+                    if players[playerNumber].pawns[l].island_number == k:
+                        lip.append(l)
+        
+        
         for p in range(len(players[0].pawns)):
             if lip != None and p not in lip:
                 players[self.playerNumber].pawns[p].compute_accessible(board)
@@ -34,7 +44,7 @@ class Node:
         return s
     
     def addChild(self, move, board, players, playerNumber):
-        n = Node(lip=None, move=move, parent=self, board=board, players=players, playerNumber=playerNumber)
+        n = Node(move=move, parent=self, board=board, players=players, playerNumber=playerNumber)
         self.untriedMoves.remove(move)
         self.childNodes.append(n)
         return n

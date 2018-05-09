@@ -58,7 +58,6 @@ class Board:
             cases_tab.append(line)
 
         self.cases_tab = cases_tab
-        self.compute_islands()
 
     def cases_stat(self):
         numberLeft = 0
@@ -71,7 +70,7 @@ class Board:
                         scoreLeft += self.cases_tab[i][j].score
         return numberLeft, scoreLeft
 
-    def compute_islands(self):
+    def compute_islands(self, players):
         dirs = [(1, -1), (2, 0), (1, 1), (-1, 1), (-2, 0), (-1, -1)]
 
         cases = self.cases_tab
@@ -80,33 +79,38 @@ class Board:
         islands_list = []
 
         while active_cases != []:
-            cur_island = []
+            island_cases = []
             island_score = 0
-            occupied = []
+            island_owners = []
 
             cur_case = active_cases[0]
             if cases[cur_case[1]][cur_case[0]].state == 2:
-                occupied.append(cases[cur_case[1]][cur_case[0]].owner)
+                island_owners.append(cases[cur_case[1]][cur_case[0]].owner)
 
             active_cases.remove(cur_case)
-            cur_island.append(cur_case)
+            island_cases.append(cur_case)
             island_score += cases[cur_case[1]][cur_case[0]].score
 
             reachable = [(cur_case[0] + d[0], cur_case[1] + d[1]) for d in dirs if (cur_case[0] + d[0], cur_case[1] + d[1]) in active_cases]
 
             while reachable != []:
                 cur_case = reachable[0]
-                if cases[cur_case[1]][cur_case[0]].state == 2 and cases[cur_case[1]][cur_case[0]].owner not in occupied:
-                    occupied.append(cases[cur_case[1]][cur_case[0]].owner)
+                if cases[cur_case[1]][cur_case[0]].state == 2 and cases[cur_case[1]][cur_case[0]].owner not in island_owners:
+                    island_owners.append(cases[cur_case[1]][cur_case[0]].owner)
 
                 reachable.remove(cur_case)
                 active_cases.remove(cur_case)
-                cur_island.append(cur_case)
-                island_score +=cases[cur_case[1]][cur_case[0]].score
+                island_cases.append(cur_case)
+                island_score += cases[cur_case[1]][cur_case[0]].score
 
                 reachable += [(cur_case[0] + d[0], cur_case[1] + d[1]) for d in dirs if (cur_case[0] + d[0], cur_case[1] + d[1]) in active_cases and (cur_case[0] + d[0], cur_case[1] + d[1]) not in reachable]
 
-            islands_list.append([occupied, cur_island, island_score])
+            islands_list.append([island_owners, island_cases, island_score])
+            
+            for player_number in island_owners:
+                for k in range(len(players[player_number].pawns)):
+                    if (players[player_number].pawns[k].x, players[player_number].pawns[k].y) in island_cases:
+                        players[player_number].pawns[k].island_number = len(islands_list)-1
 
         self.islands = islands_list
 

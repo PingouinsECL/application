@@ -1,5 +1,5 @@
 def update_islands(board, players, recalculate):
-    board.compute_islands()
+    board.compute_islands(players)
     nbr_isolated=0
     for island in board.islands:
         occupiers, island_cases, score = island
