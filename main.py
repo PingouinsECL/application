@@ -455,13 +455,13 @@ while hold:
             window.blit(background, pos_background)
             board.display_end(window)
             scores = [players[k].score for k in range(len(players))]
+            for i in range (len(players)) :
+                for j in range (len(players[i].pawns)) :
+                    scores[i] += board.cases_tab[players[i].pawns[j].y][players[i].pawns[j].x].score
             display_scores(scores, window)
             pygame.display.flip()
 
-            scores = [[players[k].score, k] for k in range(len(players))]
-            for i in range (len(players)) :
-                for j in range (len(players[i].pawns)) :
-                    scores[i][0] += board.cases_tab[players[i].pawns[j].y][players[i].pawns[j].x].score
+            scores = [(j, i) for (i,j) in enumerate(scores)]
             save_scores (scores)
 
             scores = sorted(scores, reverse=True)
