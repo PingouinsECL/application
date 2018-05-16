@@ -6,8 +6,9 @@ from display_scores import *
 from max_island import *
 from ai_maxN_time import *
 
-def ai_human(board, players, display, player_number, list_active_pawns, window, background, pos_background):
-
+def ai_human(board, players, display, player_number, list_active_pawns, list_isolated_pawns, window, background, pos_background):
+    
+    list_active_pawns = list_active_pawns + list_isolated_pawns
     number_pawns = len(players[player_number].pawns)
 
     def getCase(t):
@@ -116,8 +117,8 @@ def ai_human(board, players, display, player_number, list_active_pawns, window, 
                     if hint_but.hover(cursor):
                         hint = True
                         if hinted_cases == []:
-                            flag=update_islands(board, players, True)
-                            if flag :
+                            if list_isolated_pawns == list_active_pawns :
+                                update_islands(board, players, True)
                                 h_direction, h_dist, h_pawn_number = players[player_number].pawns[list_active_pawns[0]].remaining_actions[-1]
                             else :
                                 h_direction, h_dist, h_pawn_number = ai_maxN_time(board, players, player_number, 1)
