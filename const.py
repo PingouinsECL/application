@@ -429,7 +429,8 @@ path_impaler0 = "images/nombre_0.png"
 path_impaler1 = "images/nombre_1.png"
 path_impaler2 = "images/nombre_2.png"
 path_impaler3 = "images/nombre_3.png"
-path_impaler_array = [path_impaler0, path_impaler1, path_impaler2, path_impaler3]
+path_impalermax = "images/nombre_max.png"
+path_impaler_array = [path_impaler0, path_impaler1, path_impaler2, path_impaler3, path_impalermax]
 
 path_void = "images/void.png"
 

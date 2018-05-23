@@ -3,7 +3,6 @@ import pygame
 
 from case import *
 from button import *
-
 from const import *
 
 window = pygame.display.set_mode((0, 0))
@@ -28,18 +27,13 @@ class Board:
         i = 0
 
         for k in range(0, 8):
-
-            if k % 2 == 0:
-                n_case = 8
-            else:
-                n_case = 7
-
+            n_case = 8 if k%2 == 0 else 7
             line = []
 
             # to have a constant number of rows per line
             if k % 2 == 1:
                 line.append(0)
-
+                
             for l in range(0, n_case):
 
                 n_fish = n_fish_tab[i]
@@ -48,7 +42,7 @@ class Board:
                 c = Case(2*l + k % 2, k, n_fish)
                 line.append(c)
                 line.append(0)
-
+                
                 i += 1
 
             # to have a constant number of rows per line
@@ -56,7 +50,7 @@ class Board:
                 line = line[:-1]
 
             cases_tab.append(line)
-
+        
         self.cases_tab = cases_tab
 
     def cases_stat(self):
@@ -119,15 +113,8 @@ class Board:
         table_but = [[0 for k in range(15)] for k in range(8)]
 
         for k in range(0, 8):
-
-            if k % 2 == 0:
-                n_case = 8
-            else:
-                n_case = 7
-
-            s = ''
-            if k % 2 == 1:
-                s += ' '
+            n_case = 8 if k%2 ==0 else 7
+            s = '' if k%2==0 else '  '
             real_l = 0
 
             for l in range(0, 15):
@@ -194,8 +181,7 @@ class Board:
                             s += str(c.score) + ' '
                             table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
                             table_but[k][l].show(window, [0, 0])
-            
-            # print(s)
+        
         return table_but
         
     def display_end(self, window, l_init=-10, k_init=-10, z=0):
@@ -203,11 +189,7 @@ class Board:
         table_but = [[0 for k in range(15)] for k in range(8)]
 
         for k in range(0, 8):
-
-            if k % 2 == 0:
-                n_case = 8
-            else:
-                n_case = 7
+            n_case = 8 if k%2 == 0 else 7
             real_l = 0
 
             for l in range(0, 15):
@@ -234,6 +216,3 @@ class Board:
                         else:
                             table_but[k][l] = Button(image_number[c.score - 1], one, pos, 1)
                             table_but[k][l].show(window, [0, 0])
-        
-        
-            

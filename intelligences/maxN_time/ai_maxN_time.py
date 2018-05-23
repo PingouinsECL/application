@@ -1,7 +1,7 @@
 from time import clock
 from random import choice
 
-def ai_maxN_time (board, players, player_number, t_max, number_h = 0) :
+def ai_maxN_time (board, players, player_number, t_max, number_h = 1) :
     """
     Maxn algorith applied to the 2 to 4 players in this game.
     """
