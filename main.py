@@ -255,15 +255,23 @@ while hold:
                 if configuration[0] == 5 and but_choice_impaler0.hover(cur) :
                     configuration_impaler[0] = (configuration_impaler[0] + 1) % len(choices_impaler)
                     but_choice_impaler0.modify_image(choices_impaler[configuration_impaler[0]])
+                elif configuration[0] != 5 :
+                    configuration_impaler[0] = 4
                 if configuration[1] == 5 and but_choice_impaler1.hover(cur) :
                     configuration_impaler[1] = (configuration_impaler[1] + 1) % len(choices_impaler)
                     but_choice_impaler1.modify_image(choices_impaler[configuration_impaler[1]])
+                elif configuration[1] != 5 :
+                    configuration_impaler[1] = 4
                 if configuration[2] == 5 and but_choice_impaler2.hover(cur) :
                     configuration_impaler[2] = (configuration_impaler[2] + 1) % len(choices_impaler)
                     but_choice_impaler2.modify_image(choices_impaler[configuration_impaler[2]])
+                elif configuration[2] != 5 :
+                    configuration_impaler[2] = 4
                 if configuration[3] == 5 and but_choice_impaler3.hover(cur) :
                     configuration_impaler[3] = (configuration_impaler[3] + 1) % len(choices_impaler)
                     but_choice_impaler3.modify_image(choices_impaler[configuration_impaler[3]])
+                elif configuration[3] != 5 :
+                    configuration_impaler[3] = 4
                 if but_end_choice.hover(cur):
                     mode_choice = 0
                     mode_init = 1
