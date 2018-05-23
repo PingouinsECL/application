@@ -5,7 +5,7 @@ import pygame
 window_title = "Pingouins"
 
 path_icon = "images/icon.png"
-pos_logo = [195, 50]
+pos_logo = [210, 50]
 
 path_background = "images/background.jpg"
 pos_background = [0, 0]
@@ -17,11 +17,11 @@ pos_club = [720, 550]
 
 path_play = "images/jouer.png"
 path_play_hover = "images/jouer_hover.png"
-pos_play = [310, 340]
+pos_play = [325, 340]
 
 path_tuto = "images/tuto.png"
 path_tuto_hover = "images/tuto_hover.png"
-pos_tuto = [310, 430]
+pos_tuto = [325, 430]
 
 path_sound = "images/sound_on.jpg"
 path_mute = "images/sound_off.jpg"
@@ -432,20 +432,28 @@ path_impaler3 = "images/nombre_3.png"
 path_impalermax = "images/nombre_max.png"
 path_impaler_array = [path_impaler0, path_impaler1, path_impaler2, path_impaler3, path_impalermax]
 
+path_imaplerfa = "images/points_faux.png"
+path_imaplervr = "images/points_vrai.png"
+path_impaler_points_array = [path_imaplerfa, path_imaplervr]
+
 path_void = "images/void.png"
 
 path_end_choice = "images/play.png"
-pos_choice0 = [170, 210]
-pos_choice1 = [430, 210]
-pos_choice2 = [170, 315]
-pos_choice3 = [430, 315]
-pos_choice_impaler0 = [70, 210]
-pos_choice_impaler1 = [650, 210]
-pos_choice_impaler2 = [70, 315]
-pos_choice_impaler3 = [650, 315]
-pos_end_choice = [300, 435]
+pos_choice0 = [185, 210]
+pos_choice1 = [445, 210]
+pos_choice2 = [185, 315]
+pos_choice3 = [445, 315]
+pos_choice_impaler0 = [85, 210]
+pos_choice_impaler1 = [665, 210]
+pos_choice_impaler2 = [85, 315]
+pos_choice_impaler3 = [665, 315]
+pos_choice_impaler_points0 = [85, 110]
+pos_choice_impaler_points1 = [665, 110]
+pos_choice_impaler_points2 = [85, 415]
+pos_choice_impaler_points3 = [665, 415]
+pos_end_choice = [315, 435]
 
 # LAST SCREEN
 
 path_back_to_menu = "images/back_to_menu.png"
-pos_back_to_menu = [300,560]
+pos_back_to_menu = [315,560]

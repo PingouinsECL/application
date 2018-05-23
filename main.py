@@ -72,12 +72,14 @@ back = pygame.image.load(path_back).convert()
 
 choices = [pygame.image.load(path_choice).convert() for path_choice in path_choice_array]
 choices_impaler = [pygame.image.load(path_impaler).convert() for path_impaler in path_impaler_array]
+choices_impaler_points = [pygame.image.load(path_impaler).convert() for path_impaler in path_impaler_points_array]
 void = pygame.image.load(path_void).convert()
 
 end_choice = pygame.image.load(path_end_choice).convert()
 back_to_menu = pygame.image.load(path_back_to_menu).convert()
 configuration = [0]*4
 configuration_impaler = [0]*4
+configuration_impaler_points = [0]*4
 
 # Creating buttons
 but_play = Button(play, play_hover, pos_play, 0)
@@ -93,6 +95,10 @@ but_choice_impaler0 = Button(void, void, pos_choice_impaler0, 0)
 but_choice_impaler1 = Button(void, void, pos_choice_impaler1, 0)
 but_choice_impaler2 = Button(void, void, pos_choice_impaler2, 0)
 but_choice_impaler3 = Button(void, void, pos_choice_impaler3, 0)
+but_choice_impaler_points0 = Button(void, void, pos_choice_impaler_points0, 0)
+but_choice_impaler_points1 = Button(void, void, pos_choice_impaler_points1, 0)
+but_choice_impaler_points2 = Button(void, void, pos_choice_impaler_points2, 0)
+but_choice_impaler_points3 = Button(void, void, pos_choice_impaler_points3, 0)
 but_end_choice = Button(end_choice, end_choice, pos_end_choice, 0)
 but_back_to_menu = Button(back_to_menu, back_to_menu, pos_back_to_menu, 0)
 
@@ -216,6 +222,11 @@ while hold:
         but_choice_impaler1.show(window, pos_choice_impaler1)
         but_choice_impaler2.show(window, pos_choice_impaler2)
         but_choice_impaler3.show(window, pos_choice_impaler3)
+        but_choice_impaler_points0.show(window, pos_choice_impaler_points3)
+        but_choice_impaler_points1.show(window, pos_choice_impaler_points3)
+        but_choice_impaler_points2.show(window, pos_choice_impaler_points3)
+        but_choice_impaler_points3.show(window, pos_choice_impaler_points3)
+        
         but_end_choice.show(window, pos_end_choice)
         pygame.display.flip()
         
@@ -228,29 +239,37 @@ while hold:
                     but_choice0.modify_image(choices[configuration[0]])
                     if configuration[0] == 5 :
                         but_choice_impaler0.modify_image(choices_impaler[configuration_impaler[0]])
+                        but_choice_impaler_points0.modify_image(choices_impaler_points[configuration_impaler_points[0]])
                     if configuration[0] != 5 :
                         but_choice_impaler0.modify_image(void)
+                        but_choice_impaler_points0.modify_image(void)
                 if but_choice1.hover(cur):
                     configuration[1] = (configuration[1] + 1) % len(choices)
                     but_choice1.modify_image(choices[configuration[1]])
                     if configuration[1] == 5 :
                         but_choice_impaler1.modify_image(choices_impaler[configuration_impaler[1]])
+                        but_choice_impaler_points1.modify_image(choices_impaler_points[configuration_impaler_points[1]])
                     if configuration[1] != 5 :
                         but_choice_impaler1.modify_image(void)
+                        but_choice_impaler_points1.modify_image(void)
                 if but_choice2.hover(cur):
                     configuration[2] = (configuration[2] + 1) % len(choices)
                     but_choice2.modify_image(choices[configuration[2]])
                     if configuration[2] == 5 :
                         but_choice_impaler2.modify_image(choices_impaler[configuration_impaler[2]])
+                        but_choice_impaler_points2.modify_image(choices_impaler_points[configuration_impaler_points[2]])
                     if configuration[2] != 5 :
                         but_choice_impaler2.modify_image(void)
+                        but_choice_impaler_points2.modify_image(void)
                 if but_choice3.hover(cur):
                     configuration[3] = (configuration[3] + 1) % len(choices)
                     but_choice3.modify_image(choices[configuration[3]])
                     if configuration[3] == 5 :
                         but_choice_impaler3.modify_image(choices_impaler[configuration_impaler[3]])
+                        but_choice_impaler_points3.modify_image(choices_impaler_points[configuration_impaler_points[3]])
                     if configuration[3] != 5 :
                         but_choice_impaler3.modify_image(void)
+                        but_choice_impaler_points3.modify_image(void)
                         
                 if configuration[0] == 5 and but_choice_impaler0.hover(cur) :
                     configuration_impaler[0] = (configuration_impaler[0] + 1) % len(choices_impaler)
@@ -272,6 +291,28 @@ while hold:
                     but_choice_impaler3.modify_image(choices_impaler[configuration_impaler[3]])
                 elif configuration[3] != 5 :
                     configuration_impaler[3] = 4
+                
+                if configuration[0] == 5 and but_choice_impaler_points0.hover(cur) :
+                    configuration_impaler_points[0] = (configuration_impaler_points[0] + 1) % len(choices_impaler_points)
+                    but_choice_impaler_points0.modify_image(choices_impaler_points[configuration_impaler_points[0]])
+                elif configuration[0] != 5 :
+                    configuration_impaler_points[0] = 0
+                if configuration[1] == 5 and but_choice_impaler_points1.hover(cur) :
+                    configuration_impaler_points[1] = (configuration_impaler_points[1] + 1) % len(choices_impaler_points)
+                    but_choice_impaler_points1.modify_image(choices_impaler_points[configuration_impaler_points[1]])
+                elif configuration[1] != 5 :
+                    configuration_impaler_points[1] = 0
+                if configuration[2] == 5 and but_choice_impaler_points2.hover(cur) :
+                    configuration_impaler_points[2] = (configuration_impaler_points[2] + 1) % len(choices_impaler_points)
+                    but_choice_impaler_points2.modify_image(choices_impaler_points[configuration_impaler_points[2]])
+                elif configuration[2] != 5 :
+                    configuration_impaler_points[2] = 0
+                if configuration[3] == 5 and but_choice_impaler_points3.hover(cur) :
+                    configuration_impaler_points[3] = (configuration_impaler_points[3] + 1) % len(choices_impaler_points)
+                    but_choice_impaler_points3.modify_image(choices_impaler_points[configuration_impaler_points[3]])
+                elif configuration[3] != 5 :
+                    configuration_impaler_points[3] = 0
+                
                 if but_end_choice.hover(cur):
                     mode_choice = 0
                     mode_init = 1
@@ -297,14 +338,17 @@ while hold:
         pawns_per_player = 2 + 4 - number_players
         
         adversary_numbers = []
+        points = []
         for mode in range(len(configuration)) :
             if configuration[mode] > 0:
                 mode_player = configuration[mode] - 1
                 players.append(Player(mode_player, pawns_per_player))
                 if configuration[mode] == 5 :
                     adversary_numbers.append(configuration_impaler[mode])
+                    points.append(configuration_impaler_points[mode]==1)
                 else :
-                    adversary_numbers.append(1)
+                    adversary_numbers.append(None)
+                    points.append(None)
         initial_players = players
 
         # printing the board
@@ -349,7 +393,7 @@ while hold:
 
         # selecting the move if pawns left
         if players_lost[player_number] != 1:
-            fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number, players_lost, window, background, pos_background, adversary_numbers)
+            fail, pawns, (direction, dist, pawn_number) = select_mode(board, players, table_button, player_number, players_lost, window, background, pos_background, adversary_numbers, points)
 
             # if a move was found
             if not(fail):

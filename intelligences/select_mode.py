@@ -8,7 +8,7 @@ from ai_monte_carlo_guided import *
 from ai_impaler import *
 
 
-def select_mode(board, players, display, player_number, players_lost, window, background, pos_background, adversary_numbers):
+def select_mode(board, players, display, player_number, players_lost, window, background, pos_background, adversary_numbers, points):
     mode = players[player_number].mode
 
     number_pawns = len(players[player_number].pawns)
@@ -58,7 +58,7 @@ def select_mode(board, players, display, player_number, players_lost, window, ba
                 return fail, players[player_number].pawns, ai_monte_carlo_guided(board, players, player_number, itermax=2000, timemax=3) # dernier nb à changer, pour test
             
             elif mode == 4:
-                return fail, players[player_number].pawns, ai_impaler(board, players, player_number, list_active_pawns, adversary_numbers[player_number], points = False)
+                return fail, players[player_number].pawns, ai_impaler(board, players, player_number, list_active_pawns, adversary_numbers[player_number], points = points[player_number])
 
             else:
                 return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)
