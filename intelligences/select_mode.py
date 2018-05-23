@@ -35,7 +35,7 @@ def select_mode(board, players, display, player_number, players_lost, window, ba
         return True, players[player_number].pawns, (0, 0, 0)
     else:
         if mode == 0:
-            return fail, players[player_number].pawns, ai_human(board, players, display, player_number, list_active_pawns+list_isolated_pawns, window, background, pos_background)
+            return fail, players[player_number].pawns, ai_human(board, players, display, player_number, list_active_pawns, list_isolated_pawns, window, background, pos_background)
         
         elif len(list_active_pawns) != 0:
             

@@ -493,7 +493,7 @@ while hold:
             # sc = font.render(score, True, (128,0,0))
 
             w, h = pygame.display.get_surface().get_size()
-            window.blit(text, ((w - text.get_width()) //2 , 0))
+            window.blit(text, ((w - text.get_width()) //2 , 20))
             # window.blit(sc, ((w - text.get_width()) //2 +50 , (h - text.get_height()) // 2+70))
             pygame.display.flip()
 

@@ -1,13 +1,11 @@
 def update_islands(board, players, recalculate):
     board.compute_islands(players)
-    nbr_isolated=0
     for island in board.islands:
         occupiers, island_cases, score = island
         if occupiers == []:
             for (x, y) in island_cases:
                 board.cases_tab[y][x].change_state(0)
         if len(occupiers) == 1:
-            nbr_isolated+=1
             if len(island_cases)!=1:
                 pawns_on_island = []
                 calc = False
@@ -24,7 +22,6 @@ def update_islands(board, players, recalculate):
                     m_island = max_island(board,players,occupiers[0],pawns_on_island, score)
                     for i in pawns_on_island:
                         players[occupiers[0]].pawns[i].remaining_actions = m_island 
-    return(len(board.islands)==nbr_isolated)
 
 def max_island(board, players, p, pawns_on_island, max_point):
 
