@@ -67,8 +67,7 @@ tuto_hover = pygame.image.load(path_tuto_hover).convert()
 sound = pygame.image.load(path_sound).convert()
 mute = pygame.image.load(path_mute).convert()
 
-background_tutorial = pygame.image.load(path_background_tutorial).convert()
-back = pygame.image.load(path_back).convert()
+back = pygame.image.load(path_back)
 
 choices = [pygame.image.load(path_choice).convert() for path_choice in path_choice_array]
 choices_impaler = [pygame.image.load(path_impaler).convert() for path_impaler in path_impaler_array]
@@ -86,6 +85,8 @@ but_play = Button(play, play_hover, pos_play, 0)
 but_tuto = Button(tuto, tuto_hover, pos_tuto, 0)
 but_sound = Button(sound, mute, pos_sound, 0)
 but_back = Button(back, back, pos_back, 0)
+but_language = Button(language_fr, language_fr, pos_language, 0)
+language = 0
 
 but_choice0 = Button(choices[0], choices[0], pos_choice0, 0)
 but_choice1 = Button(choices[0], choices[0], pos_choice1, 0)
@@ -113,6 +114,26 @@ show_scores = 1
 
 tstart = 0
 tend = 0
+
+pygame.font.init()
+
+def blit_text(surface, text, pos, font, color=pygame.Color('white')):
+    words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
+    space = font.size(' ')[0]  # The width of a space.
+    max_width, _ = surface.get_size()
+    max_width -= 50
+    x, y = pos
+    for line in words:
+        for word in line:
+            word_surface = font.render(word, 1, color)
+            word_width, word_height = word_surface.get_size()
+            if x + word_width >= max_width:
+                x = pos[0]  # Reset the x.
+                y += word_height  # Start on new row.
+            surface.blit(word_surface, (x, y))
+            x += word_width + space
+        x = pos[0]  # Reset the x.
+        y += word_height  # Start on new row.
 
 while hold:
 
@@ -188,9 +209,13 @@ while hold:
     while mode_tuto:
 
         # displaying background and button
-        window.blit(background_tutorial, pos_background_tutorial)
+        window.blit(background, pos_background)
         window.blit(logo, (pos_logo[0],pos_logo[1]+400))
-        pygame.display.flip()
+        but_back.show(window, (0, 0))
+    
+        window.blit(one, (220, 40))
+        window.blit(player023, (500, 50))
+        
 
         # listening for events
         for event in pygame.event.get():
@@ -199,11 +224,23 @@ while hold:
                 mode_home = 0
                 hold = 0
 
-            if event.type == MOUSEBUTTONDOWN and event.pos[0]<=60 and event.pos[1]<=60:
+            if event.type == MOUSEBUTTONDOWN:
                 cursor = event.pos
                 if but_back.hover(cursor):
                     mode_tuto = 0
                     mode_home = 1
+                elif but_language.hover(cursor):
+                    language += 1
+                    language %= len(languages_flags)
+                    but_language.modify_image(languages_flags[language])
+
+            if language == len(languages_flags) - 1:
+                font = pygame.font.Font("fonts/zh.otf", 20)
+            else:
+                font = pygame.font.Font("fonts/other.otf", 20)
+            but_language.show(window, pos_language)
+            blit_text(window, languages_rules[language], (50, 150), font)
+            pygame.display.flip()
 
     # CHOICE MODE
     """

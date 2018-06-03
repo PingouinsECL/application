@@ -5,23 +5,23 @@ import pygame
 window_title = "Pingouins"
 
 path_icon = "images/icon.png"
-pos_logo = [210, 50]
 
 path_background = "images/background.jpg"
 pos_background = [0, 0]
 
 path_logo = "images/logo.png"
+pos_logo = [164, 50]
 
 path_club_jeu = "images/club.png"
 pos_club = [720, 550]
 
 path_play = "images/jouer.png"
 path_play_hover = "images/jouer_hover.png"
-pos_play = [325, 340]
+pos_play = [314, 340]
 
 path_tuto = "images/tuto.png"
 path_tuto_hover = "images/tuto_hover.png"
-pos_tuto = [325, 430]
+pos_tuto = [314, 440]
 
 path_sound = "images/sound_on.jpg"
 path_mute = "images/sound_off.jpg"
@@ -33,14 +33,26 @@ pos_hint = [10, 300]
 
 # TUTORIAL MODE
 
-path_background_tutorial = "images/tutorial.jpg"
-pos_background_tutorial = [0, 0]
-
 path_back = "images/back.png"
 pos_back = [0, 0]
 
 back_width = 828
 back_height = 659
+
+language_fr = pygame.image.load("images/language_fr.png");
+language_en = pygame.image.load("images/language_en.png");
+language_es = pygame.image.load("images/language_es.png");
+language_de = pygame.image.load("images/language_de.png");
+language_zh = pygame.image.load("images/language_zh.png");
+languages_flags = [language_fr, language_en, language_es, language_de, language_zh]
+pos_language = [600, 50]
+
+french_rules = "Mode 1v1 : chaque joueur possède quatre pingouins. Au début de la partie, vous devez chacun votre tour placer vos pingouins un par un sur les cases de valeur un. Une fois que tous les pingouins sont placés, la partie peut commencer. Lorsque votre tour arrive, vous devez déplacer l'un de vos pingouins. Un pingouin peut se déplacer d'autant de cases qu'il le souhaite, et ce dans les six directions de l'hexagone. Cependant, il ne peut pas sauter par dessus une case vide. Quand il quitte une case, il récupère un nombre de points égal au nombre de poissons dessiné sur la case, et la case est retirée du plateau. Le jeu s'arrête quand aucun pingouin ne peut plus bouger. Le joueur ayant le plus grand nombre de points remporte la partie."
+english_rules = "Mode 1V1 : each player owns four penguins. At the beginning of the game, one player after another places their penguins one by one on the one-mark square. Once every penguins are set up, the game can start. When it is your turn to play, you have to move one of your penguins. A penguin can move in any of the six directions of the hexagon without distance limit. However, it is not allowed to jump over a hole and there can only be one penguin within a square. When the penguin leaves a square, it wins the number of fish drawn upon it and the square is taken away from the board. The game ends when no penguin can move anymore. The player who has won the greatest amount of marks wins the game."
+spanish_rules = "Versión 1V1 : cada jugador tiene quatro pingüinos. Al inicio del juego, un jugador tras otro ordena sus pingüinos uno tras otro sobre casillas de valor uno. Una vez los pingüinos dispuestos sobre la mesa, el juego puede ya empezar. Cuando a uno le toca jugar, tiene que mover uno de los pingüinos. Un pingüino puede moverse en las seis direcciones del hexágono sin límite de distancia. Pero no se puede saltar por encima de un hoyo y sólo puede haber un pingüino sobre una casilla. Cuando un pingüino se marcha de una casilla, gana el número de peces inscrito por encima de ella y la casilla está quitada de la mesa. El juego se acaba cuando no pingüino puede moverse. El jugador que habrá reunido la mayor parte de los punto gana el juego."
+german_rules = "1V1 : jede Spieler besitzt vier Pinguine. Anfangs des Spiels, die Spieler aufeinanderfolgend stellen ihre Pinguine nacheinander auf einem von den 1-punkt spielsteine ein. Wann alle die Pinguine eingestellt wurden, das Spiel kann anfangen. Wann man daran ist, muss man einen von seinen Pinguine umlagern. Ein Pinguin kann sich bewegen in die sechs Richtungen des Sechsecks ohne maximale Strecke. Aber man kann nich über Löcher hüpfen. Wann ein Pinguin aus einem Spielstein ausscheidet, erzielt er genauso viel Punkte wie Fische auf dem Spielstein. Das Stein wordt dann zurückgenommen. Das Spiel beendet sich wann keine mehr Pinguine sich bewegen kann. Der Spieler, der die Meiste Punkte erzielt hat, gewinnt das Spiel."
+chinese_rules = u"1v1模式：每个玩家拥有四只企鹅。 在比赛开始的时候，人人相继必须把自己的企鹅放在一比分的六边形上。 一旦放置了所有的企鹅，游戏就可以开始。 轮到你时，你必须移动一只企鹅。 企鹅可以在六边形的所有六个方向上移动，没有距离极限。 但是，不能跳过一个空盒子。 当企鹅离开广场时，玩家会得到与六边形上的鱼数相等的点数，并将该框从棋盘上移除。 当所有的企鹅不能移动时，游戏停止。 积分最高的玩家赢了比赛。"
+languages_rules = [french_rules, english_rules, spanish_rules, german_rules, chinese_rules]
 
 # ANIMATIONS
 
@@ -331,7 +343,7 @@ player36 = pygame.image.load(path_player36)
 image_player_animation_sliding= [[player01,player02,player03,player04,player05,player06],[player11,player12,player13,player14,player15,player16],[player21,player22,player23,player24,player25,player26],[player31,player32,player33,player34,player35,player36]]
 
 
-animation_number_unit = 10
+animation_number_unit = 1
 animation_speed = 0.5
 proba_sliding = 0.5
 
