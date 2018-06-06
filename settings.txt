@@ -1,0 +1,27 @@
+Cette fenêtre permet de paramétrer le nombre et le mode de jeu des joueurs de la partie.
+Chaque case correspond à un joueur, numéroté de 1 à 4 de gauche à droite et de haut en bas. Cliquer sur la case permet de rajouter un joueur ou de changer le mode de jeu.
+
+1. Joueur humain
+
+2. Joueur aléatoire, niveau facile
+Sélectionne un coup aléatoirement parmi tous les coups possibles
+
+3. Explorateur, niveau moyen
+Parcourt toutes les solutions possibles et en fait des statistiques
+
+4. Attaquant, niveau difficile
+Sélectionne un joueur cible et cherche à le bloquer.
+Le premier cadre sert à sélectionner la cible (meilleur joueur ou numéro du joueur).
+Le deuxième cadre permet de choisir entre un mode offensif et un mode cupide.
+Dans le mode cupide le joueur cherchera à maximiser ses points en plus d'isoler sa cible
+
+5. Calculateur, niveau difficile
+Anticipe plusieurs tours en avance et sélectionne le meilleur coup possible
+###
+Anglais
+###
+Espagnol
+###
+Allemand
+###
+Chinois

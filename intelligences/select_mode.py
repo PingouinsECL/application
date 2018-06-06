@@ -43,6 +43,12 @@ def select_mode(board, players, display, player_number, players_lost, window, ba
                 return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)
 
             elif mode == 2:
+                return fail, players[player_number].pawns, ai_monte_carlo_guided(board, players, player_number, itermax=2000, timemax=3) # dernier nb à changer, pour test
+            
+            elif mode == 3:
+                return fail, players[player_number].pawns, ai_impaler(board, players, player_number, list_active_pawns, adversary_numbers[player_number], points = points[player_number])
+
+            elif mode == 4:
                 tmax = 5
                 if sum(players_lost[:len(players)]) == len(players) - 2:
                     adversary_number = 0
@@ -53,12 +59,6 @@ def select_mode(board, players, display, player_number, players_lost, window, ba
                     return fail, players[player_number].pawns, ai_alphabeta(board, players, player_number, adversary_number, tmax)
                 else:
                     return fail, players[player_number].pawns, ai_maxN_time(board, players, player_number, tmax)
-
-            elif mode == 3:
-                return fail, players[player_number].pawns, ai_monte_carlo_guided(board, players, player_number, itermax=2000, timemax=3) # dernier nb à changer, pour test
-            
-            elif mode == 4:
-                return fail, players[player_number].pawns, ai_impaler(board, players, player_number, list_active_pawns, adversary_numbers[player_number], points = points[player_number])
 
             else:
                 return fail, players[player_number].pawns, ai_random(players, player_number, list_active_pawns)

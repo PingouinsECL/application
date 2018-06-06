@@ -55,6 +55,8 @@ window = pygame.display.set_mode((0, 0))
 # Loading images
 icon = pygame.image.load(path_icon).convert()
 background = pygame.image.load(path_background).convert()
+background_alpha = pygame.image.load(path_background_alpha).convert()
+
 logo = pygame.image.load(path_logo)
 club = pygame.image.load(path_club_jeu)
 
@@ -253,16 +255,16 @@ while hold:
     while mode_choice:
 
         if mode_settings:
-            window.blit(background, pos_background)
+            window.blit(background_alpha, pos_background)
             but_settings.show(window, pos_settings)
             but_language.show(window, pos_language)
             but_back.show(window, pos_back)
 
             if language == len(languages_flags) - 1:
-                font = pygame.font.Font("fonts/zh.otf", 20)
+                font = pygame.font.Font("fonts/zh.otf", 15)
             else:
-                font = pygame.font.Font("fonts/other.otf", 20)
-            blit_text(window, languages_settings[language], (50, 150), font)
+                font = pygame.font.Font("fonts/other.otf", 15)
+            blit_text(window, languages_settings[language], (50, 150), font, color=pygame.Color('black'))
 
             pygame.display.flip()
 
@@ -297,37 +299,37 @@ while hold:
                 if but_choice0.hover(cur):
                     configuration[0] = (configuration[0] + 1) % len(choices)
                     but_choice0.modify_image(choices[configuration[0]])
-                    if configuration[0] == 5 :
+                    if configuration[0] == 4 :
                         but_choice_impaler0.modify_image(choices_impaler[configuration_impaler[0]])
                         but_choice_impaler_points0.modify_image(choices_impaler_points[configuration_impaler_points[0]])
-                    if configuration[0] != 5 :
+                    if configuration[0] != 4 :
                         but_choice_impaler0.modify_image(void)
                         but_choice_impaler_points0.modify_image(void)
                 elif but_choice1.hover(cur):
                     configuration[1] = (configuration[1] + 1) % len(choices)
                     but_choice1.modify_image(choices[configuration[1]])
-                    if configuration[1] == 5 :
+                    if configuration[1] == 4 :
                         but_choice_impaler1.modify_image(choices_impaler[configuration_impaler[1]])
                         but_choice_impaler_points1.modify_image(choices_impaler_points[configuration_impaler_points[1]])
-                    if configuration[1] != 5 :
+                    if configuration[1] != 4 :
                         but_choice_impaler1.modify_image(void)
                         but_choice_impaler_points1.modify_image(void)
                 elif but_choice2.hover(cur):
                     configuration[2] = (configuration[2] + 1) % len(choices)
                     but_choice2.modify_image(choices[configuration[2]])
-                    if configuration[2] == 5 :
+                    if configuration[2] == 4 :
                         but_choice_impaler2.modify_image(choices_impaler[configuration_impaler[2]])
                         but_choice_impaler_points2.modify_image(choices_impaler_points[configuration_impaler_points[2]])
-                    if configuration[2] != 5 :
+                    if configuration[2] != 4 :
                         but_choice_impaler2.modify_image(void)
                         but_choice_impaler_points2.modify_image(void)
                 elif but_choice3.hover(cur):
                     configuration[3] = (configuration[3] + 1) % len(choices)
                     but_choice3.modify_image(choices[configuration[3]])
-                    if configuration[3] == 5 :
+                    if configuration[3] == 4 :
                         but_choice_impaler3.modify_image(choices_impaler[configuration_impaler[3]])
                         but_choice_impaler_points3.modify_image(choices_impaler_points[configuration_impaler_points[3]])
-                    if configuration[3] != 5 :
+                    if configuration[3] != 4 :
                         but_choice_impaler3.modify_image(void)
                         but_choice_impaler_points3.modify_image(void)
                 
@@ -344,46 +346,46 @@ while hold:
                     language %= len(languages_flags)
                     but_language.modify_image(languages_flags[language])
                         
-                if configuration[0] == 5 and but_choice_impaler0.hover(cur) :
+                if configuration[0] == 4 and but_choice_impaler0.hover(cur) :
                     configuration_impaler[0] = (configuration_impaler[0] + 1) % len(choices_impaler)
                     but_choice_impaler0.modify_image(choices_impaler[configuration_impaler[0]])
-                elif configuration[0] != 5 :
+                elif configuration[0] != 4 :
                     configuration_impaler[0] = 4
-                if configuration[1] == 5 and but_choice_impaler1.hover(cur) :
+                if configuration[1] == 4 and but_choice_impaler1.hover(cur) :
                     configuration_impaler[1] = (configuration_impaler[1] + 1) % len(choices_impaler)
                     but_choice_impaler1.modify_image(choices_impaler[configuration_impaler[1]])
-                elif configuration[1] != 5 :
+                elif configuration[1] != 4 :
                     configuration_impaler[1] = 4
-                if configuration[2] == 5 and but_choice_impaler2.hover(cur) :
+                if configuration[2] == 4 and but_choice_impaler2.hover(cur) :
                     configuration_impaler[2] = (configuration_impaler[2] + 1) % len(choices_impaler)
                     but_choice_impaler2.modify_image(choices_impaler[configuration_impaler[2]])
-                elif configuration[2] != 5 :
+                elif configuration[2] != 4 :
                     configuration_impaler[2] = 4
-                if configuration[3] == 5 and but_choice_impaler3.hover(cur) :
+                if configuration[3] == 4 and but_choice_impaler3.hover(cur) :
                     configuration_impaler[3] = (configuration_impaler[3] + 1) % len(choices_impaler)
                     but_choice_impaler3.modify_image(choices_impaler[configuration_impaler[3]])
-                elif configuration[3] != 5 :
+                elif configuration[3] != 4 :
                     configuration_impaler[3] = 4
                 
-                if configuration[0] == 5 and but_choice_impaler_points0.hover(cur) :
+                if configuration[0] == 4 and but_choice_impaler_points0.hover(cur) :
                     configuration_impaler_points[0] = (configuration_impaler_points[0] + 1) % len(choices_impaler_points)
                     but_choice_impaler_points0.modify_image(choices_impaler_points[configuration_impaler_points[0]])
-                elif configuration[0] != 5 :
+                elif configuration[0] != 4 :
                     configuration_impaler_points[0] = 0
-                if configuration[1] == 5 and but_choice_impaler_points1.hover(cur) :
+                if configuration[1] == 4 and but_choice_impaler_points1.hover(cur) :
                     configuration_impaler_points[1] = (configuration_impaler_points[1] + 1) % len(choices_impaler_points)
                     but_choice_impaler_points1.modify_image(choices_impaler_points[configuration_impaler_points[1]])
-                elif configuration[1] != 5 :
+                elif configuration[1] != 4 :
                     configuration_impaler_points[1] = 0
-                if configuration[2] == 5 and but_choice_impaler_points2.hover(cur) :
+                if configuration[2] == 4 and but_choice_impaler_points2.hover(cur) :
                     configuration_impaler_points[2] = (configuration_impaler_points[2] + 1) % len(choices_impaler_points)
                     but_choice_impaler_points2.modify_image(choices_impaler_points[configuration_impaler_points[2]])
-                elif configuration[2] != 5 :
+                elif configuration[2] != 4 :
                     configuration_impaler_points[2] = 0
-                if configuration[3] == 5 and but_choice_impaler_points3.hover(cur) :
+                if configuration[3] == 4 and but_choice_impaler_points3.hover(cur) :
                     configuration_impaler_points[3] = (configuration_impaler_points[3] + 1) % len(choices_impaler_points)
                     but_choice_impaler_points3.modify_image(choices_impaler_points[configuration_impaler_points[3]])
-                elif configuration[3] != 5 :
+                elif configuration[3] != 4 :
                     configuration_impaler_points[3] = 0
                 
                 if but_end_choice.hover(cur):
@@ -416,7 +418,7 @@ while hold:
             if configuration[mode] > 0:
                 mode_player = configuration[mode] - 1
                 players.append(Player(mode_player, pawns_per_player))
-                if configuration[mode] == 5 :
+                if configuration[mode] == 4 :
                     adversary_numbers.append(configuration_impaler[mode])
                     points.append(configuration_impaler_points[mode]==1)
                 else :
