@@ -32,6 +32,8 @@ path_hint="images/hint.png"
 path_hint_hover="images/hint_highlight.png"
 pos_hint = [10, 300]
 
+sound_path = "sounds/background.wav"
+
 # TUTORIAL MODE
 
 path_back = "images/back.png"
@@ -74,6 +76,9 @@ chinese_settings = cont[4]
 languages_settings = [french_settings, english_settings, spanish_settings, german_settings, chinese_settings]
 
 # ANIMATIONS
+
+break_path = "sounds/break.wav"
+score_path = "sounds/score.wav"
 
 # Player 0
 path_player001 = "images/animation/player001.png"
@@ -362,7 +367,7 @@ player36 = pygame.image.load(path_player36)
 image_player_animation_sliding= [[player01,player02,player03,player04,player05,player06],[player11,player12,player13,player14,player15,player16],[player21,player22,player23,player24,player25,player26],[player31,player32,player33,player34,player35,player36]]
 
 
-animation_number_unit = 1
+animation_number_unit = 10
 animation_speed = 0.5
 proba_sliding = 0.5
 

@@ -2,6 +2,10 @@
 
 import pygame
 from pygame.locals import *
+
+from pygame.mixer import *
+from pygame.mixer_music import * 
+
 import numpy as np
 
 import sys
@@ -119,7 +123,12 @@ show_scores = 1
 tstart = 0
 tend = 0
 
+sound_on = 1
+
 pygame.font.init()
+
+pygame.mixer.music.load(sound_path)
+pygame.mixer.music.play()
 
 def blit_text(surface, text, pos, font, color=pygame.Color('white')):
     words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
@@ -171,17 +180,27 @@ while hold:
 
     while mode_home:
 
-        # displaying background
-        window.blit(background, pos_background)
-        window.blit(logo, pos_logo)
-        window.blit(club, pos_club)
-
         # creating cursor if not exists
         if not('cursor' in locals() or 'cursor' in globals()):
             cursor = [0, 0]
 
-        # listening for events
+        if not(pygame.mixer.music.get_busy()):
+            pygame.mixer.music.load(sound_path)
+            pygame.mixer.music.play()
 
+        # displaying background
+        window.blit(background, pos_background)
+        window.blit(logo, pos_logo)
+        window.blit(club, pos_club)
+        
+        # displaying buttons        
+        but_play.show(window, cursor)
+        but_tuto.show(window, cursor)
+        but_sound.show(window, cursor)
+
+        pygame.display.flip()
+
+        # listening for events
         for event in pygame.event.get():
 
             if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
@@ -196,15 +215,15 @@ while hold:
                 elif but_tuto.hover(cursor):
                     mode_home = 0
                     mode_tuto = 1
+                elif but_sound.hover(cursor):
+                    sound_on = 1 - sound_on
+                    if not(sound_on):
+                        pygame.mixer.music.set_volume(0)
+                    else:
+                        pygame.mixer.music.set_volume(1)
 
             elif event.type == MOUSEMOTION:
                 cursor = event.pos
-
-        # displaying buttons
-        but_play.show(window, cursor)
-        but_tuto.show(window, cursor)
-        but_sound.show(window, cursor)
-        pygame.display.flip()
 
     # TUTORIAL
     """
@@ -212,6 +231,10 @@ while hold:
     """
 
     while mode_tuto:
+
+        if not(pygame.mixer.music.get_busy()):
+            pygame.mixer.music.load(sound_path)
+            pygame.mixer.music.play()
 
         # displaying background and button
         window.blit(background, pos_background)
@@ -253,6 +276,10 @@ while hold:
     """
 
     while mode_choice:
+
+        if not(pygame.mixer.music.get_busy()):
+            pygame.mixer.music.load(sound_path)
+            pygame.mixer.music.play()
 
         if mode_settings:
             window.blit(background_alpha, pos_background)
@@ -402,6 +429,10 @@ while hold:
     """
     while mode_init:
 
+        if not(pygame.mixer.music.get_busy()):
+            pygame.mixer.music.load(sound_path)
+            pygame.mixer.music.play()
+
         # creation of the players and the board
         board = Board()
         players = []
@@ -446,6 +477,10 @@ while hold:
     """
 
     while mode_game:
+
+        if not(pygame.mixer.music.get_busy()):
+            pygame.mixer.music.load(sound_path)
+            pygame.mixer.music.play()
 
         # number of the current player
         player_number = number_turn % number_players
@@ -503,6 +538,8 @@ while hold:
                 
                 p=np.random.binomial(1,proba_sliding)
 
+                pygame.mixer.Sound(score_path).play()
+
                 for i in range(animation_number + 1):
 
                     # Static printings 
@@ -537,7 +574,9 @@ while hold:
                 
                 players[player_number].pawns[pawn_number].move(board, players[player_number], direction, dist)
                 board.cases_tab[y_init][x_init].change_state(2)
+
                 # finally completing the move
+                pygame.mixer.Sound(break_path).play()
                 for z in range (1,9):
                     window.blit(background, pos_background)
                     table_but = board.display(window, l_init=x_init, k_init=y_init,z=z)
@@ -574,6 +613,10 @@ while hold:
     # RESULTS
 
     while mode_results:
+
+        if not(pygame.mixer.music.get_busy()):
+            pygame.mixer.music.load(sound_path)
+            pygame.mixer.music.play()
 
         # refreshing the window
         if show_scores:
