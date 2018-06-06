@@ -18,10 +18,82 @@ Dans le mode cupide le joueur cherchera à maximiser ses points en plus d'isoler
 5. Calculateur, niveau difficile
 Anticipe plusieurs tours en avance et sélectionne le meilleur coup possible
 ###
-Anglais
+This window enables you to select the number and the mode of each player.
+Each square corresponds to a player, ordered from 1 to 4 from left to right and top to bottom. Clicking on a square can either add a player or change its game mode.
+
+1. Human player
+
+2. Random player, easy level
+Selects a random move from all the legal moves
+
+3. Explorer, medium level
+Goes through every possible move and selects the best according to statistics
+
+4. Attacker, high level
+Selects a target and tries and isolate it.
+The first frame selects the target (best current player or number of the player).
+The second frame chooses between attack or greedy mode.
+In the greedy mode, this player will try and maximise its score in addition to isolating its target.
+
+5. Computer, high level
+Thinks several turns ahead and selects the best move
 ###
-Espagnol
+Esta ventana permite seleccionar el número y el modo de juego de los jugadores.
+Cada botón corresponde a un jugador, numerados de 1 a 4, de izquierda a la derecha y de encima a abajo. Clicar sobre un botón permite añadir o cambiar el modo de juego de un jugador.
+
+1. Jugador humano
+
+2. Jugador aleatorio, nivel fácil
+Escoge un movimiento al azar entre todos los movimientos posibles
+
+3. Explorador, nivel medio
+Examina cada de las opciones y escoge la mejor según las estadísticas
+
+4. Attaquante, nivel difícil
+Elige como blanco a un jugador y intenta bloquearlo.
+El primer botón permite seleccionar el blanco (mejor jugador o número de un jugador).
+El segundo botón permite escoger entre el modo agresivo y el modo codicioso.
+En el modo codicioso este jugador intentará maximizar su resultado además de aislar su meta.
+
+5. Computador, nivel difícil
+Anticipa algunos pasos detrás y selecciona el mejor movimiento. 
 ###
-Allemand
+In diesem Fenster kann man die Anzahl und den Modus jedes Spielers auswählen.
+Jedes Feld entspricht einem Spieler, geordnet von 1 bis 4 von links nach rechts und von oben nach unten. Ein Klick auf ein Feld kann entweder einen Spieler hinzufügen oder seinen Spielmodus ändern.
+
+1. Menschlicher Spieler
+
+2. Zufallsspieler, leichtes Level
+Wählt einen zufälligen Zug aus allen legalen Zügen aus.
+
+3. Explorer, mittleres Level
+Geht jeden möglichen Zug durch und wählt den besten nach der Statistik aus.
+
+4. Angreifer, hohes Level
+Wählt ein Ziel aus und versucht es zu isolieren.
+Das erste Bild wählt das Ziel (bester aktueller Spieler oder Nummer des Spielers).
+Das zweite Bild wählt zwischen Angriffs- und Giermodus.
+Im gierigen Modus wird dieser Spieler versuchen, seine Punktzahl zu maximieren und sein Ziel zu isolieren.
+
+5. Computer, hohes Level
+Denkt mehrere Runden voraus und wählt den besten Zug aus
 ###
-Chinois
+这个窗口可让您选择每个玩家的号码和模式。
+每个正方形对应一名玩家，从左到右和从上到下排列从1到4。 点击广场可以添加玩家或更改其游戏模式。
+
+1.人类玩家
+
+2.随机播放器，简单的水平
+从所有合法移动中选择一个随机移动
+
+3.资源管理器，中等水平
+经历一切可能的举措，并根据统计数据选择最佳
+
+4.攻击者，高水平
+选择一个目标并尝试并隔离它。
+第一帧选择目标（当前最佳球员或球员号码）。
+第二帧选择攻击或贪婪模式。
+在贪婪模式下，除了隔离其目标之外，该玩家还会尝试并最大化其得分。
+
+5.电脑，高水平
+思考几圈，并选择最佳举措
