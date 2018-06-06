@@ -36,6 +36,9 @@ pos_hint = [10, 300]
 path_back = "images/back.png"
 pos_back = [0, 0]
 
+path_settings = "images/instructions.png"
+pos_settings = [0, 70] # [384, 150]
+
 back_width = 828
 back_height = 659
 
@@ -53,6 +56,13 @@ spanish_rules = "Versión 1V1 : cada jugador tiene quatro pingüinos. Al inicio 
 german_rules = "1V1 : jede Spieler besitzt vier Pinguine. Anfangs des Spiels, die Spieler aufeinanderfolgend stellen ihre Pinguine nacheinander auf einem von den 1-punkt spielsteine ein. Wann alle die Pinguine eingestellt wurden, das Spiel kann anfangen. Wann man daran ist, muss man einen von seinen Pinguine umlagern. Ein Pinguin kann sich bewegen in die sechs Richtungen des Sechsecks ohne maximale Strecke. Aber man kann nich über Löcher hüpfen. Wann ein Pinguin aus einem Spielstein ausscheidet, erzielt er genauso viel Punkte wie Fische auf dem Spielstein. Das Stein wordt dann zurückgenommen. Das Spiel beendet sich wann keine mehr Pinguine sich bewegen kann. Der Spieler, der die Meiste Punkte erzielt hat, gewinnt das Spiel."
 chinese_rules = u"1v1模式：每个玩家拥有四只企鹅。 在比赛开始的时候，人人相继必须把自己的企鹅放在一比分的六边形上。 一旦放置了所有的企鹅，游戏就可以开始。 轮到你时，你必须移动一只企鹅。 企鹅可以在六边形的所有六个方向上移动，没有距离极限。 但是，不能跳过一个空盒子。 当企鹅离开广场时，玩家会得到与六边形上的鱼数相等的点数，并将该框从棋盘上移除。 当所有的企鹅不能移动时，游戏停止。 积分最高的玩家赢了比赛。"
 languages_rules = [french_rules, english_rules, spanish_rules, german_rules, chinese_rules]
+
+french_settings = "français"
+english_settings = "anglais"
+spanish_settings = "espagnol"
+german_settings = "allemand"
+chinese_settings = "chinois"
+languages_settings = [french_settings, english_settings, spanish_settings, german_settings, chinese_settings]
 
 # ANIMATIONS
 

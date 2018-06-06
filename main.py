@@ -68,6 +68,7 @@ sound = pygame.image.load(path_sound).convert()
 mute = pygame.image.load(path_mute).convert()
 
 back = pygame.image.load(path_back)
+settings = pygame.image.load(path_settings)
 
 choices = [pygame.image.load(path_choice).convert() for path_choice in path_choice_array]
 choices_impaler = [pygame.image.load(path_impaler).convert() for path_impaler in path_impaler_array]
@@ -85,6 +86,7 @@ but_play = Button(play, play_hover, pos_play, 0)
 but_tuto = Button(tuto, tuto_hover, pos_tuto, 0)
 but_sound = Button(sound, mute, pos_sound, 0)
 but_back = Button(back, back, pos_back, 0)
+but_settings = Button(settings, settings, pos_settings, 0)
 but_language = Button(language_fr, language_fr, pos_language, 0)
 language = 0
 
@@ -143,6 +145,7 @@ while hold:
     # mode selectors
     mode_home = 1
     mode_tuto = 0
+    mode_settings = 0
 
     mode_choice = 0
     mode_init = 0
@@ -248,24 +251,44 @@ while hold:
     """
 
     while mode_choice:
+
+        if mode_settings:
+            window.blit(background, pos_background)
+            but_settings.show(window, pos_settings)
+            but_language.show(window, pos_language)
+            but_back.show(window, pos_back)
+
+            if language == len(languages_flags) - 1:
+                font = pygame.font.Font("fonts/zh.otf", 20)
+            else:
+                font = pygame.font.Font("fonts/other.otf", 20)
+            blit_text(window, languages_settings[language], (50, 150), font)
+
+            pygame.display.flip()
+
+        else:
         # displaying background and buttons
-        window.blit(background, pos_background)
-        window.blit(logo, pos_logo)
-        but_choice0.show(window, pos_choice0)
-        but_choice1.show(window, pos_choice1)
-        but_choice2.show(window, pos_choice2)
-        but_choice3.show(window, pos_choice3)
-        but_choice_impaler0.show(window, pos_choice_impaler0)
-        but_choice_impaler1.show(window, pos_choice_impaler1)
-        but_choice_impaler2.show(window, pos_choice_impaler2)
-        but_choice_impaler3.show(window, pos_choice_impaler3)
-        but_choice_impaler_points0.show(window, pos_choice_impaler_points3)
-        but_choice_impaler_points1.show(window, pos_choice_impaler_points3)
-        but_choice_impaler_points2.show(window, pos_choice_impaler_points3)
-        but_choice_impaler_points3.show(window, pos_choice_impaler_points3)
-        
-        but_end_choice.show(window, pos_end_choice)
-        pygame.display.flip()
+            window.blit(background, pos_background)
+            window.blit(logo, pos_logo)
+
+            but_settings.show(window, pos_settings)
+            but_back.show(window, pos_back)
+
+            but_choice0.show(window, pos_choice0)
+            but_choice1.show(window, pos_choice1)
+            but_choice2.show(window, pos_choice2)
+            but_choice3.show(window, pos_choice3)
+            but_choice_impaler0.show(window, pos_choice_impaler0)
+            but_choice_impaler1.show(window, pos_choice_impaler1)
+            but_choice_impaler2.show(window, pos_choice_impaler2)
+            but_choice_impaler3.show(window, pos_choice_impaler3)
+            but_choice_impaler_points0.show(window, pos_choice_impaler_points3)
+            but_choice_impaler_points1.show(window, pos_choice_impaler_points3)
+            but_choice_impaler_points2.show(window, pos_choice_impaler_points3)
+            but_choice_impaler_points3.show(window, pos_choice_impaler_points3)
+            
+            but_end_choice.show(window, pos_end_choice)
+            pygame.display.flip()
         
         for event in pygame.event.get():
             window.blit(background, pos_background)
@@ -280,7 +303,7 @@ while hold:
                     if configuration[0] != 5 :
                         but_choice_impaler0.modify_image(void)
                         but_choice_impaler_points0.modify_image(void)
-                if but_choice1.hover(cur):
+                elif but_choice1.hover(cur):
                     configuration[1] = (configuration[1] + 1) % len(choices)
                     but_choice1.modify_image(choices[configuration[1]])
                     if configuration[1] == 5 :
@@ -289,7 +312,7 @@ while hold:
                     if configuration[1] != 5 :
                         but_choice_impaler1.modify_image(void)
                         but_choice_impaler_points1.modify_image(void)
-                if but_choice2.hover(cur):
+                elif but_choice2.hover(cur):
                     configuration[2] = (configuration[2] + 1) % len(choices)
                     but_choice2.modify_image(choices[configuration[2]])
                     if configuration[2] == 5 :
@@ -298,7 +321,7 @@ while hold:
                     if configuration[2] != 5 :
                         but_choice_impaler2.modify_image(void)
                         but_choice_impaler_points2.modify_image(void)
-                if but_choice3.hover(cur):
+                elif but_choice3.hover(cur):
                     configuration[3] = (configuration[3] + 1) % len(choices)
                     but_choice3.modify_image(choices[configuration[3]])
                     if configuration[3] == 5 :
@@ -307,6 +330,19 @@ while hold:
                     if configuration[3] != 5 :
                         but_choice_impaler3.modify_image(void)
                         but_choice_impaler_points3.modify_image(void)
+                
+                elif but_settings.hover(cur):
+                    mode_settings = 1-mode_settings
+                
+                elif but_back.hover(cur):
+                    mode_choice = 0
+                    mode_settings = 0
+                    mode_home = 1
+                
+                elif but_language.hover(cur):
+                    language += 1
+                    language %= len(languages_flags)
+                    but_language.modify_image(languages_flags[language])
                         
                 if configuration[0] == 5 and but_choice_impaler0.hover(cur) :
                     configuration_impaler[0] = (configuration_impaler[0] + 1) % len(choices_impaler)
