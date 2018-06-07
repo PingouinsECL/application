@@ -53,7 +53,7 @@ language_zh = pygame.image.load("images/language_zh.png");
 languages_flags = [language_fr, language_en, language_es, language_de, language_zh]
 pos_language = [600, 50]
 
-with open("rules.txt", "r") as f:
+with open("rules.txt", "r", encoding="utf8") as f:
     cont = f.read()
 
 cont = cont.split("###")
@@ -64,7 +64,7 @@ german_rules = cont[3]
 chinese_rules = cont[4]
 languages_rules = [french_rules, english_rules, spanish_rules, german_rules, chinese_rules]
 
-with open("settings.txt", "r") as f:
+with open("settings.txt", "r", encoding="utf8") as f:
     cont = f.read()
 
 cont = cont.split("###")
