@@ -1,3 +1,5 @@
+from time import clock
+
 def update_islands(board, players, recalculate):
     board.compute_islands(players)
     for island in board.islands:
@@ -20,13 +22,20 @@ def update_islands(board, players, recalculate):
                             break
                 if not calc or recalculate:
                     m_island = max_island(board,players,occupiers[0],pawns_on_island, score)
-                    for i in pawns_on_island:
-                        players[occupiers[0]].pawns[i].remaining_actions = m_island 
+                    if m_island == False:
+                        for i in pawns_on_island:
+                            players[occupiers[0]].pawns[i].isolate = False    
+                    else:
+                        for i in pawns_on_island:
+                            players[occupiers[0]].pawns[i].remaining_actions = m_island 
 
 def max_island(board, players, p, pawns_on_island, max_point):
 
     maxi = players[p].score + max_point
+    time_a = clock()
     def max_island_rec() :
+        if clock() > time_a + 10:
+            return [[],False]
         nb_pawns = len(pawns_on_island)
         i = 0
         players[p].pawns[pawns_on_island[i]].compute_accessible_island(board)
@@ -47,8 +56,11 @@ def max_island(board, players, p, pawns_on_island, max_point):
             for j in range(len(acce)):
                 for k in range(1, 1+acce[j], max(1, acce[j]-1)) :
                     players[p].pawns[i].move(board, players[p], j, k)
-                    (w, list_actions) = max_island_rec()
+                    result = max_island_rec()
                     players[p].pawns[i].anti_move(board, players[p], j, k)
+                    if result[1] == False:
+                        return [[],False]
+                    (w, list_actions) = result
                     if w == maxi:
                         list_actions.append([j, k, i])
                         return w, list_actions
